@@ -1,5 +1,11 @@
 # Agentic AI Framework Generator
 
+## Members
+- Kenji Ratanaputra (24/534421/PA/22664)
+- Ayasha Rahmadinni (24/545462/PA/23178)
+- Kevin Antonio Wiyono Lauw (24/535917/PA/22736)
+- Melinda Annastasia Budijono (24/542840/PA/23052)
+
 ## Description
 
 This project is a tool/pipeline that automatically generates Agentic AI framework code from Knowledge Graphs (KGs) of Agentic AI patterns. The system reads KGs constructed using the [Agentic AI Ontology](https://w3id.org/agentic-ai/onto) and transforms them into executable code for target frameworks such as CrewAI and AutoGen.
