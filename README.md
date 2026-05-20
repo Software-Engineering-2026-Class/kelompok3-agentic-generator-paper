@@ -1,18 +1,23 @@
 # Agentic AI Framework Generator
 
 ## Members
-- Kenji Ratanaputra (24/534421/PA/22664)
-- Ayasha Rahmadinni (24/545462/PA/23178)
-- Kevin Antonio Wiyono Lauw (24/535917/PA/22736)
-- Melinda Annastasia Budijono (24/542840/PA/23052)
+- Kenji Ratanaputra (24/534421/PA/22664) — [@Kenzi-GIT](https://github.com/Kenzi-GIT)
+- Ayasha Rahmadinni (24/545462/PA/23178) — [@ayashar](https://github.com/ayashar)
+- Kevin Antonio Wiyono Lauw (24/535917/PA/22736) — [@KevinAntonioWiyonoLauw](https://github.com/KevinAntonioWiyonoLauw)
+- Melinda Annastasia Budijono (24/542840/PA/23052) — [@melinda-ab](https://github.com/melinda-ab)
+
+## Project Links
+- Repository: [Software-Engineering-2026-Class/kelompok3-agentic-generator-paper](https://github.com/Software-Engineering-2026-Class/kelompok3-agentic-generator-paper.git)
+- GitHub Project: https://github.com/Software-Engineering-2026-Class/kelompok3-agentic-generator-paper
+- Ontology reference: [Agentic AI Ontology](https://w3id.org/agentic-ai/onto)
 
 ## Description
 
-This project is a tool/pipeline that automatically generates Agentic AI framework code from Knowledge Graphs (KGs) of Agentic AI patterns. The system reads KGs constructed using the [Agentic AI Ontology](https://w3id.org/agentic-ai/onto) and transforms them into executable code for target frameworks such as CrewAI and AutoGen.
+This project is a knowledge-graph-driven generator for Agentic AI frameworks. It reads RDF/Turtle Knowledge Graphs built with the [Agentic AI Ontology](https://w3id.org/agentic-ai/onto), extracts the semantic structure of agents, tasks, tools, prompts, and workflows, and turns that structure into executable code for frameworks such as CrewAI and AutoGen.
 
 ### Project Overview
 
-The generator bridges the gap between abstract agentic AI patterns defined in ontologies and concrete implementations in popular agentic AI frameworks. By parsing Knowledge Graphs that describe agentic AI patterns, the tool can automatically produce runnable code that implements these patterns in different target frameworks.
+The generator bridges the gap between abstract agentic AI patterns defined in ontologies and concrete implementations in popular agentic AI frameworks. The repository also includes the scripts, templates, and generated Knowledge Graph instances needed to inspect, normalize, and reproduce the pipeline end to end.
 
 ### Key Features
 
@@ -23,6 +28,31 @@ The generator bridges the gap between abstract agentic AI patterns defined in on
 - **Knowledge Graph Parsing**: Reads and interprets KGs in RDF/Turtle format (.ttl, .rdf)
 - **Pattern Recognition**: Extracts agentic AI patterns including agents, tasks, tools, and workflows
 - **Automated Code Generation**: Produces executable Python scripts for target frameworks
+
+### Documentation and Source Notes
+
+- `Script/analysis.prompt.md` contains the ontology-population prompt used to turn source code and configuration into Turtle instances.
+- `Script/run_prompt.py` is the main script that loads the ontology, reads source files, calls the model, and writes the generated `.ttl` output.
+- `scripts/normalize_kg.py` normalizes generated Knowledge Graph files into the canonical agent pattern used by the repository.
+- `scripts/add_kickoff_inputs.py` adds kickoff input bundles to generated TTL files.
+- `generated_kg/` stores the generated Knowledge Graph instances for AutoGen, CrewAI, LangGraph, and Mastra AI.
+- `output_files/` contains generated framework outputs and example code artifacts.
+
+## License
+
+This project is developed for academic and research purposes.  
+The project references the Agentic AI Ontology (AgentO), which is distributed under the Creative Commons Attribution 4.0 International (CC BY 4.0) license.
+
+The source code of this repository is distributed under the MIT License.
+
+### Initial Code
+
+The main starting points for the codebase are:
+
+- `Script/run_prompt.py` for the ontology-to-instance generation flow.
+- `scripts/normalize_kg.py` for KG cleanup and canonicalization.
+- `src/crewai/generator.py` for CrewAI code generation.
+- `src/crewai/templates/main.py.j2` for the generated CrewAI entry point template.
 
 ## Installation
 
