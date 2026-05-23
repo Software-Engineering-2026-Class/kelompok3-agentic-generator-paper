@@ -12,6 +12,8 @@
 
 
 
+
+
 # Execution time: 117.22 seconds
 # Model used: gpt-5-mini
 
@@ -26,6 +28,7 @@
 ########################################################################
 # Team (Crew) and workflow pattern
 ########################################################################
+
 
 
 :JobPostingCrew rdf:type :Team ;
@@ -443,9 +446,23 @@ These behaviors are not executable within the ontology and are therefore capture
 
 # Goals
 
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
 :goal_ResearchAgent rdf:type :Goal ;
     dcterms:title "research_agent goal" ;
     dcterms:description "Analyze the company website and provided description to extract insights on culture, values, and specific needs." .
+
+:goal_WriterAgent rdf:type :Goal ;
+    dcterms:title "writer_agent goal" ;
+    dcterms:description "Use insights from the Research Analyst to create a detailed, engaging, and enticing job posting." .
+
+:goal_ReviewAgent rdf:type :Goal ;
+    dcterms:title "review_agent goal" ;
+    dcterms:description "Review the job posting for clarity, engagement, grammatical accuracy, and alignment with company values and refine it to ensure perfection." .
 
 :ResearchAgent rdf:type :LLMAgent ;
     rdfs:label "research_agent" ;
@@ -456,11 +473,7 @@ These behaviors are not executable within the ontology and are therefore capture
     :agentPrompt :prompt_ResearchAgent .
 
 :prompt_ResearchAgent rdf:type :Prompt ;
-    :promptContext "Expert in analyzing company cultures and identifying key values and needs from various sources, including websites and brief descriptions." .
-
-:goal_WriterAgent rdf:type :Goal ;
-    dcterms:title "writer_agent goal" ;
-    dcterms:description "Use insights from the Research Analyst to create a detailed, engaging, and enticing job posting." .
+    :promptContext "You are a Research Analyst." .
 
 :WriterAgent rdf:type :LLMAgent ;
     rdfs:label "writer_agent" ;
@@ -471,11 +484,7 @@ These behaviors are not executable within the ontology and are therefore capture
     :agentPrompt :prompt_WriterAgent .
 
 :prompt_WriterAgent rdf:type :Prompt ;
-    :promptContext "Skilled in crafting compelling job descriptions that resonate with the company's values and attract the right candidates." .
-
-:goal_ReviewAgent rdf:type :Goal ;
-    dcterms:title "review_agent goal" ;
-    dcterms:description "Review the job posting for clarity, engagement, grammatical accuracy, and alignment with company values and refine it to ensure perfection." .
+    :promptContext "You are a Job Description Writer." .
 
 :ReviewAgent rdf:type :LLMAgent ;
     rdfs:label "review_agent" ;
@@ -486,4 +495,4 @@ These behaviors are not executable within the ontology and are therefore capture
     :agentPrompt :prompt_ReviewAgent .
 
 :prompt_ReviewAgent rdf:type :Prompt ;
-    :promptContext "A meticulous editor with an eye for detail, ensuring every piece of content is clear, engaging, and grammatically perfect." .
+    :promptContext "You are a Review and Editing Specialist." .

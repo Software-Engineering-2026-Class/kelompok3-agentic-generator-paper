@@ -11,6 +11,8 @@
 
 
 
+
+
 # Execution time: 104.84 seconds
 # Model used: gpt-5-mini
 
@@ -25,6 +27,7 @@
 #################################################################
 # Recruitment crew instance graph
 #################################################################
+
 
 
 :RecruitmentCrew a :Team ;
@@ -404,6 +407,12 @@ Summarize the findings from the previous tasks and provide clear recommendations
 
 # Goals
 
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
 :goal_research_candidates a :Goal ;
     <http://purl.org/dc/terms/description> "Find potential candidates for the job" .
 
@@ -436,7 +445,7 @@ Summarize the findings from the previous tasks and provide clear recommendations
 
 :prompt_agent_researcher a :Prompt ;
     rdfs:label "Researcher Agent Prompt" ;
-    :promptContext "You are adept at finding the right candidates by exploring various online resources. Your skill in identifying suitable candidates ensures the best match for job positions." .
+    :promptContext "You are a Job Candidate Researcher." .
 
 :agent_matcher a :LLMAgent ;
     rdfs:label "Matcher Agent" ;
@@ -458,7 +467,7 @@ Summarize the findings from the previous tasks and provide clear recommendations
 
 :prompt_agent_matcher a :Prompt ;
     rdfs:label "Matcher Agent Prompt" ;
-    :promptContext "You have a knack for matching the right candidates to the right job positions using advanced algorithms and scoring techniques. Your scores help prioritize the best candidates for outreach." .
+    :promptContext "You are a Candidate Matcher and Scorer." .
 
 :agent_communicator a :LLMAgent ;
     rdfs:label "Communicator Agent" ;
@@ -480,7 +489,7 @@ Summarize the findings from the previous tasks and provide clear recommendations
 
 :prompt_agent_communicator a :Prompt ;
     rdfs:label "Communicator Agent Prompt" ;
-    :promptContext "You are skilled at creating effective outreach strategies and templates to engage candidates. Your communication tactics ensure high response rates from potential candidates." .
+    :promptContext "You are a Candidate Outreach Strategist." .
 
 :agent_reporter a :LLMAgent ;
     rdfs:label "Reporter Agent" ;
@@ -501,4 +510,4 @@ Summarize the findings from the previous tasks and provide clear recommendations
 
 :prompt_agent_reporter a :Prompt ;
     rdfs:label "Reporter Agent Prompt" ;
-    :promptContext "You are proficient at compiling and presenting detailed reports for recruiters. Your reports provide clear insights into the best candidates to pursue." .
+    :promptContext "You are a Candidate Reporting Specialist." .

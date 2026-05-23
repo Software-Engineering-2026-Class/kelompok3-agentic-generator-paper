@@ -9,6 +9,8 @@
 
 
 
+
+
 # Execution time: 141.64 seconds
 # Model used: gpt-5-mini
 
@@ -25,6 +27,7 @@
 #################################################################
 # Resources / Input data (the discussion)
 #################################################################
+
 
 
 :discussion_newsgroup_01 a beam:Instance ;
@@ -409,6 +412,12 @@ keith
 
 # Goals
 
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
 :goal_filter_spam a :Goal ;
     dcterms:title "Filter spam/vulgar messages" ;
     dcterms:description "Decide whether a text is spam or not." .
@@ -449,7 +458,7 @@ keith
 
 :prompt_agent_spamfilter a :Prompt ;
     rdfs:label "spamfilter agent prompt" ;
-    :promptContext "You are an expert spam filter with years of experience. You DETEST advertisements, newsletters and vulgar language." .
+    :promptContext "You are a spamfilter." .
 
 :agent_analyst a :LLMAgent ;
     rdfs:label "analyst" ;
@@ -471,7 +480,7 @@ keith
 
 :prompt_agent_analyst a :Prompt ;
     rdfs:label "analyst agent prompt" ;
-    :promptContext "You are an expert discussion analyst." .
+    :promptContext "You are a analyse." .
 
 :agent_scriptwriter a :LLMAgent ;
     rdfs:label "scriptwriter" ;
@@ -493,7 +502,7 @@ keith
 
 :prompt_agent_scriptwriter a :Prompt ;
     rdfs:label "scriptwriter agent prompt" ;
-    :promptContext "You are an expert on writing natural sounding movie script dialogues. You only focus on the text part and you HATE directional notes." .
+    :promptContext "You are a scriptwriter." .
 
 :agent_formatter a :LLMAgent ;
     rdfs:label "formatter" ;
@@ -515,7 +524,7 @@ keith
 
 :prompt_agent_formatter a :Prompt ;
     rdfs:label "formatter agent prompt" ;
-    :promptContext "You are an expert text formatter." .
+    :promptContext "You are a formatter." .
 
 :agent_scorer a :LLMAgent ;
     rdfs:label "scorer" ;
@@ -537,4 +546,4 @@ keith
 
 :prompt_agent_scorer a :Prompt ;
     rdfs:label "scorer agent prompt" ;
-    :promptContext "You are an expert at scoring conversations on a scale of 1 to 10." .
+    :promptContext "You are a scorer." .

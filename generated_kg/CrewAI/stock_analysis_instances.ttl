@@ -10,6 +10,8 @@
 
 
 
+
+
 # Execution time: 113.06 seconds
 # Model used: gpt-5-mini
 
@@ -24,6 +26,7 @@
 #################################################################
 # Team / Crew
 #################################################################
+
 
 
 :StockAnalysisCrew rdf:type :Team ;
@@ -348,9 +351,27 @@
 
 # Goals
 
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
 :goal_LLM_FinancialAgent_1 rdf:type :Goal ;
     dcterms:title "financial_agent (method: financial_agent) goal" ;
     dcterms:description "Impress all customers with your financial data and market trends analysis" .
+
+:goal_LLM_FinancialAnalystAgent rdf:type :Goal ;
+    dcterms:title "financial_analyst_agent (method: financial_analyst_agent) goal" ;
+    dcterms:description "Impress all customers with your financial data and market trends analysis" .
+
+:goal_LLM_ResearchAnalystAgent rdf:type :Goal ;
+    dcterms:title "research_analyst_agent goal" ;
+    dcterms:description "Being the best at gathering, interpreting data and amazing your customer with it" .
+
+:goal_LLM_InvestmentAdvisorAgent rdf:type :Goal ;
+    dcterms:title "investment_advisor_agent goal" ;
+    dcterms:description "Impress your customers with full analyses over stocks and complete investment recommendations" .
 
 :LLM_FinancialAgent_1 rdf:type :LLMAgent ;
     rdfs:label "financial_agent (method: financial_agent)" ;
@@ -364,11 +385,7 @@
 
 :prompt_LLM_FinancialAgent_1 rdf:type :Prompt ;
     rdfs:label "Financial Agent system prompt" ;
-    :promptContext "The most seasoned financial analyst with lots of expertise in stock market analysis and investment strategies that is working for a super important customer." .
-
-:goal_LLM_FinancialAnalystAgent rdf:type :Goal ;
-    dcterms:title "financial_analyst_agent (method: financial_analyst_agent) goal" ;
-    dcterms:description "Impress all customers with your financial data and market trends analysis" .
+    :promptContext "You are a The Best Financial Analyst." .
 
 :LLM_FinancialAnalystAgent rdf:type :LLMAgent ;
     rdfs:label "financial_analyst_agent (method: financial_analyst_agent)" ;
@@ -382,11 +399,7 @@
 
 :prompt_LLM_FinancialAnalystAgent rdf:type :Prompt ;
     rdfs:label "Financial Analyst Agent (duplicate) system prompt" ;
-    :promptContext "The most seasoned financial analyst with lots of expertise in stock market analysis and investment strategies that is working for a super important customer." .
-
-:goal_LLM_ResearchAnalystAgent rdf:type :Goal ;
-    dcterms:title "research_analyst_agent goal" ;
-    dcterms:description "Being the best at gathering, interpreting data and amazing your customer with it" .
+    :promptContext "You are a The Best Financial Analyst." .
 
 :LLM_ResearchAnalystAgent rdf:type :LLMAgent ;
     rdfs:label "research_analyst_agent" ;
@@ -400,11 +413,7 @@
 
 :prompt_LLM_ResearchAnalystAgent rdf:type :Prompt ;
     rdfs:label "Research Analyst system prompt" ;
-    :promptContext "Known as the BEST research analyst, you're skilled in sifting through news, company announcements, and market sentiments. Now you're working on a super important customer." .
-
-:goal_LLM_InvestmentAdvisorAgent rdf:type :Goal ;
-    dcterms:title "investment_advisor_agent goal" ;
-    dcterms:description "Impress your customers with full analyses over stocks and complete investment recommendations" .
+    :promptContext "You are a Staff Research Analyst." .
 
 :LLM_InvestmentAdvisorAgent rdf:type :LLMAgent ;
     rdfs:label "investment_advisor_agent" ;
@@ -418,4 +427,4 @@
 
 :prompt_LLM_InvestmentAdvisorAgent rdf:type :Prompt ;
     rdfs:label "Investment Advisor system prompt" ;
-    :promptContext "You're the most experienced investment advisor and you combine various analytical insights to formulate strategic investment advice. You are now working for a super important customer you need to impress." .
+    :promptContext "You are a Private Investment Advisor." .

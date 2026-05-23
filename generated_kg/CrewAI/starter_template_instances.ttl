@@ -12,6 +12,8 @@
 
 
 
+
+
 # Execution time: 95.72 seconds
 # Model used: gpt-5-mini
 
@@ -29,6 +31,7 @@
 #################################################################
 
 ### Team (Crew)
+
 
 :CustomCrewTeam rdf:type :Team ;
     dcterms:title "CustomCrew (example crew from main.py)" ;
@@ -220,6 +223,12 @@ Make sure to do something else.
 
 # Goals
 
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
 :CustomAgent1Goal rdf:type :Goal ;
     dcterms:title "Agent 1 goal" ;
     dcterms:description "Define agent 1 goal here" .
@@ -246,7 +255,7 @@ Make sure to do something else.
     :configValue "True" .
 
 :prompt_CustomAgent1 rdf:type :Prompt ;
-    :promptContext "Define agent 1 backstory here" .
+    :promptContext "You are a Define agent 1 role here." .
 
 :CustomAgent2 rdf:type :LLMAgent ;
     :agentID "agent_2_name" ;
@@ -266,4 +275,4 @@ Make sure to do something else.
     :configValue "True" .
 
 :prompt_CustomAgent2 rdf:type :Prompt ;
-    :promptContext "Define agent 2 backstory here" .
+    :promptContext "You are a Define agent 2 role here." .

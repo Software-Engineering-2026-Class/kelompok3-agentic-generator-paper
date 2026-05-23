@@ -1,0 +1,145 @@
+@prefix : <http://www.w3id.org/agentic-ai/onto#> .
+@prefix pp: <http://purl.org/net/p-plan#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix beam: <http://w3id.org/beam/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.w3id.org/agentic-ai/onto#> .
+@prefix agento-ext: <http://www.w3id.org/agentic-ai/ext#> .
+
+# Execution time: 10.00 seconds
+# Model used: manual-generation-by-copilot
+
+################################################################################
+# Team / System representing the crew
+################################################################################
+
+:GymPlannerCrew a :Team ;
+    <http://purl.org/dc/terms/title> "Gym Planner Crew" ;
+    <http://purl.org/dc/terms/description> "A crew composed of multiple LLM agents and tools to plan personalized fitness, nutrition, and daily workout routines." ;
+    :hasAgentMember :FitnessExpertAgent , :NutritionistAgent ;
+    :hasWorkflowPattern :GymPlanningPattern ;
+    :hasSystemConfig :EnvConfig .
+
+################################################################################
+# Agents (LLM Agents)
+################################################################################
+
+:FitnessExpertAgent a :LLMAgent ;
+    :agentID "FitnessExpertAgent" ;
+    :agentRole "Senior Fitness Coach" ;
+    <http://purl.org/dc/terms/description> "An expert in personal training, biomechanics, and designing customized workout routines based on user goals (e.g., hypertrophy, weight loss, mobility) and current fitness levels." ;
+    :hasAgentGoal "Design highly effective, structured, and customized workout routines." ;
+    :hasAgentCapability :RoutineDesignCapability ;
+    :agentPrompt :FitnessExpertAgent_Backstory .
+
+:NutritionistAgent a :LLMAgent ;
+    :agentID "NutritionistAgent" ;
+    :agentRole "Certified Dietitian" ;
+    <http://purl.org/dc/terms/description> "An expert in sports nutrition who calculates macronutrients and creates practical, healthy daily meal plans tailored to specific caloric needs and fitness goals." ;
+    :hasAgentGoal "Create healthy, easy-to-follow daily meal plans that complement the workout routines." ;
+    :hasAgentCapability :MealPlanCapability ;
+    :agentPrompt :NutritionistAgent_Backstory .
+
+:FitnessExpertAgent_Backstory a :Prompt ;
+    :promptInstruction "You are a top-tier Senior Fitness Coach who has trained professional athletes and total beginners. You know how to balance intensity and recovery." .
+
+:NutritionistAgent_Backstory a :Prompt ;
+    :promptInstruction "You are a Certified Dietitian specializing in sports nutrition. You believe in sustainable, science-backed meal planning." .
+
+################################################################################
+# Capabilities
+################################################################################
+
+:RoutineDesignCapability a :Capability ;
+    <http://purl.org/dc/terms/description> "Create detailed, day-by-step workout routines tailored to individual user goals, equipment availability, and fitness level." .
+
+:MealPlanCapability a :Capability ;
+    <http://purl.org/dc/terms/description> "Calculate daily caloric and macronutrient needs and produce a comprehensive daily meal plan with recipes." .
+
+:CalculatorCapability a :Capability ;
+    <http://purl.org/dc/terms/description> "Calculate BMI, BMR, and daily caloric expenditure accurately." .
+
+################################################################################
+# Tools
+################################################################################
+
+:FitnessCalculatorTools a :Tool ;
+    <http://purl.org/dc/terms/title> "FitnessCalculatorTools" ;
+    <http://purl.org/dc/terms/description> "A tool to calculate Body Mass Index (BMI), Basal Metabolic Rate (BMR), and Total Daily Energy Expenditure (TDEE)." ;
+    :hasCapability :CalculatorCapability .
+
+################################################################################
+# Resources (external services and produced artifacts)
+################################################################################
+
+:WorkoutPlanResource a beam:Resource ;
+    <http://purl.org/dc/terms/title> "Weekly Workout Plan (produced resource)" ;
+    <http://purl.org/dc/terms/description> "A detailed 7-day workout routine specifying warmups, exercises, sets, reps, and rest times." .
+
+:MealPlanResource a beam:Resource ;
+    <http://purl.org/dc/terms/title> "Weekly Meal Plan (produced resource)" ;
+    <http://purl.org/dc/terms/description> "A detailed 7-day meal plan including breakfast, lunch, dinner, snacks, and grocery list breakdowns." .
+
+################################################################################
+# Configurations
+################################################################################
+
+:EnvConfig a :Config ;
+    <http://purl.org/dc/terms/title> ".env system configuration" ;
+    :configKey "OPENAI_API_KEY" ;
+    :configValue "<OPENAI_API_KEY>" .
+
+################################################################################
+# Language Model used by agents
+################################################################################
+
+:OpenAI_LanguageModel a :LanguageModel ;
+    <http://purl.org/dc/terms/title> "OpenAI (langchain_openai.OpenAI wrapper)" ;
+    <http://purl.org/dc/terms/description> "Language model client used by agents. Uses OPENAI_API_KEY for authentication." .
+
+################################################################################
+# Tasks and Prompts
+################################################################################
+
+:CreateWorkoutTask a :Task ;
+    <http://purl.org/dc/terms/title> "create_workout_routine" ;
+    <http://purl.org/dc/terms/description> "Analyze the user's fitness profile and create a personalized 7-day workout plan based on their goals and available equipment." ;
+    :performedByAgent :FitnessExpertAgent ;
+    :producedResource :WorkoutPlanResource ;
+    :taskPrompt :CreateWorkoutTask_Prompt .
+
+:CreateWorkoutTask_Prompt a :Prompt ;
+    :promptInstruction "Based on the user's age, weight, target goal, and available gym equipment, formulate a weekly workout plan. Make sure to specify the exercises, sets, and reps clearly for each day. Output must be in markdown." .
+
+:CreateMealPlanTask a :Task ;
+    <http://purl.org/dc/terms/title> "create_meal_plan" ;
+    <http://purl.org/dc/terms/description> "Calculate required macros and formulate a daily meal plan that synergizes with the workout routine." ;
+    :performedByAgent :NutritionistAgent ;
+    :requiresResource :WorkoutPlanResource ;
+    :producedResource :MealPlanResource ;
+    :taskPrompt :CreateMealPlanTask_Prompt .
+
+:CreateMealPlanTask_Prompt a :Prompt ;
+    :promptInstruction "Analyze the provided workout plan and user metrics to determine caloric needs. Create a 7-day meal plan with breakfast, lunch, dinner, and snacks. Ensure it aligns with the user's dietary preferences (e.g., vegan/keto)." .
+
+################################################################################
+# Workflow
+################################################################################
+
+:GymPlanningPattern a :WorkflowPattern ;
+    <http://purl.org/dc/terms/title> "Gym Planning Workflow Sequence" ;
+    <http://purl.org/dc/terms/description> "Sequential workflow: First generate the workout, then base the meal plan off of it." ;
+    :hasWorkflowStep :Step1_Workout , :Step2_MealPlan .
+
+:Step1_Workout a :StartStep ;
+    :stepOrder 1 ;
+    :hasAssociatedTask :CreateWorkoutTask ;
+    :nextStep :Step2_MealPlan .
+
+:Step2_MealPlan a :EndStep ;
+    :stepOrder 2 ;
+    :hasAssociatedTask :CreateMealPlanTask ;
+    :relatedStep :Step1_Workout .

@@ -11,6 +11,8 @@
 
 
 
+
+
 # Execution time: 103.17 seconds
 # Model used: gpt-5-mini
 
@@ -25,6 +27,7 @@
 #################################################################
 # Team / Crew
 #################################################################
+
 
 
 :MarketingPostsCrewTeam rdf:type :Team ;
@@ -340,6 +343,12 @@ Marketing copies for each campaign idea.""" .
 
 # Goals
 
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
 :lead_market_analyst_goal rdf:type :Goal ;
     <http://purl.org/dc/terms/description> "Conduct amazing analysis of the products and competitors, providing in-depth insights to guide marketing strategies." .
 
@@ -366,7 +375,7 @@ Marketing copies for each campaign idea.""" .
 
 :prompt_lead_market_analyst_agent rdf:type :Prompt ;
     rdfs:label "Lead Market Analyst Prompt" ;
-    :promptContext "As the Lead Market Analyst at a premier digital marketing firm, you specialize in dissecting online business landscapes." .
+    :promptContext "You are a Lead Market Analyst." .
 
 :chief_marketing_strategist_agent rdf:type :LLMAgent ;
     rdfs:label "Chief Marketing Strategist (agent)" ;
@@ -385,7 +394,7 @@ Marketing copies for each campaign idea.""" .
 
 :prompt_chief_marketing_strategist_agent rdf:type :Prompt ;
     rdfs:label "Chief Marketing Strategist Prompt" ;
-    :promptContext "You are the Chief Marketing Strategist at a leading digital marketing agency, known for crafting bespoke strategies that drive success." .
+    :promptContext "You are a Chief Marketing Strategist." .
 
 :creative_content_creator_agent rdf:type :LLMAgent ;
     rdfs:label "Creative Content Creator (agent)" ;
@@ -403,4 +412,4 @@ Marketing copies for each campaign idea.""" .
 
 :prompt_creative_content_creator_agent rdf:type :Prompt ;
     rdfs:label "Creative Content Creator Prompt" ;
-    :promptContext "As a Creative Content Creator at a top-tier digital marketing agency, you excel in crafting narratives that resonate with audiences. Your expertise lies in turning marketing strategies into engaging stories and visual content that capture attention and inspire action." .
+    :promptContext "You are a Creative Content Creator." .

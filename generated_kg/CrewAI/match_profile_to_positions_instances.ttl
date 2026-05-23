@@ -12,6 +12,8 @@
 
 
 
+
+
 # Execution time: 58.64 seconds
 # Model used: gpt-5-mini
 
@@ -28,6 +30,7 @@
 #################################################################
 # Team / Crew
 #################################################################
+
 
 
 :MatchToProposalCrew rdf:type :Team ;
@@ -283,9 +286,19 @@ CV file: {path_to_cv}""" ;
 
 # Goals
 
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
 :goal_cv_reader_agent rdf:type :Goal ;
     dcterms:title "cv_reader goal" ;
     dcterms:description "Extract relevant information from the CV, such as skills, experience, and education." .
+
+:goal_matcher_agent rdf:type :Goal ;
+    dcterms:title "matcher goal" ;
+    dcterms:description "Match the CV to the job opportunities based on skills and experience." .
 
 :cv_reader_agent rdf:type :LLMAgent ;
     :agentID "cv_reader" ;
@@ -305,11 +318,7 @@ CV file: {path_to_cv}""" ;
     :configValue "True" .
 
 :prompt_cv_reader_agent rdf:type :Prompt ;
-    :promptContext "With years of experience in HR, you excel at quickly identifying key qualifications in resumes." .
-
-:goal_matcher_agent rdf:type :Goal ;
-    dcterms:title "matcher goal" ;
-    dcterms:description "Match the CV to the job opportunities based on skills and experience." .
+    :promptContext "You are a CV Reader." .
 
 :matcher_agent rdf:type :LLMAgent ;
     :agentID "matcher" ;
@@ -329,4 +338,4 @@ CV file: {path_to_cv}""" ;
     :configValue "True" .
 
 :prompt_matcher_agent rdf:type :Prompt ;
-    :promptContext "A seasoned recruiter, you specialize in finding the perfect fit between candidates and job roles." .
+    :promptContext "You are a Matcher." .

@@ -11,6 +11,8 @@
 
 
 
+
+
 # Execution time: 141.68 seconds
 # Model used: gpt-5-mini
 
@@ -28,6 +30,7 @@
 #################################################################
 
 ### Language model used by agents
+
 
 :gpt4 rdf:type :LanguageModel ;
       rdfs:label "gpt-4 (default in project runtime)" ;
@@ -596,6 +599,12 @@ qa_component_task:
 
 # Goals
 
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
 :goal_senior_idea_analyst rdf:type :Goal ;
     <http://purl.org/dc/terms/title> "Expand and validate product idea" ;
     <http://purl.org/dc/terms/description> "Understand and expand upon the essence of ideas, make sure they are great and focus on real pain points others could benefit from." .
@@ -623,7 +632,7 @@ qa_component_task:
     :agentPrompt :prompt_seniorIdeaAnalystAgent .
 
 :prompt_seniorIdeaAnalystAgent rdf:type :Prompt ;
-    :promptContext "Recognized as a thought leader, I thrive on refining concepts into campaigns that resonate with audiences." .
+    :promptContext "You are a Senior Idea Analyst." .
 
 :seniorStrategistAgent rdf:type :LLMAgent ;
     rdfs:label "Senior Communications Strategist (agent)" ;
@@ -636,7 +645,7 @@ qa_component_task:
     :agentPrompt :prompt_seniorStrategistAgent .
 
 :prompt_seniorStrategistAgent rdf:type :Prompt ;
-    :promptContext "A narrative craftsman for top-tier launches, I reveal the 'why' behind projects, aligning with visions and speaking to audiences." .
+    :promptContext "You are a Senior Communications Strategist." .
 
 :seniorReactEngineerAgent rdf:type :LLMAgent ;
     rdfs:label "Senior React Engineer (agent)" ;
@@ -649,7 +658,7 @@ qa_component_task:
     :agentPrompt :prompt_seniorReactEngineerAgent .
 
 :prompt_seniorReactEngineerAgent rdf:type :Prompt ;
-    :promptContext "A coding virtuoso and design enthusiast, expert in Tailwind, you're known for crafting beautiful websites that provide seamless user experiences." .
+    :promptContext "You are a Senior React Engineer." .
 
 :seniorContentEditorAgent rdf:type :LLMAgent ;
     rdfs:label "Senior Content Editor (agent)" ;
@@ -662,4 +671,4 @@ qa_component_task:
     :agentPrompt :prompt_seniorContentEditorAgent .
 
 :prompt_seniorContentEditorAgent rdf:type :Prompt ;
-    :promptContext "With a keen eye for detail and a passion for storytelling, you have refined content for leading brands, turning bland text into engaging stories." .
+    :promptContext "You are a Senior Content Editor." .

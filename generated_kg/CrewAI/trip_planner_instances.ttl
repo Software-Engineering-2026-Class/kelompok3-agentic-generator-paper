@@ -11,6 +11,8 @@
 
 
 
+
+
 # Execution time: 143.77 seconds
 # Model used: gpt-5-mini
 
@@ -27,6 +29,7 @@
 ################################################################################
 # Team / System representing the crew
 ################################################################################
+
 
 
 :TripPlannerCrew a :Team ;
@@ -429,6 +432,12 @@ Traveler Interests: {interests}
 
 # Goals
 
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
 :CitySelectionGoal a :Goal ;
     <http://purl.org/dc/terms/title> "Select the best city" ;
     <http://purl.org/dc/terms/description> "Select the best city based on weather patterns, seasonal events, and travel costs" .
@@ -453,7 +462,7 @@ Traveler Interests: {interests}
     :agentPrompt :prompt_CitySelectionAgent .
 
 :prompt_CitySelectionAgent a :Prompt ;
-    :promptContext "An expert in analyzing travel data to pick ideal destinations" .
+    :promptContext "You are a City Selection Expert." .
 
 :LocalExpertAgent a :LLMAgent ;
     :agentID "local_expert_agent" ;
@@ -467,7 +476,7 @@ Traveler Interests: {interests}
     :agentPrompt :prompt_LocalExpertAgent .
 
 :prompt_LocalExpertAgent a :Prompt ;
-    :promptContext "A knowledgeable local guide with extensive information about the city, it's attractions and customs" .
+    :promptContext "You are a Local Expert at this city." .
 
 :TravelConciergeAgent a :LLMAgent ;
     :agentID "travel_concierge_agent" ;
@@ -481,4 +490,4 @@ Traveler Interests: {interests}
     :agentPrompt :prompt_TravelConciergeAgent .
 
 :prompt_TravelConciergeAgent a :Prompt ;
-    :promptContext "Specialist in travel planning and logistics with decades of experience" .
+    :promptContext "You are a Amazing Travel Concierge." .

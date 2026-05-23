@@ -12,6 +12,8 @@
 
 
 
+
+
 # Execution time: 57.23 seconds
 # Model used: gpt-5-mini
 
@@ -29,6 +31,7 @@
 #################################################################
 
 ### Team / Crew
+
 
 :MetaQuestKnowledge_Crew rdf:type :Team ;
     dcterms:title "MetaQuestKnowledge Crew" ;
@@ -159,6 +162,12 @@ These runtime operations and parameters are preserved as documentation rather th
 
 # Goals
 
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
 :MetaQuest_Answering_Goal rdf:type :Goal ;
     dcterms:title "Provide the best possible answers to questions about Meta Quest" ;
     dcterms:description "Goal expressed in agents configuration to provide best answers to questions about Meta Quest." .
@@ -172,4 +181,4 @@ These runtime operations and parameters are preserved as documentation rather th
     :agentPrompt :prompt_meta_quest_expert .
 
 :prompt_meta_quest_expert rdf:type :Prompt ;
-    :promptContext "You're a seasoned expert in the world of Meta Quest. You're known for your ability to provide the best possible answers to questions about this cutting-edge technology, ensuring that your audience is well-informed and satisfied with the latest advancements in the field." .
+    :promptContext "You are a Meta Quest Expert." .

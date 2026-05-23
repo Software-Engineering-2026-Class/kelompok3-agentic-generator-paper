@@ -1,0 +1,8 @@
+create_workout_task:
+  description: |
+    Analyze the user's fitness profile and create a personalized 7-day workout plan based on their goals and available equipment.
+  expected_output: 'Completed: create_workout_task'
+create_meal_plan_task:
+  description: Calculate required macros and formulate a daily meal plan that synergizes
+    with the workout routine.
+  expected_output: 'Completed: create_meal_plan_task'

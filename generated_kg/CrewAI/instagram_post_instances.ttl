@@ -8,6 +8,8 @@
 
 
 
+
+
 # Execution time: 218.00 seconds
 # Model used: gpt-5-mini
 
@@ -23,6 +25,7 @@
 #################################################################
 # Agents (LLMAgent individuals)
 #################################################################
+
 
 
 :lm_Ollama rdf:type :LanguageModel ;
@@ -540,9 +543,31 @@ each with 1 paragraph description following the examples provided above.
 
 # Goals
 
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
 :goal_agent_ProductCompetitor rdf:type :Goal ;
     dct:title "product_competitor_agent goal" ;
     dct:description "Conduct amazing analysis of the products and competitors, providing in-depth insights to guide marketing strategies." .
+
+:goal_agent_StrategyPlanner rdf:type :Goal ;
+    dct:title "strategy_planner_agent goal" ;
+    dct:description "Synthesize amazing insights from product analysis to formulate incredible marketing strategies." .
+
+:goal_agent_CreativeContentCreator rdf:type :Goal ;
+    dct:title "creative_content_creator_agent goal" ;
+    dct:description "Develop compelling and innovative content for social media campaigns, with a focus on creating high-impact Instagram ad copies." .
+
+:goal_agent_SeniorPhotographer rdf:type :Goal ;
+    dct:title "senior_photographer_agent goal" ;
+    dct:description "Take the most amazing photographs for instagram ads that capture emotions and convey a compelling message." .
+
+:goal_agent_ChiefCreativeDirector rdf:type :Goal ;
+    dct:title "chief_creative_director_agent goal" ;
+    dct:description "Oversee the work done by your team to make sure it's the best possible and aligned with the product's goals, review, approve, ask clarifying question or delegate follow up work if necessary to make decisions." .
 
 :agent_ProductCompetitor rdf:type :LLMAgent ;
     :agentID "product_competitor_agent" ;
@@ -559,11 +584,7 @@ each with 1 paragraph description following the examples provided above.
 
 :prompt_agent_ProductCompetitor rdf:type :Prompt ;
     rdfs:label "Agent Prompt - Product Competitor Agent" ;
-    :promptContext "As the Lead Market Analyst at a premier digital marketing firm, you specialize in dissecting online business landscapes." .
-
-:goal_agent_StrategyPlanner rdf:type :Goal ;
-    dct:title "strategy_planner_agent goal" ;
-    dct:description "Synthesize amazing insights from product analysis to formulate incredible marketing strategies." .
+    :promptContext "You are a Lead Market Analyst." .
 
 :agent_StrategyPlanner rdf:type :LLMAgent ;
     :agentID "strategy_planner_agent" ;
@@ -580,11 +601,7 @@ each with 1 paragraph description following the examples provided above.
 
 :prompt_agent_StrategyPlanner rdf:type :Prompt ;
     rdfs:label "Agent Prompt - Strategy Planner Agent" ;
-    :promptContext "You are the Chief Marketing Strategist at a leading digital marketing agency known for bespoke strategies." .
-
-:goal_agent_CreativeContentCreator rdf:type :Goal ;
-    dct:title "creative_content_creator_agent goal" ;
-    dct:description "Develop compelling and innovative content for social media campaigns, with a focus on creating high-impact Instagram ad copies." .
+    :promptContext "You are a Chief Marketing Strategist." .
 
 :agent_CreativeContentCreator rdf:type :LLMAgent ;
     :agentID "creative_content_creator_agent" ;
@@ -601,11 +618,7 @@ each with 1 paragraph description following the examples provided above.
 
 :prompt_agent_CreativeContentCreator rdf:type :Prompt ;
     rdfs:label "Agent Prompt - Creative Content Creator Agent" ;
-    :promptContext "As a Creative Content Creator at a top-tier agency, you craft narratives that resonate with social audiences." .
-
-:goal_agent_SeniorPhotographer rdf:type :Goal ;
-    dct:title "senior_photographer_agent goal" ;
-    dct:description "Take the most amazing photographs for instagram ads that capture emotions and convey a compelling message." .
+    :promptContext "You are a Creative Content Creator." .
 
 :agent_SeniorPhotographer rdf:type :LLMAgent ;
     :agentID "senior_photographer_agent" ;
@@ -622,11 +635,7 @@ each with 1 paragraph description following the examples provided above.
 
 :prompt_agent_SeniorPhotographer rdf:type :Prompt ;
     rdfs:label "Agent Prompt - Senior Photographer" ;
-    :promptContext "As a Senior Photographer at a leading digital marketing agency, you are an expert at taking amazing photographs that inspire and engage." .
-
-:goal_agent_ChiefCreativeDirector rdf:type :Goal ;
-    dct:title "chief_creative_director_agent goal" ;
-    dct:description "Oversee the work done by your team to make sure it's the best possible and aligned with the product's goals, review, approve, ask clarifying question or delegate follow up work if necessary to make decisions." .
+    :promptContext "You are a Senior Photographer." .
 
 :agent_ChiefCreativeDirector rdf:type :LLMAgent ;
     :agentID "chief_creative_director_agent" ;
@@ -643,4 +652,4 @@ each with 1 paragraph description following the examples provided above.
 
 :prompt_agent_ChiefCreativeDirector rdf:type :Prompt ;
     rdfs:label "Agent Prompt - Chief Creative Director" ;
-    :promptContext "Chief Content Officer specialized in product branding." .
+    :promptContext "You are a Chief Creative Director." .

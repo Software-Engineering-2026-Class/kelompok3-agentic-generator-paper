@@ -11,6 +11,8 @@
 
 
 
+
+
 # Execution time: 130.60 seconds
 # Model used: gpt-5-mini
 
@@ -26,6 +28,7 @@
 ################################################################################
 # Team (Crew)
 ################################################################################
+
 
 
 :SurpriseTravelCrew rdf:type :Team ;
@@ -319,6 +322,12 @@ This resource is the output_json schema referenced by itinerary_compilation_task
 
 # Goals
 
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
 :goal_personalized_activity_planner rdf:type :Goal ;
     dcterms:description "Research and find cool things to do at the destination, including activities and events that match the traveler's interests and age group" .
 
@@ -346,7 +355,7 @@ This resource is the output_json schema referenced by itinerary_compilation_task
     :configValue "True" .
 
 :prompt_agent_personalized_activity_planner rdf:type :Prompt ;
-    :promptContext "You are skilled at creating personalized itineraries that cater to the specific preferences and demographics of travelers." .
+    :promptContext "You are a Activity Planner." .
 
 :agent_restaurant_scout rdf:type :LLMAgent ;
     rdfs:label "restaurant_scout" ;
@@ -366,7 +375,7 @@ This resource is the output_json schema referenced by itinerary_compilation_task
     :configValue "True" .
 
 :prompt_agent_restaurant_scout rdf:type :Prompt ;
-    :promptContext "As a food lover, you know the best spots in town for a delightful culinary experience. You also have a knack for finding picturesque and entertaining locations." .
+    :promptContext "You are a Restaurant Scout." .
 
 :agent_itinerary_compiler rdf:type :LLMAgent ;
     rdfs:label "itinerary_compiler" ;
@@ -386,4 +395,4 @@ This resource is the output_json schema referenced by itinerary_compilation_task
     :configValue "True" .
 
 :prompt_agent_itinerary_compiler rdf:type :Prompt ;
-    :promptContext "With an eye for detail, you organize all the information into a coherent and enjoyable travel plan." .
+    :promptContext "You are a Itinerary Compiler." .

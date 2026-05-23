@@ -11,6 +11,8 @@
 
 
 
+
+
 # Execution time: 90.72 seconds
 # Model used: gpt-5-mini
 
@@ -25,6 +27,7 @@
 #################################################################
 # Team / Workflow pattern for the Meeting Preparation solution
 #################################################################
+
 
 
 :MeetingPrepCrew rdf:type :Team ;
@@ -263,6 +266,12 @@ strategic recommendations.""" .
 
 # Goals
 
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
 :Goal_Researcher rdf:type :Goal ;
     <http://purl.org/dc/terms/description> "Conduct thorough research on people and companies involved in the meeting" .
 
@@ -285,9 +294,7 @@ strategic recommendations.""" .
 
 :prompt_ResearcherAgent rdf:type :Prompt ;
     rdfs:label "Research Specialist Backstory Prompt" ;
-    :promptContext """As a Research Specialist, your mission is to uncover detailed information
-about the individuals and entities participating in the meeting. Your insights
-will lay the groundwork for strategic meeting preparation.""" .
+    :promptContext "You are a Research Specialist." .
 
 :IndustryAnalystAgent rdf:type :LLMAgent ;
     rdfs:label "Industry Analyst (agent)" ;
@@ -299,9 +306,7 @@ will lay the groundwork for strategic meeting preparation.""" .
 
 :prompt_IndustryAnalystAgent rdf:type :Prompt ;
     rdfs:label "Industry Analyst Backstory Prompt" ;
-    :promptContext """As an Industry Analyst, your analysis will identify key trends,
-challenges facing the industry, and potential opportunities that
-could be leveraged during the meeting for strategic advantage.""" .
+    :promptContext "You are a Industry Analyst." .
 
 :MeetingStrategyAgent rdf:type :LLMAgent ;
     rdfs:label "Meeting Strategy Advisor (agent)" ;
@@ -313,9 +318,7 @@ could be leveraged during the meeting for strategic advantage.""" .
 
 :prompt_MeetingStrategyAgent rdf:type :Prompt ;
     rdfs:label "Meeting Strategy Advisor Backstory Prompt" ;
-    :promptContext """As a Strategy Advisor, your expertise will guide the development of
-talking points, insightful questions, and strategic angles
-to ensure the meeting's objectives are achieved.""" .
+    :promptContext "You are a Meeting Strategy Advisor." .
 
 :BriefingCoordinatorAgent rdf:type :LLMAgent ;
     rdfs:label "Briefing Coordinator (agent)" ;
@@ -327,5 +330,4 @@ to ensure the meeting's objectives are achieved.""" .
 
 :prompt_BriefingCoordinatorAgent rdf:type :Prompt ;
     rdfs:label "Briefing Coordinator Backstory Prompt" ;
-    :promptContext """As the Briefing Coordinator, your role is to consolidate the research,
-analysis, and strategic insights into a concise briefing document.""" .
+    :promptContext "You are a Briefing Coordinator." .

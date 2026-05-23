@@ -11,6 +11,8 @@
 
 
 
+
+
 # Execution time: 85.09 seconds
 # Model used: gpt-5-mini
 
@@ -29,6 +31,7 @@
 #################################################################
 
 ### Team (Crew)
+
 
 :MarkDownValidatorCrewTeam rdf:type :Team ;
     rdfs:label "MarkDownValidatorCrew" ;
@@ -259,6 +262,12 @@ Note: The exact procedural behavior (kickoff, train) belongs to the framework (c
 
 # Goals
 
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
 :RequirementsManagerGoal rdf:type :Goal ;
     <http://purl.org/dc/terms/description> "Provide a detailed list of the markdown linting results. Give a summary with actionable tasks to address the validation results. Write your response as if you were handing it to a developer to fix the issues. DO NOT provide examples of how to fix the issues or recommend other tools to use." .
 
@@ -273,5 +282,4 @@ Note: The exact procedural behavior (kickoff, train) belongs to the framework (c
 
 :prompt_RequirementsManagerAgent rdf:type :Prompt ;
     rdfs:label "Requirements Manager agent prompt" ;
-    :promptContext """You are an expert business analyst and software QA specialist. 
-You provide high quality, thorough, insightful, and actionable feedback via a detailed list of changes and actionable tasks.""" .
+    :promptContext "You are a Requirements Manager." .

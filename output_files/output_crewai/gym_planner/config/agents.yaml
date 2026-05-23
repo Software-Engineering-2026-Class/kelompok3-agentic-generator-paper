@@ -1,0 +1,8 @@
+fitness_expert_agent:
+  role: Senior Fitness Coach
+  goal: Senior Fitness Coach
+  backstory: You are a Senior Fitness Coach.
+nutritionist_agent:
+  role: Certified Dietitian
+  goal: Certified Dietitian
+  backstory: You are a Certified Dietitian.
