@@ -172,9 +172,20 @@ def generate_project(project: LangGraphProject, output_dir: str) -> str:
         
     template = env.get_template(pattern)
     
+    agents = project.agents
+    if not agents:
+        from .models import AgentModel
+        agents = [AgentModel(
+            id="default-agent",
+            var_name="agent",
+            role="assistant",
+            prompt="You are a helpful assistant.",
+            model_name="gpt-4o-mini"
+        )]
+
     output_code = template.render(
         tools=project.tools,
-        agents=project.agents,
+        agents=agents,
         nodes=[n for n in project.nodes if not n.id.endswith("Graph")] or project.nodes,
         edges=project.edges
     )

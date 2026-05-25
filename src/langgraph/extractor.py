@@ -17,11 +17,27 @@ def extract_langgraph_project(kg_path: str) -> LangGraphProject:
     
     project = LangGraphProject()
     
+    # Track seen variable names to avoid collisions
+    seen_tool_vars = set()
+    seen_agent_vars = set()
+    
+    def make_unique(base_name: str, seen_set: set) -> str:
+        s = to_snake_case(base_name)
+        if not s:
+            s = "unnamed"
+        candidate = s
+        counter = 1
+        while candidate in seen_set:
+            candidate = f"{s}_{counter}"
+            counter += 1
+        seen_set.add(candidate)
+        return candidate
+    
     # 1. Extract Tools
     for tool_uri in g.subjects(rdflib.RDF.type, agento.Tool):
         title = str(g.value(tool_uri, dct.title) or "Unnamed Tool")
         desc = str(g.value(tool_uri, dct.description) or "A tool")
-        var_name = to_snake_case(title)
+        var_name = make_unique(title, seen_tool_vars)
         project.tools.append(ToolModel(
             id=str(tool_uri),
             var_name=var_name,
@@ -34,14 +50,17 @@ def extract_langgraph_project(kg_path: str) -> LangGraphProject:
     for agent_uri in agent_nodes:
         role = str(g.value(agent_uri, agento.agentRole) or "agent")
         prompt = str(g.value(agent_uri, agento.agentPrompt) or "You are a helpful assistant.")
-        var_name = to_snake_case(str(g.value(agent_uri, dct.title) or "Agent"))
+        agent_title = str(g.value(agent_uri, dct.title) or "Agent")
+        var_name = make_unique(agent_title, seen_agent_vars)
         
         # Determine model
         model_name = "gpt-4o-mini"
         for config_uri in g.objects(agent_uri, agento.hasAgentConfig):
-            val = g.value(config_uri, agento.configValue)
-            if val:
-                model_name = str(val)
+            config_key = g.value(config_uri, agento.configKey)
+            if config_key and str(config_key) == "model":
+                val = g.value(config_uri, agento.configValue)
+                if val:
+                    model_name = str(val)
         
         project.agents.append(AgentModel(
             id=str(agent_uri),
