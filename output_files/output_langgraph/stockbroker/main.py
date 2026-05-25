@@ -10,52 +10,32 @@ from langchain_core.tools import tool
 
 @tool
 def unnamed__tool(query: str) -> str:
-    """A tool"""
+    """A tool to get the stock price of a company. Invoked with argument { ticker: string }. When called, the agent fetches one-day and thirty-day price collections from https://api.financialdatasets.ai/prices with specified query parameters (interval, interval_multiplier, start_date, end_date, limit). The thirty-day retrieval may follow next_page_url to aggregate pages."""
     return f"Execution of unnamed__tool on {query}"
 
 @tool
 def unnamed__tool_1(query: str) -> str:
-    """A tool"""
+    """A tool to get the user's portfolio details. Only called when the user explicitly requests portfolio details. Invoked with argument { get_portfolio: true }."""
     return f"Execution of unnamed__tool_1 on {query}"
 
 @tool
 def unnamed__tool_2(query: str) -> str:
-    """A tool"""
+    """A tool to buy a stock. Invoked with arguments { ticker: string, quantity: number }. When called, the agent requests a price snapshot from https://api.financialdatasets.ai/prices/snapshot and includes the snapshot and quantity in the UI output."""
     return f"Execution of unnamed__tool_2 on {query}"
 
-@tool
-def unnamed__tool_3(query: str) -> str:
-    """A tool"""
-    return f"Execution of unnamed__tool_3 on {query}"
 
-@tool
-def unnamed__tool_4(query: str) -> str:
-    """A tool"""
-    return f"Execution of unnamed__tool_4 on {query}"
-
-@tool
-def unnamed__tool_5(query: str) -> str:
-    """A tool"""
-    return f"Execution of unnamed__tool_5 on {query}"
-
-@tool
-def unnamed__tool_6(query: str) -> str:
-    """A tool"""
-    return f"Execution of unnamed__tool_6 on {query}"
-
-
-tools_list = [unnamed__tool, unnamed__tool_1, unnamed__tool_2, unnamed__tool_3, unnamed__tool_4, unnamed__tool_5, unnamed__tool_6]
+tools_list = [unnamed__tool, unnamed__tool_1, unnamed__tool_2]
 
 # 2. Define State
 class AgentState(TypedDict):
     messages: Annotated[list, add_messages]
 
 # 3. Define the main Agent Node
-llm = ChatOpenAI(model="anthropic/claude-3-7-sonnet-latest")
+llm = ChatOpenAI(model="gpt-4o-mini")
 llm_with_tools = llm.bind_tools(tools_list)
 
 def agent_node(state: AgentState):
-    sys_msg = SystemMessage(content="""You are a helpful assistant.""")
+    sys_msg = SystemMessage(content="""http://www.w3id.org/agentic-ai/onto#StockbrokerSystemPrompt""")
     messages = [sys_msg] + state['messages']
     response = llm_with_tools.invoke(messages)
     return {"messages": [response]}

@@ -14,19 +14,19 @@ def unnamed__tool(query: str) -> str:
     return f"Execution of unnamed__tool on {query}"
 
 @tool
-def unnamed__tool(query: str) -> str:
+def unnamed__tool_1(query: str) -> str:
     """A tool"""
-    return f"Execution of unnamed__tool on {query}"
+    return f"Execution of unnamed__tool_1 on {query}"
 
 
-tools_list = [unnamed__tool, unnamed__tool]
+tools_list = [unnamed__tool, unnamed__tool_1]
 
 # 2. Define State
 class AgentState(TypedDict):
     messages: Annotated[list, add_messages]
 
 # 3. Define the main Agent Node
-llm = ChatOpenAI(model="runtime boolean; when true the executor will loop back to the planner after proposing a change (allowing continued automated edits). When false, the workflow ends after the first success or when the success message is generated.")
+llm = ChatOpenAI(model="gpt-4o-mini")
 llm_with_tools = llm.bind_tools(tools_list)
 
 def agent_node(state: AgentState):

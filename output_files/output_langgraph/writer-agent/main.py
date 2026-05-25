@@ -9,52 +9,22 @@ from langchain_core.tools import tool
 # 1. Define Tools
 
 @tool
-def unnamed__tool(query: str) -> str:
-    """A tool"""
-    return f"Execution of unnamed__tool on {query}"
-
-@tool
-def unnamed__tool_1(query: str) -> str:
-    """A tool"""
-    return f"Execution of unnamed__tool_1 on {query}"
-
-@tool
-def unnamed__tool_2(query: str) -> str:
-    """A tool"""
-    return f"Execution of unnamed__tool_2 on {query}"
-
-@tool
-def unnamed__tool_3(query: str) -> str:
-    """A tool"""
-    return f"Execution of unnamed__tool_3 on {query}"
-
-@tool
-def unnamed__tool_4(query: str) -> str:
-    """A tool"""
-    return f"Execution of unnamed__tool_4 on {query}"
-
-@tool
-def unnamed__tool_5(query: str) -> str:
-    """A tool"""
-    return f"Execution of unnamed__tool_5 on {query}"
-
-@tool
-def unnamed__tool_6(query: str) -> str:
-    """A tool"""
-    return f"Execution of unnamed__tool_6 on {query}"
+def draft_text_document(query: str) -> str:
+    """Prepare a text document for the user with a short title and short description for browsing purposes. Can be also used when creating a new version of the document."""
+    return f"Execution of draft_text_document on {query}"
 
 
-tools_list = [unnamed__tool, unnamed__tool_1, unnamed__tool_2, unnamed__tool_3, unnamed__tool_4, unnamed__tool_5, unnamed__tool_6]
+tools_list = [draft_text_document]
 
 # 2. Define State
 class AgentState(TypedDict):
     messages: Annotated[list, add_messages]
 
 # 3. Define the main Agent Node
-llm = ChatOpenAI(model="anthropic/claude-3-7-sonnet-latest")
+llm = ChatOpenAI(model="gpt-4o-mini")
 llm_with_tools = llm.bind_tools(tools_list)
 
-def agent_node(state: AgentState):
+def writer__annotation__agent_node(state: AgentState):
     sys_msg = SystemMessage(content="""You are a helpful assistant.""")
     messages = [sys_msg] + state['messages']
     response = llm_with_tools.invoke(messages)
@@ -62,7 +32,7 @@ def agent_node(state: AgentState):
 
 # 4. Build Graph
 workflow = StateGraph(AgentState)
-workflow.add_node("agent", agent_node)
+workflow.add_node("agent", writer__annotation__agent_node)
 workflow.add_node("tools", ToolNode(tools_list))
 
 workflow.add_edge(START, "agent")
