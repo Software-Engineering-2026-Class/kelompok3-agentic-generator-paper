@@ -87,19 +87,19 @@
     :promptInstruction "Instruction: Capitalize the first letter of each word in the input string. Implementation details: split the input on space characters; for each word, transform the first character to uppercase and keep the remaining characters unchanged; rejoin with single spaces. Input: a string representing a sentence. Output: a string where each word's first character is uppercase. Example: 'hello world' -> 'Hello World'." ;
     :promptInputData "string input (sentence-like)" ;
     :promptOutputIndicator "string output (sentence with each word capitalized)" ;
-    :promptContext "Utility for normalizing presentation of multi-word strings."
+    :promptContext "Utility for normalizing presentation of multi-word strings." .
 
 :CapitalizePrompt rdf:type :Prompt ;
     :promptInstruction "Instruction: Capitalize the first character of the input string. Implementation details: if the string is non-empty, return Uppercase(firstChar) + remainder of string. Input: a string (often a single word). Output: the string with its first letter capitalized. Example: 'apple' -> 'Apple'." ;
     :promptInputData "string input (single token or general string)" ;
     :promptOutputIndicator "string output (first letter capitalized)" ;
-    :promptContext "Utility to ensure first-character capitalization."
+    :promptContext "Utility to ensure first-character capitalization." .
 
 :FormatMessagesPrompt rdf:type :Prompt ;
     :promptInstruction "Instruction: Given an ordered array of messages (BaseMessage[]), produce a single serialized string. For each message at index i: - obtain role via message.getType(); - obtain content: if content is a string, use it; otherwise convert content to a JSON string representation; - emit a block: '<{role} index=\"{i}\'>\\n{contentString}\\n</{role}>' ; concatenate blocks with newlines between them. Input: an array of BaseMessage-like objects. Output: a single formatted string used for logging, transmission, or downstream processing." ;
     :promptInputData "BaseMessage[] (each element exposes getType() and a content field which may be string or serializable object)" ;
     :promptOutputIndicator "string (XML-like wrapped message blocks)" ;
-    :promptContext "Serializer for message arrays to text representation; preserves role and index."
+    :promptContext "Serializer for message arrays to text representation; preserves role and index." .
 
 #################################################################
 # Tools (implementations; described but not including source code)
