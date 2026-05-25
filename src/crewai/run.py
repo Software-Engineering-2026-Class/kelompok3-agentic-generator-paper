@@ -17,6 +17,8 @@ Usage:
 import os
 import sys
 import shutil
+import json
+from datetime import datetime, timezone
 
 # Support both `python -m` and direct script execution
 try:
@@ -45,14 +47,36 @@ def process_single(kg_path: str, output_dir: str) -> str:
     project = extract_crew_project(kg_path)
 
     # Layer 3: File generation (YAML + Jinja2)
-    return generate_project(project, output_dir)
+    res_dir = generate_project(project, output_dir)
+    
+    # Generate Manifest
+    generated_files = []
+    for root, _, files in os.walk(output_dir):
+        for file in files:
+            if file == "manifest.json":
+                continue
+            abs_path = os.path.join(root, file)
+            rel_path = os.path.relpath(abs_path, output_dir)
+            generated_files.append(rel_path.replace("\\", "/"))
+            
+    manifest = {
+        "framework": "crewai",
+        "pattern": os.path.basename(output_dir),
+        "generated_files": sorted(generated_files),
+        "timestamp": datetime.now(timezone.utc).isoformat()
+    }
+    
+    with open(os.path.join(output_dir, "manifest.json"), "w", encoding="utf-8") as f:
+        json.dump(manifest, f, indent=2)
+        
+    return res_dir
 
 
 def main():
     project_root = os.path.abspath(
         os.path.join(os.path.dirname(__file__), "..", "..")
     )
-    output_base = os.path.join(project_root, "output_files", "output_crewai")
+    output_base = os.path.join(project_root, "output_files", "crewai")
 
     # ── Handle single-file mode ──
     if len(sys.argv) > 1 and sys.argv[1].endswith(".ttl"):

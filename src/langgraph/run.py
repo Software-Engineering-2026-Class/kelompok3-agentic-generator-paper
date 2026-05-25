@@ -1,5 +1,7 @@
 import os
 import sys
+import json
+from datetime import datetime, timezone
 
 try:
     from .extractor import extract_langgraph_project
@@ -27,6 +29,27 @@ def process_single(kg_path: str, output_dir: str) -> str:
     print(f"Generating Python code into {output_dir}...")
     generate_project(project, output_dir)
     print("Done!")
+    
+    # Generate Manifest
+    generated_files = []
+    for root, _, files in os.walk(output_dir):
+        for file in files:
+            if file == "manifest.json":
+                continue
+            abs_path = os.path.join(root, file)
+            rel_path = os.path.relpath(abs_path, output_dir)
+            generated_files.append(rel_path.replace("\\", "/"))
+            
+    manifest = {
+        "framework": "langgraph",
+        "pattern": os.path.basename(output_dir),
+        "generated_files": sorted(generated_files),
+        "timestamp": datetime.now(timezone.utc).isoformat()
+    }
+    
+    with open(os.path.join(output_dir, "manifest.json"), "w", encoding="utf-8") as f:
+        json.dump(manifest, f, indent=2)
+        
     return output_dir
 
 if __name__ == "__main__":
@@ -36,6 +59,6 @@ if __name__ == "__main__":
         kg_path = os.path.join("generated_kg", "LangGraph", "chat-agent_instances.ttl")
         
     raw_name = os.path.basename(kg_path).replace(".ttl", "").replace("_instances", "")
-    out_dir = os.path.join("output_files", "output_langgraph", raw_name)
+    out_dir = os.path.join("output_files", "langgraph", raw_name)
     
     process_single(kg_path, out_dir)

@@ -11,3 +11,7 @@ output/*.py
 # IDE settings
 .vscode/
 .idea/
+
+help.md
+ARCHITECTURE_MAP.md
+REPOSITORY_GUIDE.md
