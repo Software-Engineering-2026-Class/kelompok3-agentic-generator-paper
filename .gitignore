@@ -15,3 +15,4 @@ output/*.py
 help.md
 ARCHITECTURE_MAP.md
 REPOSITORY_GUIDE.md
+docs/quality_findings.md
