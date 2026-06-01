@@ -43,6 +43,7 @@ These conditional functions are documented on step individuals below.
 :StartStep_TripPlanner a :StartStep ;
     <http://purl.org/dc/terms/title> "Start" ;
     <http://www.w3id.org/agentic-ai/onto#stepOrder> 0 ;
+    :hasRouteCondition :TripPlannerRouteStartCondition ;
     <http://purl.org/dc/terms/description> """
 Start of the workflow. Conditional route function (routeStart):
 - If state.tripDetails is undefined -> go to 'extraction' step.
@@ -55,6 +56,7 @@ This conditional branching is part of the workflow builder logic; the ontology c
     <http://purl.org/dc/terms/title> "extraction" ;
     <http://www.w3id.org/agentic-ai/onto#stepOrder> 1 ;
     :hasAssociatedTask :Task_Extraction ;
+    :hasRouteCondition :TripPlannerRouteAfterExtractionCondition ;
     <http://purl.org/dc/terms/description> """
 Extraction step: calls an extraction tool to extract TripDetails from the conversation using a tool schema. After extraction:
 - If tripDetails remains undefined (missing required 'location'), route to END to request clarification.
@@ -66,6 +68,7 @@ Extraction step: calls an extraction tool to extract TripDetails from the conver
     <http://purl.org/dc/terms/title> "classify" ;
     <http://www.w3id.org/agentic-ai/onto#stepOrder> 2 ;
     :hasAssociatedTask :Task_Classify ;
+    :hasRouteCondition :TripPlannerRouteAfterClassifyingCondition ;
     <http://purl.org/dc/terms/description> """
 Classify step: uses a classification tool to check whether the tripDetails remain relevant to the user's latest message.
 - If classification indicates isRelevant == false, the agent clears tripDetails and routes to 'extraction'.
@@ -279,6 +282,21 @@ Produces: A restaurants list resource used to populate UI.
     :configKey "schema" ;
     :configValue "{}" ;
     <http://purl.org/dc/terms/description> "List-restaurants tool does not require structured input in the implementation." .
+
+:TripPlannerRouteStartCondition a :Config ;
+    :configKey "routeCondition" ;
+    :configValue "routeStart: if state.tripDetails is undefined then extraction, otherwise classify" ;
+    <http://purl.org/dc/terms/description> "Explicit KG instance for the LangGraph routeStart(state) decision." .
+
+:TripPlannerRouteAfterExtractionCondition a :Config ;
+    :configKey "routeCondition" ;
+    :configValue "routeAfterExtraction: if tripDetails remains undefined then END, otherwise callTools" ;
+    <http://purl.org/dc/terms/description> "Explicit KG instance for the LangGraph branch after extraction." .
+
+:TripPlannerRouteAfterClassifyingCondition a :Config ;
+    :configKey "routeCondition" ;
+    :configValue "routeAfterClassifying: if tripDetails remains relevant then callTools, otherwise extraction" ;
+    <http://purl.org/dc/terms/description> "Explicit KG instance for the LangGraph branch after classify." .
 
 #################################################################
 # Prompts (preserve full prompt text where available)

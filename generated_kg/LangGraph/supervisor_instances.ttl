@@ -231,6 +231,7 @@
 :RouterStep rdf:type :StartStep ;
     rdfs:label "Router Step" ;
     :hasAssociatedTask :RouterTask ;
+    :hasRouteCondition :RouterRouteConditionConfig ;
     rdfs:comment "Analyzes the most recent user message (with conversation context) and selects the next tool route." ;
     :nextStep :StockbrokerStep , :TripPlannerStep , :OpenCodeStep , :OrderPizzaStep , :GeneralInputStep , :WriterAgentStep .
 
@@ -340,6 +341,11 @@ The router receives conversation history and must choose a route based on the mo
     :promptInputData """Conversation history (all messages except the last) and the most recent message; the router should prefer specific tools when user intent matches a tool description and otherwise choose 'generalInput'. """ ;
     :promptOutputIndicator """A tool call result indicating selected route, e.g., { "route": "stockbroker" }.""" ;
     rdfs:comment "Prompt used by the router node; contains the system instruction and schema description used for tool selection." .
+
+:RouterRouteConditionConfig rdf:type :Config ;
+    :configKey "routeCondition" ;
+    :configValue "route: stockbroker | tripPlanner | openCode | orderPizza | generalInput | writerAgent; choose the branch that best matches the latest user message." ;
+    rdfs:comment "Explicit KG instance for the conditional routing rule used by the router step in the StateGraph." .
 
 # General Input system prompt
 :GeneralInputPrompt rdf:type :Prompt ;

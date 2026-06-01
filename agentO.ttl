@@ -275,6 +275,22 @@
                  rdfs:label "has workflow step" .
 
 
+###  http://www.w3id.org/agentic-ai/onto#hasRouteCondition
+:hasRouteCondition rdf:type owl:ObjectProperty ;
+                   rdfs:domain :WorkflowStep ;
+                   rdfs:range :Config ;
+                   rdfs:comment "Binds a workflow step to a configuration that captures a conditional routing rule or branch condition." ;
+                   rdfs:label "has route condition" .
+
+
+###  http://www.w3id.org/agentic-ai/onto#hasStateAnnotation
+:hasStateAnnotation rdf:type owl:ObjectProperty ;
+                    rdfs:domain :WorkflowPattern ;
+                    rdfs:range :KnowledgeBase ;
+                    rdfs:comment "Links a workflow pattern to the state annotation or state schema used by the underlying graph." ;
+                    rdfs:label "has state annotation" .
+
+
 ###  http://www.w3id.org/agentic-ai/onto#humanParticipatedIn
 :humanParticipatedIn rdf:type owl:ObjectProperty ;
                      rdfs:subPropertyOf <http://w3id.org/beam/core#participatedIn> ;

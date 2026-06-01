@@ -71,6 +71,7 @@
 :ChatAgentStateGraph rdf:type :WorkflowPattern ;
     dct:title "Chat Agent State Graph" ;
     dct:description "Represents the StateGraph with a single 'chat' node. The START edge points to this node; modeled here by making the step a StartStep and setting stepOrder=1." ;
+    :hasStateAnnotation :MessagesAnnotationKB ;
     :hasWorkflowStep :ChatStep ;
     .
 
