@@ -1,4 +1,4 @@
-# Agentic AI Framework Generator 🚀
+# Agentic AI Framework Generator
 
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -9,7 +9,7 @@ A semantic-web-driven code generator that bridges the gap between formal ontolog
 
 ---
 
-## 👥 Members (Kelompok 3 - Rekayasa Perangkat Lunak 2026)
+## Members (Kelompok 3 - Metode Rekayasa Perangkat Lunak 2026)
 
 | Name | Student ID | GitHub |
 |---|---|---|
@@ -20,30 +20,7 @@ A semantic-web-driven code generator that bridges the gap between formal ontolog
 
 ---
 
-
-## Table of Contents
-
-- [Project Overview](#-project-overview)
-- [Key Features](#-key-features)
-- [System Architecture](#-system-architecture)
-- [Workspace Structure](#-workspace-structure)
-- [Tech Stack](#-tech-stack)
-- [Prerequisites](#-prerequisites)
-- [Installation Guide](#-installation-guide)
-- [Quick Start with Docker](#-quick-start-with-docker)
-- [Usage Documentation](#-usage-documentation)
-  - [Forward Engineering — KG to Code](#1-forward-engineering--kg-to-code)
-  - [Quality Assurance & Evaluation](#2-quality-assurance--evaluation-offline)
-  - [Reverse Engineering — Code to KG](#3-reverse-engineering--code-to-kg)
-- [Generated Output Structure](#-generated-output-structure)
-- [Available Scripts Reference](#-available-scripts-reference)
-- [Project Links](#-project-links)
-- [Team Members](#-members-kelompok-3---rekayasa-perangkat-lunak-2026)
-- [License](#-license)
-
----
-
-## 📋 Project Overview
+## Project Overview
 
 **AgentO** is a knowledge-graph-driven code generator that automatically transforms formal ontology definitions into production-ready multi-agent Python applications. It reads **RDF/Turtle Knowledge Graphs** built with the [Agentic AI Ontology (AgentO)](https://w3id.org/agentic-ai/onto) and generates complete, executable codebases for popular agentic AI frameworks.
 
@@ -83,7 +60,7 @@ AgentO solves this by providing a **single source of truth** — a Knowledge Gra
 
 ---
 
-## 🌟 Key Features
+## Key Features
 
 | Feature | Description |
 |---|---|
@@ -108,7 +85,7 @@ AgentO solves this by providing a **single source of truth** — a Knowledge Gra
 
 ---
 
-## 🏗 System Architecture
+## System Architecture
 
 ```mermaid
 graph LR
@@ -135,68 +112,68 @@ graph LR
 
 ---
 
-## 📁 Workspace Structure
+## Workspace Structure
 
 ```
 kelompok3-agentic-generator-paper/
 │
-├── src/                            # Core generator engine
+├── src/                            
 │   ├── crewai/                     #   CrewAI code generation module
-│   │   ├── extractor.py            #     Layer 1: SPARQL queries & RDF parsing
-│   │   ├── models.py               #     Layer 2: Pydantic IR (CrewProject, AgentModel, etc.)
-│   │   ├── generator.py            #     Layer 3: YAML builder + Jinja2 renderer
-│   │   ├── run.py                  #     CLI runner (batch/single mode)
-│   │   └── templates/              #     Jinja2 templates
-│   │       ├── crew.py.j2          #       Template for crew.py
-│   │       └── main.py.j2          #       Template for main.py
+│   │   ├── extractor.py            
+│   │   ├── models.py               
+│   │   ├── generator.py            
+│   │   ├── run.py                  
+│   │   └── templates/              
+│   │       ├── crew.py.j2          
+│   │       └── main.py.j2          
 │   └── langgraph/                  #   LangGraph code generation module
-│       ├── extractor.py            #     Layer 1: SPARQL extraction
-│       ├── models.py               #     Layer 2: Pydantic IR (LangGraphProject)
-│       ├── generator.py            #     Layer 3: Pattern-based code builder
-│       └── run.py                  #     CLI runner
+│       ├── extractor.py            
+│       ├── models.py               
+│       ├── generator.py            
+│       └── run.py                  
 │
-├── scripts/                        # Utility & validation scripts
-│   ├── evaluate_quality.py         #   3-stage offline quality evaluation (Issue #07)
-│   ├── generate_statistics.py      #   LOC counting & syntax validation
-│   ├── validate_langgraph.py       #   Mock runtime execution testing
-│   ├── normalize_kg.py             #   Turtle file cleanup & standardization
-│   └── add_kickoff_inputs.py       #   Add input parameter bundles to TTL files
+├── scripts/                        
+│   ├── evaluate_quality.py         
+│   ├── generate_statistics.py      
+│   ├── validate_langgraph.py       
+│   ├── normalize_kg.py             
+│   └── add_kickoff_inputs.py       
 │
-├── Script/                         # Reverse engineering module
-│   ├── run_prompt.py               #   LLM-powered code-to-KG converter
-│   ├── analysis.prompt.md          #   Prompt template for ontology population
-│   └── run_all.sh                  #   Batch processing shell script
+├── Script/                         
+│   ├── run_prompt.py               
+│   ├── analysis.prompt.md          
+│   └── run_all.sh                  
 │
-├── generated_kg/                   # Input dataset — Knowledge Graph instances
-│   ├── CrewAI/                     #   17 CrewAI scenario TTL files
-│   ├── LangGraph/                  #   9 LangGraph scenario TTL files
-│   ├── AutoGen/                    #   6 AutoGen scenario TTL files
-│   └── Mastra AI/                  #   35 Mastra AI scenario TTL files
+├── generated_kg/                   
+│   ├── CrewAI/                     
+│   ├── LangGraph/                  
+│   ├── AutoGen/                    
+│   └── Mastra AI/                  
 │
-├── output_files/                   # Generated code output (created at runtime)
-│   ├── crewai/                     #   17 CrewAI project directories
-│   └── langgraph/                  #   9 LangGraph project directories
+├── output_files/                   
+│   ├── crewai/                     
+│   └── langgraph/                  
 │
-├── docs/                           # Technical reports & analysis
-│   ├── quality_report.md           #   Quality evaluation scores
-│   ├── quality_findings.md         #   Root cause analysis of generator bugs
-│   ├── summary_statistics.md       #   Code metrics & LOC statistics
-│   └── validation_results.md       #   LangGraph mock execution results
+├── docs/                           
+│   ├── quality_report.md           
+│   ├── quality_findings.md         
+│   ├── summary_statistics.md       
+│   └── validation_results.md       
 │
-├── paper/                          # Research paper artifacts
-│   ├── K-CAP_2025_paper_25.pdf     #   Published conference paper
-│   └── paper-latest.pdf            #   Latest version of the paper
+├── paper/                          
+│   ├── K-CAP_2025_paper_25.pdf     
+│   └── paper-latest.pdf            
 │
-├── agentO.ttl                      # Base ontology schema definition
-├── pyproject.toml                  # Python project configuration (uv/hatch)
-├── requirements.txt                # Dependency list (pip)
-├── LICENSE                         # MIT License
-└── README.md                       # This file
+├── agentO.ttl                      
+├── pyproject.toml                  
+├── requirements.txt                
+├── LICENSE                         
+└── README.md                       
 ```
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 | Category | Technology | Purpose |
 |---|---|---|
@@ -214,7 +191,7 @@ kelompok3-agentic-generator-paper/
 
 ---
 
-## ✅ Prerequisites
+## Prerequisites
 
 Before you begin, ensure you have the following installed:
 
@@ -229,7 +206,7 @@ Before you begin, ensure you have the following installed:
 
 ---
 
-## 🚀 Installation Guide
+## Installation Guide
 
 ### Step 1 — Clone the Repository
 
@@ -282,7 +259,7 @@ echo "OPENAI_API_KEY=sk-your-key-here" > .env
 
 ---
 
-## 🐳 Quick Start with Docker
+## Quick Start with Docker
 
 A complete containerized environment is provided. The whole pipeline (normalize → generate → validate → statistics) is runnable with a single command:
 
@@ -325,7 +302,7 @@ The multi-container `pipeline` profile runs each stage in a separate container w
 
 ---
 
-## 📖 Usage Documentation
+## Usage Documentation
 
 ### 1. Forward Engineering — KG to Code
 
@@ -476,7 +453,7 @@ The output `.ttl` file will be written to `agent-o/<folder-name>_instances.ttl`.
 
 ---
 
-## 📦 Generated Output Structure
+## Generated Output Structure
 
 ### CrewAI Project
 
@@ -485,28 +462,28 @@ Each generated CrewAI project follows the official project structure:
 ```
 output_files/crewai/<scenario>/
 ├── config/
-│   ├── agents.yaml         # Agent definitions (role, goal, backstory)
-│   ├── tasks.yaml          # Task definitions (description, expected output)
-│   └── inputs.yaml         # Dynamic kickoff input parameters
-├── crew.py                 # Crew class with @agent, @task, @crew decorators
-├── main.py                 # Entry point with crew.kickoff(inputs={...})
-├── .env.example            # Required environment variables
-├── pyproject.toml           # Project dependencies
-└── manifest.json           # Generation metadata
+│   ├── agents.yaml         
+│   ├── tasks.yaml          
+│   └── inputs.yaml         
+├── crew.py                 
+├── main.py                 
+├── .env.example            
+├── pyproject.toml          
+└── manifest.json           
 ```
 
 ### LangGraph Project
 
 ```
 output_files/langgraph/<scenario>/
-├── main.py                 # Complete StateGraph with nodes, edges, and compiled app
-├── requirements.txt        # LangGraph-specific dependencies
-└── manifest.json           # Generation metadata
+├── main.py                 
+├── requirements.txt        
+└── manifest.json           
 ```
 
 ---
 
-## 📜 Available Scripts Reference
+## Available Scripts Reference
 
 | Script | Command | Description |
 |---|---|---|
@@ -521,7 +498,7 @@ output_files/langgraph/<scenario>/
 
 ---
 
-## 🔗 Project Links
+## Project Links
 
 | Resource | URL |
 |---|---|
@@ -531,7 +508,7 @@ output_files/langgraph/<scenario>/
 
 ---
 
-## 📄 License
+## License
 
 This project is dual-licensed:
 
