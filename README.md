@@ -1,76 +1,99 @@
-# Agentic AI Framework Generator
+# Agentic AI Framework Generator 🚀
 
-## Members
-- Kenji Ratanaputra (24/534421/PA/22664) — [@Kenzi-GIT](https://github.com/Kenzi-GIT)
-- Ayasha Rahmadinni (24/545462/PA/23178) — [@ayashar](https://github.com/ayashar)
-- Kevin Antonio Wiyono Lauw (24/535917/PA/22736) — [@KevinAntonioWiyonoLauw](https://github.com/KevinAntonioWiyonoLauw)
-- Melinda Annastasia Budijono (24/542840/PA/23052) — [@melinda-ab](https://github.com/melinda-ab)
+[![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Frameworks](https://img.shields.io/badge/Target%20Frameworks-CrewAI%20%7C%20LangGraph%20%7C%20AutoGen-green.svg)](#)
 
-## Project Links
-- Repository: [Software-Engineering-2026-Class/kelompok3-agentic-generator-paper](https://github.com/Software-Engineering-2026-Class/kelompok3-agentic-generator-paper.git)
-- GitHub Project: https://github.com/Software-Engineering-2026-Class/kelompok3-agentic-generator-paper
-- Ontology reference: [Agentic AI Ontology](https://w3id.org/agentic-ai/onto)
+A semantic-web-driven code generator that bridges the gap between formal ontology designs and operational multi-agent python applications. By reading RDF/Turtle Knowledge Graphs built with the **Agentic AI Ontology (AgentO)**, this generator parses semantic agentic configurations (agents, tasks, workflows, tools, and prompts) and automatically builds production-ready executable codebases for **CrewAI** and **LangGraph**.
 
-## Description
+This project supports **Two-Way Engineering**:
+*   **Forward Engineering**: Knowledge Graph (`.ttl`) ──> SPARQL extraction ──> Pydantic IR ──> Jinja2 Python/YAML codebase.
+*   **Reverse Engineering**: Source code / configuration ──> LLM parsing ──> RDF Turtle instance generation.
 
-This project is a knowledge-graph-driven generator for Agentic AI frameworks. It reads RDF/Turtle Knowledge Graphs built with the [Agentic AI Ontology](https://w3id.org/agentic-ai/onto), extracts the semantic structure of agents, tasks, tools, prompts, and workflows, and turns that structure into executable code for frameworks such as CrewAI and AutoGen.
+---
 
-### Project Overview
+## 👥 Members (Kelompok 3 - Rekayasa Perangkat Lunak 2026)
 
-The generator bridges the gap between abstract agentic AI patterns defined in ontologies and concrete implementations in popular agentic AI frameworks. The repository also includes the scripts, templates, and generated Knowledge Graph instances needed to inspect, normalize, and reproduce the pipeline end to end.
+*   **Kenji Ratanaputra** (24/534421/PA/22664) — [@Kenzi-GIT](https://github.com/Kenzi-GIT)
+*   **Ayasha Rahmadinni** (24/545462/PA/23178) — [@ayashar](https://github.com/ayashar)
+*   **Kevin Antonio Wiyono Lauw** (24/535917/PA/22736) — [@KevinAntonioWiyonoLauw](https://github.com/KevinAntonioWiyonoLauw)
+*   **Melinda Annastasia Budijono** (24/542840/PA/23052) — [@melinda-ab](https://github.com/melinda-ab)
 
-### Key Features
+---
 
-- **Ontology-based Generation**: Uses the standard Agentic AI Ontology (https://w3id.org/agentic-ai/onto) as the foundation
-- **Multi-framework Support**: Generates code for multiple agentic AI frameworks:
-  - CrewAI
-  - AutoGen
-- **Knowledge Graph Parsing**: Reads and interprets KGs in RDF/Turtle format (.ttl, .rdf)
-- **Pattern Recognition**: Extracts agentic AI patterns including agents, tasks, tools, and workflows
-- **Automated Code Generation**: Produces executable Python scripts for target frameworks
+## 🌟 Key Features
 
-### Documentation and Source Notes
+*   **Ontology-Driven Generation**: Seamless mapping from [AgentO (Agentic AI Ontology)](https://w3id.org/agentic-ai/onto) to object models.
+*   **Multi-Framework Architectures**:
+    *   **CrewAI**: Outputs complete packages matching best practices (YAML-based dynamic agents/tasks, custom tools, dynamic kickoffs, `.env.example`, and manifest files).
+    *   **LangGraph**: Outputs stateful multi-agent workflows matching **Linear**, **Tool-Calling**, and **Supervisor** orchestration patterns.
+*   **AST-based Static Code Validation**: Validates generated code syntax offline (`py_compile`) and matches AST nodes against source Knowledge Graph specifications.
+*   **Mock-based Dynamic Execution**: Simulates runtime execution of compiled graphs using mock LLMs (`MockChatOpenAI`) to ensure code runs flawlessly without requiring live OpenAI API keys or quotas.
+*   **Comprehensive Codebase Coverage**: Processes batch/single input Turtle graphs, generating individual code projects inside `output_files/`.
 
-- `Script/analysis.prompt.md` contains the ontology-population prompt used to turn source code and configuration into Turtle instances.
-- `Script/run_prompt.py` is the main script that loads the ontology, reads source files, calls the model, and writes the generated `.ttl` output.
-- `scripts/normalize_kg.py` normalizes generated Knowledge Graph files into the canonical agent pattern used by the repository.
-- `scripts/add_kickoff_inputs.py` adds kickoff input bundles to generated TTL files.
-- `generated_kg/` stores the generated Knowledge Graph instances for AutoGen, CrewAI, LangGraph, and Mastra AI.
-- `output_files/` contains generated framework outputs and example code artifacts.
+---
 
-## License
+## 📁 Workspace Structure
 
-This project is developed for academic and research purposes.  
-The project references the Agentic AI Ontology (AgentO), which is distributed under the Creative Commons Attribution 4.0 International (CC BY 4.0) license.
+Below is the directory hierarchy of this repository:
 
-The source code of this repository is distributed under the MIT License.
+```text
+.
+├── .venv/                      # Python virtual environment (ignored by git)
+├── Script/                     # Reverse Engineering modules (Code -> TTL)
+│   ├── analysis.prompt.md      # Structured LLM prompt template for populating ontology
+│   ├── run_all.sh              # Bash script to batch-process target folders
+│   └── run_prompt.py           # CLI calling OpenAI model to write instances
+├── docs/                       # Reports, statistics & analytical docs
+│   ├── quality_findings.md     # Quality bug analysis & root causes (e.g. IRI leaks, unnamed tools)
+│   ├── quality_report.md       # Tabular score sheet for LangGraph quality evaluation
+│   └── summary_statistics.md   # Generated code metrics & lines of code (LOC) statistics
+├── generated_kg/               # Semantic Input Dataset (RDF Turtle instances)
+│   ├── AutoGen/                # Autogen-derived instances
+│   ├── CrewAI/                 # CrewAI-derived instances (17 scenarios)
+│   ├── LangGraph/              # LangGraph-derived instances (9 scenarios)
+│   └── Mastra AI/              # Mastra-derived instances
+├── output_files/               # Target output for generated codebases (git-ignored)
+│   ├── crewai/                 # Dynamically generated CrewAI code directories
+│   └── langgraph/              # Dynamically generated LangGraph code directories
+├── scripts/                    # Quality assurance & validation scripts
+│   ├── add_kickoff_inputs.py   # Prepends input parameter templates to Turtle files
+│   ├── evaluate_quality.py     # 3-stage QA pipeline (Syntax -> AST -> Mock execution)
+│   ├── generate_statistics.py  # Generates LOC reports & counts target files
+│   ├── normalize_kg.py         # Cleans and standardizes Turtle graph syntax
+│   └── validate_langgraph.py   # Offline test execution of compiled graphs
+├── src/                        # Core Engine (TTL -> Code)
+│   ├── crewai/                 # CrewAI code generator modules
+│   │   ├── extractor.py        # SPARQL queries & RDFLib parsing
+│   │   ├── generator.py        # Jinja2 rendering & YAML builders
+│   │   ├── models.py           # Pydantic data schemas representing CrewAI
+│   │   └── run.py              # CLI batch/single processing runner
+│   └── langgraph/              # LangGraph code generator modules
+│       ├── extractor.py        # SPARQL queries & RDFLib parsing
+│       ├── generator.py        # Logic builder for LangGraph patterns
+│       ├── models.py           # Pydantic data schemas representing LangGraph
+│       └── run.py              # CLI batch/single processing runner
+├── ARCHITECTURE_MAP.md         # Markdown document illustrating system data flows
+├── REPOSITORY_GUIDE.md         # Indonesian onboarding documentation for new developers
+├── agentO.ttl                  # Base Agentic AI Ontology schema
+├── pyproject.toml              # Build dependencies & metadata (uv compatible)
+└── requirements.txt            # Dependency definitions for standard pip setups
+```
 
-### Initial Code
+---
 
-The main starting points for the codebase are:
+## 🛠️ Tech Stack & Dependencies
 
-- `Script/run_prompt.py` for the ontology-to-instance generation flow.
-- `scripts/normalize_kg.py` for KG cleanup and canonicalization.
-- `src/crewai/generator.py` for CrewAI code generation.
-- `src/crewai/templates/main.py.j2` for the generated CrewAI entry point template.
+*   **Language**: Python `3.10` to `3.13`
+*   **Graph Manipulation**: `rdflib>=7.0.0` (SPARQL & Turtle graph parsing)
+*   **Schema & Data Validation**: `pydantic>=2.0.0`
+*   **Template Rendering**: `Jinja2` (Cleaner file rendering, preventing inline f-string templates)
+*   **Static Code Analysis**: Native `ast` & `py_compile`
+*   **Target AI Frameworks**: `crewai>=0.152.0`, `langgraph>=0.1.0`, `langchain-core`
 
-## Installation
+---
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/nauraranantya/agentic-generator.git
-   cd agentic-generator
-   ```
-2.	Create and activate a virtual environment:
-   ```bash
-  python -m venv venv
-  source venv/bin/activate       # macOS/Linux
-  venv\Scripts\activate          # Windows
-  ```
-3. Install dependencies:
-  ```bash
-  pip install -r requirements.txt
-  ```
+## 🚀 Installation & Setup
 
 ## Quick Start with Docker
 
@@ -114,46 +137,140 @@ Copy `.env.example` to `.env` and fill in your `OPENAI_API_KEY`. The default pip
 The multi-container `pipeline` profile runs each stage in a separate container with `depends_on: condition: service_completed_successfully` ordering, so stages run in sequence and the command exits only when the last one finishes.
 
 ## Usage
+### 1. Prerequisites
+Ensure you have Python installed (`>= 3.10`). Check your version:
+```bash
+python --version
+```
 
-### Option 1: Generate Multi-Agent Code from Knowledge Graph
-1. Place the Knowledge Graph (in .ttl or .rdf format) inside the data/ folder, or use the existing dummy data in `data/` or `kg_g3/`.
-   Example: `data/dummy_kg.ttl`
+### 2. Clone the Repository
+```bash
+git clone https://github.com/Software-Engineering-2026-Class/kelompok3-agentic-generator-paper.git
+cd kelompok3-agentic-generator-paper
+```
 
-2. Run the automated pipeline:
-   ```bash
-   python runner.py
-   ```
-   This will automatically:
-   - Parse the knowledge graph ontology
-   - Generate CrewAI framework code
-   - Generate AutoGen framework code
+### 3. Create & Activate Virtual Environment
+*   **Windows**:
+    ```powershell
+    python -m venv .venv
+    .venv\Scripts\activate
+    ```
+*   **macOS/Linux**:
+    ```bash
+    python3 -m venv .venv
+    source .venv/bin/activate
+    ```
 
-3. Check the `output/` folder for generated scripts:
-   - `crewai_generated.py`
-   - `autogen_generated.py`
+### 4. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+*(Optionally, if you are developing or running the LangGraph tests, install standard execution requirements:)*
+```bash
+pip install langchain-openai langgraph langchain-core pydantic
+```
 
-### Option 2: Test Workflow Simulation (Demo)
-1. Place your gpt-4o-mini API key in a `.env` file in the root directory:
-   ```
-   OPENAI_API_KEY=your-api-key-here
-   ```
+---
 
-2. Run the pre-configured workflow test:
-   ```bash
-   python test_email_workflow.py
-   ```
-   This demonstrates a complete email auto-responder workflow using CrewAI with:
-   - Email classification
-   - Automated response generation
-   - Quality review process
+## 📖 Usage Documentation
 
-   OR
-   
-   ```bash
-   python test_cust_support_workflow.py
-   ```
-   This demonstrates a customer support ticket handling workflow using AutoGen with:
-   - Ticket classification and prioritization
-   - Multi-agent collaboration for resolution
-   - Automated response generation
-3. View the complete workflow execution and results in the console output.
+The generator features CLI runners for both forward engineering pathways.
+
+### 1. Forward Engineering (KG ──> Code)
+
+#### Generating CrewAI Projects
+Processes all Turtle files in `generated_kg/CrewAI/` and generates complete CrewAI project folders under `output_files/crewai/`:
+```bash
+python src/crewai/run.py
+```
+To run a single file:
+```bash
+python src/crewai/run.py generated_kg/CrewAI/trip_planner_instances.ttl
+```
+
+#### Generating LangGraph Projects
+Processes a Turtle file in `generated_kg/LangGraph/` and generates the corresponding Python orchestration file and requirements in `output_files/langgraph/`:
+```bash
+python src/langgraph/run.py generated_kg/LangGraph/chat-agent_instances.ttl
+```
+
+---
+
+### 2. Quality Assurance & Evaluation (Offline)
+
+You can run automated statistics and quality evaluation scripts to assess syntax validation, structure completeness, and execution correctness.
+
+#### A. Generate Project Code Statistics
+This script compiles the generated Python files, measures LOC, and counts files:
+```bash
+python scripts/generate_statistics.py
+```
+Outputs a markdown summary to `docs/summary_statistics.md`.
+
+#### B. Evaluate Quality & Identify Errors (Issue #07)
+Runs a 3-stage validation process (Syntax check ──> AST-vs-IR Comparison ──> Offline mock execution):
+```bash
+python scripts/evaluate_quality.py
+```
+This script runs **completely offline** (using a patched LLM mock system). It creates two critical documents under `docs/`:
+1.  `docs/quality_report.md` - Tabular report showing quality scores for all LangGraph targets.
+2.  `docs/quality_findings.md` - Diagnostic findings on namespace leaks, missing tools, and architectural pattern errors.
+
+---
+
+### 3. Reverse Engineering (Code ──> KG)
+
+Extracts semantic structure from codebases into ontology instances.
+
+```bash
+# Ensure your OpenAI API key is exported:
+# export OPENAI_API_KEY="your-api-key"
+
+python Script/run_prompt.py path/to/source/code/folder
+```
+
+---
+
+## 🐳 Docker Environment Setup (Upcoming Issue)
+
+> [!NOTE]
+> *This section is a placeholder for the upcoming Docker environment setup issue.*
+
+A Docker environment will be introduced to containerize the generator pipeline. Once implemented, the workflow will proceed as follows:
+
+### 1. Build the Docker Image
+```bash
+docker build -t agentic-generator:latest .
+```
+
+### 2. Run the Batch Pipeline Containerized
+You can mount input KGs and generate code without polluting your local python environment:
+```bash
+docker run --rm \
+  -v ${PWD}/generated_kg:/app/generated_kg \
+  -v ${PWD}/output_files:/app/output_files \
+  agentic-generator:latest python src/crewai/run.py
+```
+
+### 3. Running via Docker Compose
+A `docker-compose.yml` configuration will support a clean development loop:
+```yaml
+version: '3.8'
+services:
+  generator:
+    image: agentic-generator:latest
+    volumes:
+      - .:/app
+    command: python src/langgraph/run.py generated_kg/LangGraph/chat-agent_instances.ttl
+```
+Execute with:
+```bash
+docker-compose up
+```
+
+---
+
+## 📄 License
+
+*   The ontology references the **Agentic AI Ontology (AgentO)** schema, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+*   The generator engine source code is distributed under the **MIT License**.
