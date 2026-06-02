@@ -1,101 +1,281 @@
-# Agentic AI Framework Generator 🚀
+<p align="center">
+  <h1 align="center">AgentO — Agentic AI Framework Generator</h1>
+  <p align="center">
+    <em>From Knowledge Graphs to Executable Multi-Agent Code</em>
+  </p>
+</p>
 
-[![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Frameworks](https://img.shields.io/badge/Target%20Frameworks-CrewAI%20%7C%20LangGraph%20%7C%20AutoGen-green.svg)](#)
-
-A semantic-web-driven code generator that bridges the gap between formal ontology designs and operational multi-agent python applications. By reading RDF/Turtle Knowledge Graphs built with the **Agentic AI Ontology (AgentO)**, this generator parses semantic agentic configurations (agents, tasks, workflows, tools, and prompts) and automatically builds production-ready executable codebases for **CrewAI** and **LangGraph**.
-
-This project supports **Two-Way Engineering**:
-*   **Forward Engineering**: Knowledge Graph (`.ttl`) ──> SPARQL extraction ──> Pydantic IR ──> Jinja2 Python/YAML codebase.
-*   **Reverse Engineering**: Source code / configuration ──> LLM parsing ──> RDF Turtle instance generation.
+<p align="center">
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.10_|_3.11_|_3.12_|_3.13-3776AB?logo=python&logoColor=white" alt="Python"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"></a>
+  <a href="https://w3id.org/agentic-ai/onto"><img src="https://img.shields.io/badge/Ontology-AgentO-blueviolet" alt="AgentO"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Frameworks-CrewAI_|_LangGraph-orange" alt="Frameworks"></a>
+</p>
 
 ---
 
-## 👥 Members (Kelompok 3 - Rekayasa Perangkat Lunak 2026)
+## Table of Contents
 
-*   **Kenji Ratanaputra** (24/534421/PA/22664) — [@Kenzi-GIT](https://github.com/Kenzi-GIT)
-*   **Ayasha Rahmadinni** (24/545462/PA/23178) — [@ayashar](https://github.com/ayashar)
-*   **Kevin Antonio Wiyono Lauw** (24/535917/PA/22736) — [@KevinAntonioWiyonoLauw](https://github.com/KevinAntonioWiyonoLauw)
-*   **Melinda Annastasia Budijono** (24/542840/PA/23052) — [@melinda-ab](https://github.com/melinda-ab)
+- [Project Overview](#-project-overview)
+- [Key Features](#-key-features)
+- [System Architecture](#-system-architecture)
+- [Workspace Structure](#-workspace-structure)
+- [Tech Stack](#-tech-stack)
+- [Prerequisites](#-prerequisites)
+- [Installation Guide](#-installation-guide)
+- [Quick Start with Docker](#-quick-start-with-docker)
+- [Usage Documentation](#-usage-documentation)
+  - [Forward Engineering — KG to Code](#1-forward-engineering--kg-to-code)
+  - [Quality Assurance & Evaluation](#2-quality-assurance--evaluation-offline)
+  - [Reverse Engineering — Code to KG](#3-reverse-engineering--code-to-kg)
+- [Generated Output Structure](#-generated-output-structure)
+- [Available Scripts Reference](#-available-scripts-reference)
+- [Project Links](#-project-links)
+- [Team Members](#-team-members)
+- [License](#-license)
+
+---
+
+## 📋 Project Overview
+
+**AgentO** is a knowledge-graph-driven code generator that automatically transforms formal ontology definitions into production-ready multi-agent Python applications. It reads **RDF/Turtle Knowledge Graphs** built with the [Agentic AI Ontology (AgentO)](https://w3id.org/agentic-ai/onto) and generates complete, executable codebases for popular agentic AI frameworks.
+
+### What Problem Does It Solve?
+
+Each agentic AI framework (CrewAI, LangGraph, AutoGen, etc.) has its own configuration syntax, project structure, and design patterns. Manually translating a conceptual agent architecture into framework-specific code is **tedious, error-prone, and difficult to keep consistent** across frameworks.
+
+AgentO solves this by providing a **single source of truth** — a Knowledge Graph — from which code for any supported framework can be generated automatically through a deterministic 3-layer pipeline.
+
+### How It Works (Two-Way Engineering)
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    FORWARD ENGINEERING                          │
+│                                                                 │
+│  Knowledge Graph (.ttl)                                         │
+│        │                                                        │
+│        ▼                                                        │
+│  Layer 1: SPARQL Extraction (rdflib)                            │
+│        │                                                        │
+│        ▼                                                        │
+│  Layer 2: Pydantic Intermediate Representation (IR)             │
+│        │                                                        │
+│        ▼                                                        │
+│  Layer 3: Code Generation (Jinja2 + PyYAML)                    │
+│        │                                                        │
+│        ▼                                                        │
+│  Executable CrewAI / LangGraph Project                          │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                    REVERSE ENGINEERING                          │
+│                                                                 │
+│  Source Code Directory ──► OpenAI LLM ──► RDF Turtle (.ttl)     │
+└─────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
 ## 🌟 Key Features
 
-*   **Ontology-Driven Generation**: Seamless mapping from [AgentO (Agentic AI Ontology)](https://w3id.org/agentic-ai/onto) to object models.
-*   **Multi-Framework Architectures**:
-    *   **CrewAI**: Outputs complete packages matching best practices (YAML-based dynamic agents/tasks, custom tools, dynamic kickoffs, `.env.example`, and manifest files).
-    *   **LangGraph**: Outputs stateful multi-agent workflows matching **Linear**, **Tool-Calling**, and **Supervisor** orchestration patterns.
-*   **AST-based Static Code Validation**: Validates generated code syntax offline (`py_compile`) and matches AST nodes against source Knowledge Graph specifications.
-*   **Mock-based Dynamic Execution**: Simulates runtime execution of compiled graphs using mock LLMs (`MockChatOpenAI`) to ensure code runs flawlessly without requiring live OpenAI API keys or quotas.
-*   **Comprehensive Codebase Coverage**: Processes batch/single input Turtle graphs, generating individual code projects inside `output_files/`.
+| Feature | Description |
+|---|---|
+| **Ontology-Driven Generation** | Uses the standard [AgentO Ontology](https://w3id.org/agentic-ai/onto) as the formal specification layer |
+| **Multi-Framework Output** | Generates complete projects for **CrewAI** (YAML configs + Python) and **LangGraph** (stateful graphs) |
+| **3 LangGraph Patterns** | Supports **Linear**, **Tool-Calling**, and **Supervisor** orchestration patterns |
+| **CrewAI Best Practices** | Outputs `agents.yaml`, `tasks.yaml`, `crew.py`, `main.py`, `.env.example`, and `inputs.yaml` |
+| **Batch & Single Processing** | Process all KGs at once or target a single `.ttl` file |
+| **Offline Quality Evaluation** | 3-stage validation pipeline: syntax check → AST-vs-IR comparison → mock runtime execution |
+| **Reverse Engineering** | Extract agentic structures from existing codebases into Knowledge Graph instances via LLM |
+| **Manifest Generation** | Each output project includes a `manifest.json` with metadata and file listings |
+
+### Dataset Coverage
+
+| Framework | KG Scenarios | Generated Agents | Generated Tasks | Generated Tools |
+|---|:---:|:---:|:---:|:---:|
+| **CrewAI** | 17 | 52 | 60 | 42 |
+| **LangGraph** | 9 | 8 | 17 | 22 |
+| **AutoGen** | 6 | — | — | — |
+| **Mastra AI** | 35 | — | — | — |
+| **Total** | **67** | **60+** | **77+** | **64+** |
+
+---
+
+## 🏗 System Architecture
+
+```mermaid
+graph LR
+    A["RDF/Turtle (.ttl)"] -->|rdflib + SPARQL| B["Pydantic IR Models"]
+    B -->|Jinja2 + PyYAML| C["CrewAI Project"]
+    B -->|Jinja2 Templates| D["LangGraph Project"]
+    E["Source Code"] -->|OpenAI LLM| A
+
+    style A fill:#2d333b,stroke:#539bf5,color:#adbac7
+    style B fill:#2d333b,stroke:#57ab5a,color:#adbac7
+    style C fill:#2d333b,stroke:#e5534b,color:#adbac7
+    style D fill:#2d333b,stroke:#e5534b,color:#adbac7
+    style E fill:#2d333b,stroke:#daaa3f,color:#adbac7
+```
+
+**Pipeline per module:**
+
+| Layer | CrewAI | LangGraph |
+|---|---|---|
+| **Layer 1** — Extraction | `src/crewai/extractor.py` (SPARQL queries) | `src/langgraph/extractor.py` (SPARQL queries) |
+| **Layer 2** — IR Models | `src/crewai/models.py` (Pydantic schemas) | `src/langgraph/models.py` (Pydantic schemas) |
+| **Layer 3** — Generation | `src/crewai/generator.py` (YAML + Jinja2) | `src/langgraph/generator.py` (Jinja2 templates) |
+| **Runner** — CLI | `src/crewai/run.py` | `src/langgraph/run.py` |
 
 ---
 
 ## 📁 Workspace Structure
 
-Below is the directory hierarchy of this repository:
-
-```text
-.
-├── .venv/                      # Python virtual environment (ignored by git)
-├── Script/                     # Reverse Engineering modules (Code -> TTL)
-│   ├── analysis.prompt.md      # Structured LLM prompt template for populating ontology
-│   ├── run_all.sh              # Bash script to batch-process target folders
-│   └── run_prompt.py           # CLI calling OpenAI model to write instances
-├── docs/                       # Reports, statistics & analytical docs
-│   ├── quality_findings.md     # Quality bug analysis & root causes (e.g. IRI leaks, unnamed tools)
-│   ├── quality_report.md       # Tabular score sheet for LangGraph quality evaluation
-│   └── summary_statistics.md   # Generated code metrics & lines of code (LOC) statistics
-├── generated_kg/               # Semantic Input Dataset (RDF Turtle instances)
-│   ├── AutoGen/                # Autogen-derived instances
-│   ├── CrewAI/                 # CrewAI-derived instances (17 scenarios)
-│   ├── LangGraph/              # LangGraph-derived instances (9 scenarios)
-│   └── Mastra AI/              # Mastra-derived instances
-├── output_files/               # Target output for generated codebases (git-ignored)
-│   ├── crewai/                 # Dynamically generated CrewAI code directories
-│   └── langgraph/              # Dynamically generated LangGraph code directories
-├── scripts/                    # Quality assurance & validation scripts
-│   ├── add_kickoff_inputs.py   # Prepends input parameter templates to Turtle files
-│   ├── evaluate_quality.py     # 3-stage QA pipeline (Syntax -> AST -> Mock execution)
-│   ├── generate_statistics.py  # Generates LOC reports & counts target files
-│   ├── normalize_kg.py         # Cleans and standardizes Turtle graph syntax
-│   └── validate_langgraph.py   # Offline test execution of compiled graphs
-├── src/                        # Core Engine (TTL -> Code)
-│   ├── crewai/                 # CrewAI code generator modules
-│   │   ├── extractor.py        # SPARQL queries & RDFLib parsing
-│   │   ├── generator.py        # Jinja2 rendering & YAML builders
-│   │   ├── models.py           # Pydantic data schemas representing CrewAI
-│   │   └── run.py              # CLI batch/single processing runner
-│   └── langgraph/              # LangGraph code generator modules
-│       ├── extractor.py        # SPARQL queries & RDFLib parsing
-│       ├── generator.py        # Logic builder for LangGraph patterns
-│       ├── models.py           # Pydantic data schemas representing LangGraph
-│       └── run.py              # CLI batch/single processing runner
-├── ARCHITECTURE_MAP.md         # Markdown document illustrating system data flows
-├── REPOSITORY_GUIDE.md         # Indonesian onboarding documentation for new developers
-├── agentO.ttl                  # Base Agentic AI Ontology schema
-├── pyproject.toml              # Build dependencies & metadata (uv compatible)
-└── requirements.txt            # Dependency definitions for standard pip setups
+```
+kelompok3-agentic-generator-paper/
+│
+├── src/                            # Core generator engine
+│   ├── crewai/                     #   CrewAI code generation module
+│   │   ├── extractor.py            #     Layer 1: SPARQL queries & RDF parsing
+│   │   ├── models.py               #     Layer 2: Pydantic IR (CrewProject, AgentModel, etc.)
+│   │   ├── generator.py            #     Layer 3: YAML builder + Jinja2 renderer
+│   │   ├── run.py                  #     CLI runner (batch/single mode)
+│   │   └── templates/              #     Jinja2 templates
+│   │       ├── crew.py.j2          #       Template for crew.py
+│   │       └── main.py.j2          #       Template for main.py
+│   └── langgraph/                  #   LangGraph code generation module
+│       ├── extractor.py            #     Layer 1: SPARQL extraction
+│       ├── models.py               #     Layer 2: Pydantic IR (LangGraphProject)
+│       ├── generator.py            #     Layer 3: Pattern-based code builder
+│       └── run.py                  #     CLI runner
+│
+├── scripts/                        # Utility & validation scripts
+│   ├── evaluate_quality.py         #   3-stage offline quality evaluation (Issue #07)
+│   ├── generate_statistics.py      #   LOC counting & syntax validation
+│   ├── validate_langgraph.py       #   Mock runtime execution testing
+│   ├── normalize_kg.py             #   Turtle file cleanup & standardization
+│   └── add_kickoff_inputs.py       #   Add input parameter bundles to TTL files
+│
+├── Script/                         # Reverse engineering module
+│   ├── run_prompt.py               #   LLM-powered code-to-KG converter
+│   ├── analysis.prompt.md          #   Prompt template for ontology population
+│   └── run_all.sh                  #   Batch processing shell script
+│
+├── generated_kg/                   # Input dataset — Knowledge Graph instances
+│   ├── CrewAI/                     #   17 CrewAI scenario TTL files
+│   ├── LangGraph/                  #   9 LangGraph scenario TTL files
+│   ├── AutoGen/                    #   6 AutoGen scenario TTL files
+│   └── Mastra AI/                  #   35 Mastra AI scenario TTL files
+│
+├── output_files/                   # Generated code output (created at runtime)
+│   ├── crewai/                     #   17 CrewAI project directories
+│   └── langgraph/                  #   9 LangGraph project directories
+│
+├── docs/                           # Technical reports & analysis
+│   ├── quality_report.md           #   Quality evaluation scores
+│   ├── quality_findings.md         #   Root cause analysis of generator bugs
+│   ├── summary_statistics.md       #   Code metrics & LOC statistics
+│   └── validation_results.md       #   LangGraph mock execution results
+│
+├── paper/                          # Research paper artifacts
+│   ├── K-CAP_2025_paper_25.pdf     #   Published conference paper
+│   └── paper-latest.pdf            #   Latest version of the paper
+│
+├── agentO.ttl                      # Base ontology schema definition
+├── pyproject.toml                  # Python project configuration (uv/hatch)
+├── requirements.txt                # Dependency list (pip)
+├── LICENSE                         # MIT License
+└── README.md                       # This file
 ```
 
 ---
 
-## 🛠️ Tech Stack & Dependencies
+## 🛠 Tech Stack
 
-*   **Language**: Python `3.10` to `3.13`
-*   **Graph Manipulation**: `rdflib>=7.0.0` (SPARQL & Turtle graph parsing)
-*   **Schema & Data Validation**: `pydantic>=2.0.0`
-*   **Template Rendering**: `Jinja2` (Cleaner file rendering, preventing inline f-string templates)
-*   **Static Code Analysis**: Native `ast` & `py_compile`
-*   **Target AI Frameworks**: `crewai>=0.152.0`, `langgraph>=0.1.0`, `langchain-core`
+| Category | Technology | Purpose |
+|---|---|---|
+| **Language** | Python 3.10 – 3.13 | Core implementation language |
+| **Knowledge Graph** | `rdflib` ≥ 7.0.0 | RDF/Turtle parsing & SPARQL query execution |
+| **Data Modeling** | `pydantic` ≥ 2.0.0 | Typed intermediate representation (IR) schemas |
+| **Template Engine** | `jinja2` | Code & YAML file generation from templates |
+| **YAML Processing** | `pyyaml` | CrewAI configuration file generation |
+| **Target Framework** | `crewai` ≥ 0.152.0 | Multi-agent orchestration framework |
+| **Target Framework** | `langgraph`, `langchain-core` | Stateful graph-based agent workflows |
+| **Target Framework** | `autogen-agentchat` ≥ 0.4.0 | Microsoft AutoGen multi-agent framework |
+| **LLM Integration** | `openai` | Reverse engineering (code-to-KG extraction) |
+| **Build System** | `hatchling` / `uv` | Modern Python packaging & dependency management |
+| **Containerization** | Docker + Docker Compose | Reproducible pipeline execution |
 
 ---
 
-## 🚀 Installation & Setup
+## ✅ Prerequisites
 
-## Quick Start with Docker
+Before you begin, ensure you have the following installed:
+
+- **Python** `>= 3.10` and `<= 3.13`
+  ```bash
+  python --version   # should output 3.10.x through 3.13.x
+  ```
+- **pip** (comes with Python) or **uv** (modern alternative)
+- **Git** for cloning the repository
+- **Docker & Docker Compose** *(optional — for containerized execution)*
+- **OpenAI API Key** *(optional — only needed for reverse engineering)*
+
+---
+
+## 🚀 Installation Guide
+
+### Step 1 — Clone the Repository
+
+```bash
+git clone https://github.com/Software-Engineering-2026-Class/kelompok3-agentic-generator-paper.git
+cd kelompok3-agentic-generator-paper
+```
+
+### Step 2 — Create a Virtual Environment
+
+**Windows (PowerShell):**
+```powershell
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+**macOS / Linux:**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### Step 3 — Install Dependencies
+
+**Option A — Using pip (standard):**
+```bash
+pip install -r requirements.txt
+```
+
+**Option B — Using uv (recommended, faster):**
+```bash
+pip install uv
+uv sync
+```
+
+**Option C — Full install with LangGraph evaluation support:**
+```bash
+pip install rdflib pandas crewai autogen
+pip install langchain-openai langgraph langchain-core pydantic jinja2 pyyaml
+```
+
+### Step 4 — Configure Environment Variables *(optional)*
+
+Only required if you plan to use the **reverse engineering** module or run **generated CrewAI/LangGraph projects** that call OpenAI:
+
+```bash
+# Create a .env file in the project root
+echo "OPENAI_API_KEY=sk-your-key-here" > .env
+```
+
+---
+
+## 🐳 Quick Start with Docker
 
 A complete containerized environment is provided. The whole pipeline (normalize → generate → validate → statistics) is runnable with a single command:
 
@@ -105,7 +285,7 @@ docker compose up
 
 This builds the image on first run and executes the full pipeline. Output appears in `./output_files/`.
 
-### Common commands
+### Common Commands
 
 | Command | Purpose |
 |---|---|
@@ -119,11 +299,11 @@ This builds the image on first run and executes the full pipeline. Output appear
 | `docker compose --profile llm up` | Also run the optional LLM ontology-population stage (requires `OPENAI_API_KEY`) |
 | `docker compose down --rmi local` | Stop and remove containers + the built image |
 
-### Environment variables
+### Environment Variables
 
 Copy `.env.example` to `.env` and fill in your `OPENAI_API_KEY`. The default pipeline does **not** call the OpenAI API; only the `prompt` service (LLM ontology-population) does. A `.env` is therefore only required if you enable the `llm` profile.
 
-### Pipeline stages
+### Pipeline Stages
 
 | Stage | Service (profile `pipeline`) | Container-only (`app`) |
 |---|---|---|
@@ -136,141 +316,230 @@ Copy `.env.example` to `.env` and fill in your `OPENAI_API_KEY`. The default pip
 
 The multi-container `pipeline` profile runs each stage in a separate container with `depends_on: condition: service_completed_successfully` ordering, so stages run in sequence and the command exits only when the last one finishes.
 
-## Usage
-### 1. Prerequisites
-Ensure you have Python installed (`>= 3.10`). Check your version:
-```bash
-python --version
-```
-
-### 2. Clone the Repository
-```bash
-git clone https://github.com/Software-Engineering-2026-Class/kelompok3-agentic-generator-paper.git
-cd kelompok3-agentic-generator-paper
-```
-
-### 3. Create & Activate Virtual Environment
-*   **Windows**:
-    ```powershell
-    python -m venv .venv
-    .venv\Scripts\activate
-    ```
-*   **macOS/Linux**:
-    ```bash
-    python3 -m venv .venv
-    source .venv/bin/activate
-    ```
-
-### 4. Install Dependencies
-```bash
-pip install -r requirements.txt
-```
-*(Optionally, if you are developing or running the LangGraph tests, install standard execution requirements:)*
-```bash
-pip install langchain-openai langgraph langchain-core pydantic
-```
-
 ---
 
 ## 📖 Usage Documentation
 
-The generator features CLI runners for both forward engineering pathways.
+### 1. Forward Engineering — KG to Code
 
-### 1. Forward Engineering (KG ──> Code)
+#### A. Generate All CrewAI Projects (Batch Mode)
 
-#### Generating CrewAI Projects
-Processes all Turtle files in `generated_kg/CrewAI/` and generates complete CrewAI project folders under `output_files/crewai/`:
+Processes all 17 TTL files in `generated_kg/CrewAI/` and outputs complete project directories:
+
 ```bash
-python src/crewai/run.py
-```
-To run a single file:
-```bash
-python src/crewai/run.py generated_kg/CrewAI/trip_planner_instances.ttl
+python -m src.crewai.run
 ```
 
-#### Generating LangGraph Projects
-Processes a Turtle file in `generated_kg/LangGraph/` and generates the corresponding Python orchestration file and requirements in `output_files/langgraph/`:
+**Expected output:**
+```
+=================================================================
+  KG → SPARQL → Pydantic → CrewAI Project Generator
+  Pipeline: 3-Layer Conversion (SPARQL / Pydantic / YAML+Jinja2)
+=================================================================
+  Source : generated_kg/CrewAI
+  Output : output_files/crewai
+  Files  : 17 knowledge graphs
+=================================================================
+
+[Processing] game-builder-crew_instances.ttl
+[Processing] gym_planner_instances.ttl
+...
+=================================================================
+  Done. 17/17 projects generated successfully.
+=================================================================
+```
+
+#### B. Generate a Single CrewAI Project
+
 ```bash
-python src/langgraph/run.py generated_kg/LangGraph/chat-agent_instances.ttl
+python -m src.crewai.run generated_kg/CrewAI/trip_planner_instances.ttl
+```
+
+#### C. Generate a LangGraph Project
+
+```bash
+python src/langgraph/run.py generated_kg/LangGraph/trip-planner_instances.ttl
+```
+
+**Expected output:**
+```
+Reading KG from generated_kg/LangGraph/trip-planner_instances.ttl...
+Detected LangGraph Pattern: tool_calling
+- Extracted 1 Agent(s)
+- Extracted 4 Tool(s)
+- Extracted 4 Node(s)
+Generating Python code into output_files/langgraph/trip-planner...
+Done!
+```
+
+#### D. Generate All LangGraph Projects
+
+**Linux/macOS:**
+```bash
+for f in generated_kg/LangGraph/*.ttl; do python src/langgraph/run.py "$f"; done
+```
+
+**Windows (PowerShell):**
+```powershell
+Get-ChildItem generated_kg\LangGraph\*.ttl | ForEach-Object {
+    python src/langgraph/run.py $_.FullName
+}
 ```
 
 ---
 
 ### 2. Quality Assurance & Evaluation (Offline)
 
-You can run automated statistics and quality evaluation scripts to assess syntax validation, structure completeness, and execution correctness.
+#### A. Run Comprehensive Quality Evaluation
 
-#### A. Generate Project Code Statistics
-This script compiles the generated Python files, measures LOC, and counts files:
-```bash
-python scripts/generate_statistics.py
-```
-Outputs a markdown summary to `docs/summary_statistics.md`.
+Executes a 3-stage pipeline — **syntax check** → **AST-vs-IR structural comparison** → **mock runtime execution** — without requiring any API key:
 
-#### B. Evaluate Quality & Identify Errors (Issue #07)
-Runs a 3-stage validation process (Syntax check ──> AST-vs-IR Comparison ──> Offline mock execution):
 ```bash
 python scripts/evaluate_quality.py
 ```
-This script runs **completely offline** (using a patched LLM mock system). It creates two critical documents under `docs/`:
-1.  `docs/quality_report.md` - Tabular report showing quality scores for all LangGraph targets.
-2.  `docs/quality_findings.md` - Diagnostic findings on namespace leaks, missing tools, and architectural pattern errors.
+
+**Expected output:**
+```
+=======================================================
+  Issue #07 - LangGraph Quality Evaluation
+  Mode: OFFLINE (no API key required)
+=======================================================
+  Skenario ditemukan: 9
+
+-------------------------------------------------------
+  Evaluasi: trip-planner
+-------------------------------------------------------
+  [A] Syntax check ... PASS
+  [B] Structural check ...
+      IR tools (4): ['extract', 'classify', 'list_accommodations', 'list_restaurants']
+      AST @tool fns (4): ['extract', 'classify', 'list_accommodations', 'list_restaurants']
+      Pattern IR=tool_calling | match=True
+  [C] Mock runtime ... PASS
+  [Score] 100.0/100
+
+=======================================================
+  RINGKASAN AKHIR
+=======================================================
+  Rata-rata Quality Score: 93.3/100
+```
+
+**Generated reports:**
+- `docs/quality_report.md` — Per-scenario quality scores and comparison table
+- `docs/quality_findings.md` — Root cause analysis (IRI leaks, unnamed tools, pattern misdetection)
+
+#### B. Generate Code Statistics
+
+```bash
+python scripts/generate_statistics.py
+```
+
+Outputs `docs/summary_statistics.md` with LOC counts, agent/task/tool tallies, and syntax validation results.
+
+#### C. Validate LangGraph Execution (Mock Runtime)
+
+```bash
+python scripts/validate_langgraph.py
+```
+
+#### D. Normalize Knowledge Graph Files
+
+```bash
+python scripts/normalize_kg.py
+```
 
 ---
 
-### 3. Reverse Engineering (Code ──> KG)
+### 3. Reverse Engineering — Code to KG
 
-Extracts semantic structure from codebases into ontology instances.
+> **Note:** This feature requires an active **OpenAI API key** and internet connectivity.
+
+Extracts the agentic structure of an existing codebase and generates a Turtle instance file:
 
 ```bash
-# Ensure your OpenAI API key is exported:
-# export OPENAI_API_KEY="your-api-key"
+# Set your API key
+export OPENAI_API_KEY="sk-your-key-here"   # Linux/macOS
+# $env:OPENAI_API_KEY="sk-your-key-here"   # Windows PowerShell
 
-python Script/run_prompt.py path/to/source/code/folder
+# Run extraction on a project folder
+cd Script
+python run_prompt.py /path/to/agent-project-folder
+```
+
+The output `.ttl` file will be written to `agent-o/<folder-name>_instances.ttl`.
+
+---
+
+## 📦 Generated Output Structure
+
+### CrewAI Project
+
+Each generated CrewAI project follows the official project structure:
+
+```
+output_files/crewai/<scenario>/
+├── config/
+│   ├── agents.yaml         # Agent definitions (role, goal, backstory)
+│   ├── tasks.yaml          # Task definitions (description, expected output)
+│   └── inputs.yaml         # Dynamic kickoff input parameters
+├── crew.py                 # Crew class with @agent, @task, @crew decorators
+├── main.py                 # Entry point with crew.kickoff(inputs={...})
+├── .env.example            # Required environment variables
+├── pyproject.toml           # Project dependencies
+└── manifest.json           # Generation metadata
+```
+
+### LangGraph Project
+
+```
+output_files/langgraph/<scenario>/
+├── main.py                 # Complete StateGraph with nodes, edges, and compiled app
+├── requirements.txt        # LangGraph-specific dependencies
+└── manifest.json           # Generation metadata
 ```
 
 ---
 
-## 🐳 Docker Environment Setup (Upcoming Issue)
+## 📜 Available Scripts Reference
 
-> [!NOTE]
-> *This section is a placeholder for the upcoming Docker environment setup issue.*
+| Script | Command | Description |
+|---|---|---|
+| **CrewAI Generator** | `python -m src.crewai.run` | Batch-generate all CrewAI projects |
+| **LangGraph Generator** | `python src/langgraph/run.py <file.ttl>` | Generate a LangGraph project |
+| **Quality Evaluation** | `python scripts/evaluate_quality.py` | 3-stage offline code quality assessment |
+| **Statistics Report** | `python scripts/generate_statistics.py` | Generate LOC/agent/task statistics |
+| **LangGraph Validation** | `python scripts/validate_langgraph.py` | Mock runtime execution testing |
+| **KG Normalization** | `python scripts/normalize_kg.py` | Clean & standardize TTL files |
+| **Add Kickoff Inputs** | `python scripts/add_kickoff_inputs.py` | Inject input bundles into TTL |
+| **Reverse Engineering** | `python Script/run_prompt.py <folder>` | LLM-based code-to-KG extraction |
 
-A Docker environment will be introduced to containerize the generator pipeline. Once implemented, the workflow will proceed as follows:
+---
 
-### 1. Build the Docker Image
-```bash
-docker build -t agentic-generator:latest .
-```
+## 🔗 Project Links
 
-### 2. Run the Batch Pipeline Containerized
-You can mount input KGs and generate code without polluting your local python environment:
-```bash
-docker run --rm \
-  -v ${PWD}/generated_kg:/app/generated_kg \
-  -v ${PWD}/output_files:/app/output_files \
-  agentic-generator:latest python src/crewai/run.py
-```
+| Resource | URL |
+|---|---|
+| **Repository** | [kelompok3-agentic-generator-paper](https://github.com/Software-Engineering-2026-Class/kelompok3-agentic-generator-paper) |
+| **AgentO Ontology** | [https://w3id.org/agentic-ai/onto](https://w3id.org/agentic-ai/onto) |
+| **Research Paper** | See `paper/K-CAP_2025_paper_25.pdf` |
 
-### 3. Running via Docker Compose
-A `docker-compose.yml` configuration will support a clean development loop:
-```yaml
-version: '3.8'
-services:
-  generator:
-    image: agentic-generator:latest
-    volumes:
-      - .:/app
-    command: python src/langgraph/run.py generated_kg/LangGraph/chat-agent_instances.ttl
-```
-Execute with:
-```bash
-docker-compose up
-```
+---
+
+## 👥 Team Members
+
+**Kelompok 3 — Rekayasa Perangkat Lunak 2026**
+
+| Name | Student ID | GitHub |
+|---|---|---|
+| Kenji Ratanaputra | 24/534421/PA/22664 | [@Kenzi-GIT](https://github.com/Kenzi-GIT) |
+| Ayasha Rahmadinni | 24/545462/PA/23178 | [@ayashar](https://github.com/ayashar) |
+| Kevin Antonio Wiyono Lauw | 24/535917/PA/22736 | [@KevinAntonioWiyonoLauw](https://github.com/KevinAntonioWiyonoLauw) |
+| Melinda Annastasia Budijono | 24/542840/PA/23052 | [@melinda-ab](https://github.com/melinda-ab) |
 
 ---
 
 ## 📄 License
 
-*   The ontology references the **Agentic AI Ontology (AgentO)** schema, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-*   The generator engine source code is distributed under the **MIT License**.
+This project is dual-licensed:
+
+- **Source Code** — [MIT License](LICENSE)
+- **AgentO Ontology** — [Creative Commons Attribution 4.0 (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
