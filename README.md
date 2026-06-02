@@ -1,18 +1,25 @@
-<p align="center">
-  <h1 align="center">AgentO — Agentic AI Framework Generator</h1>
-  <p align="center">
-    <em>From Knowledge Graphs to Executable Multi-Agent Code</em>
-  </p>
-</p>
+# Agentic AI Framework Generator 🚀
 
-<p align="center">
-  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.10_|_3.11_|_3.12_|_3.13-3776AB?logo=python&logoColor=white" alt="Python"></a>
-  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"></a>
-  <a href="https://w3id.org/agentic-ai/onto"><img src="https://img.shields.io/badge/Ontology-AgentO-blueviolet" alt="AgentO"></a>
-  <a href="#"><img src="https://img.shields.io/badge/Frameworks-CrewAI_|_LangGraph-orange" alt="Frameworks"></a>
-</p>
+[![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Ontology](https://img.shields.io/badge/Ontology-AgentO-blueviolet)](https://w3id.org/agentic-ai/onto)
+[![Frameworks](https://img.shields.io/badge/Target%20Frameworks-CrewAI%20%7C%20LangGraph%20%7C%20AutoGen-green.svg)](#)
+
+A semantic-web-driven code generator that bridges the gap between formal ontology designs and operational multi-agent python applications. By reading RDF/Turtle Knowledge Graphs built with the **Agentic AI Ontology (AgentO)**, this generator parses semantic agentic configurations (agents, tasks, workflows, tools, and prompts) and automatically builds production-ready executable codebases for **CrewAI** and **LangGraph**.
 
 ---
+
+## 👥 Members (Kelompok 3 - Rekayasa Perangkat Lunak 2026)
+
+| Name | Student ID | GitHub |
+|---|---|---|
+| Kenji Ratanaputra | 24/534421/PA/22664 | [@Kenzi-GIT](https://github.com/Kenzi-GIT) |
+| Ayasha Rahmadinni | 24/545462/PA/23178 | [@ayashar](https://github.com/ayashar) |
+| Kevin Antonio Wiyono Lauw | 24/535917/PA/22736 | [@KevinAntonioWiyonoLauw](https://github.com/KevinAntonioWiyonoLauw) |
+| Melinda Annastasia Budijono | 24/542840/PA/23052 | [@melinda-ab](https://github.com/melinda-ab) |
+
+---
+
 
 ## Table of Contents
 
@@ -31,7 +38,7 @@
 - [Generated Output Structure](#-generated-output-structure)
 - [Available Scripts Reference](#-available-scripts-reference)
 - [Project Links](#-project-links)
-- [Team Members](#-team-members)
+- [Team Members](#-members-kelompok-3---rekayasa-perangkat-lunak-2026)
 - [License](#-license)
 
 ---
@@ -521,19 +528,6 @@ output_files/langgraph/<scenario>/
 | **Repository** | [kelompok3-agentic-generator-paper](https://github.com/Software-Engineering-2026-Class/kelompok3-agentic-generator-paper) |
 | **AgentO Ontology** | [https://w3id.org/agentic-ai/onto](https://w3id.org/agentic-ai/onto) |
 | **Research Paper** | See `paper/K-CAP_2025_paper_25.pdf` |
-
----
-
-## 👥 Team Members
-
-**Kelompok 3 — Rekayasa Perangkat Lunak 2026**
-
-| Name | Student ID | GitHub |
-|---|---|---|
-| Kenji Ratanaputra | 24/534421/PA/22664 | [@Kenzi-GIT](https://github.com/Kenzi-GIT) |
-| Ayasha Rahmadinni | 24/545462/PA/23178 | [@ayashar](https://github.com/ayashar) |
-| Kevin Antonio Wiyono Lauw | 24/535917/PA/22736 | [@KevinAntonioWiyonoLauw](https://github.com/KevinAntonioWiyonoLauw) |
-| Melinda Annastasia Budijono | 24/542840/PA/23052 | [@melinda-ab](https://github.com/melinda-ab) |
 
 ---
 
