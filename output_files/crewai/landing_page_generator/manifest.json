@@ -1,0 +1,14 @@
+{
+  "framework": "crewai",
+  "pattern": "landing_page_generator",
+  "generated_files": [
+    ".env.example",
+    "config/agents.yaml",
+    "config/inputs.yaml",
+    "config/tasks.yaml",
+    "crew.py",
+    "main.py",
+    "pyproject.toml"
+  ],
+  "timestamp": "2026-06-02T08:45:11.545126+00:00"
+}

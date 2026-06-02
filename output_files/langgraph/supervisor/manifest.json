@@ -1,0 +1,9 @@
+{
+  "framework": "langgraph",
+  "pattern": "supervisor",
+  "generated_files": [
+    "main.py",
+    "requirements.txt"
+  ],
+  "timestamp": "2026-06-02T08:45:17.596219+00:00"
+}

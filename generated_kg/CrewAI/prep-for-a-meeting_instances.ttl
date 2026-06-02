@@ -13,6 +13,8 @@
 
 
 
+
+
 # Execution time: 90.72 seconds
 # Model used: gpt-5-mini
 
@@ -27,6 +29,7 @@
 #################################################################
 # Team / Workflow pattern for the Meeting Preparation solution
 #################################################################
+
 
 
 
@@ -259,6 +262,12 @@ strategic recommendations.""" .
     agento-ext:inputKey "objective" ;
     agento-ext:inputValue "" ;
     agento-ext:isDefaultValue false .
+
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
 
 #################################################################
 # Agents (Canonical Pattern)

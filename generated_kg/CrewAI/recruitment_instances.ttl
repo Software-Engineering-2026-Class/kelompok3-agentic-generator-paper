@@ -13,6 +13,8 @@
 
 
 
+
+
 # Execution time: 104.84 seconds
 # Model used: gpt-5-mini
 
@@ -27,6 +29,7 @@
 #################################################################
 # Recruitment crew instance graph
 #################################################################
+
 
 
 
@@ -400,6 +403,12 @@ Summarize the findings from the previous tasks and provide clear recommendations
     - Professional development opportunities.
 """ ;
     agento-ext:isDefaultValue true .
+
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
 
 #################################################################
 # Agents (Canonical Pattern)

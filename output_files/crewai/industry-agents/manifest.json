@@ -1,0 +1,15 @@
+{
+  "framework": "crewai",
+  "pattern": "industry-agents",
+  "generated_files": [
+    ".env",
+    ".env.example",
+    "config/agents.yaml",
+    "config/inputs.yaml",
+    "config/tasks.yaml",
+    "crew.py",
+    "main.py",
+    "pyproject.toml"
+  ],
+  "timestamp": "2026-06-02T08:45:10.724985+00:00"
+}

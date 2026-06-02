@@ -1,0 +1,9 @@
+{
+  "framework": "langgraph",
+  "pattern": "trip-planner",
+  "generated_files": [
+    "main.py",
+    "requirements.txt"
+  ],
+  "timestamp": "2026-06-02T08:45:18.227864+00:00"
+}

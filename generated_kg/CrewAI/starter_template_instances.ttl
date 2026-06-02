@@ -14,6 +14,8 @@
 
 
 
+
+
 # Execution time: 95.72 seconds
 # Model used: gpt-5-mini
 
@@ -31,6 +33,7 @@
 #################################################################
 
 ### Team (Crew)
+
 
 
 :CustomCrewTeam rdf:type :Team ;
@@ -216,6 +219,12 @@ Make sure to do something else.
     agento-ext:inputKey "var2" ;
     agento-ext:inputValue "" ;
     agento-ext:isDefaultValue false .
+
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
 
 #################################################################
 # Agents (Canonical Pattern)

@@ -1,0 +1,9 @@
+{
+  "framework": "langgraph",
+  "pattern": "pizza-orderer",
+  "generated_files": [
+    "main.py",
+    "requirements.txt"
+  ],
+  "timestamp": "2026-06-02T08:45:16.167560+00:00"
+}

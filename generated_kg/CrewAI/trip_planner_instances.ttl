@@ -13,6 +13,8 @@
 
 
 
+
+
 # Execution time: 143.77 seconds
 # Model used: gpt-5-mini
 
@@ -29,6 +31,7 @@
 ################################################################################
 # Team / System representing the crew
 ################################################################################
+
 
 
 
@@ -425,6 +428,12 @@ Traveler Interests: {interests}
     agento-ext:inputKey "interests" ;
     agento-ext:inputValue "" ;
     agento-ext:isDefaultValue false .
+
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
 
 #################################################################
 # Agents (Canonical Pattern)

@@ -1,0 +1,158 @@
+# docker-compose stack for the Agentic AI Framework Generator.
+# Usage:
+#   docker compose up                       -> run the full pipeline (default service: `app`)
+#   docker compose --profile pipeline up    -> run each stage as its own container
+#   docker compose --profile llm up         -> also run the LLM ontology-population stage
+#   docker compose --profile dev run --rm app bash -> drop into a shell inside the image
+#   docker compose run --rm app <stage>     -> run a specific stage (see entrypoint.sh)
+
+name: agentic-generator
+
+services:
+  # NOTE: `normalize` mutates generated_kg/CrewAI/*.ttl in place. Mounted writable.
+  normalize:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: agentic-generator:latest
+    container_name: agentic-normalize
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./generated_kg:/app/generated_kg
+      - ./agentO.ttl:/app/agentO.ttl:ro
+    command: ["normalize"]
+    restart: "no"
+    profiles: ["pipeline"]
+
+  kickoff:
+    image: agentic-generator:latest
+    container_name: agentic-kickoff
+    depends_on:
+      normalize:
+        condition: service_completed_successfully
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./generated_kg:/app/generated_kg
+    command: ["kickoff"]
+    restart: "no"
+    profiles: ["pipeline"]
+
+  generate-crewai:
+    image: agentic-generator:latest
+    container_name: agentic-generate-crewai
+    depends_on:
+      kickoff:
+        condition: service_completed_successfully
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./generated_kg:/app/generated_kg:ro
+      - ./output_files:/app/output_files
+    command: ["crewai"]
+    restart: "no"
+    profiles: ["pipeline"]
+
+  generate-langgraph:
+    image: agentic-generator:latest
+    container_name: agentic-generate-langgraph
+    depends_on:
+      kickoff:
+        condition: service_completed_successfully
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./generated_kg:/app/generated_kg:ro
+      - ./output_files:/app/output_files
+    command: ["langgraph"]
+    restart: "no"
+    profiles: ["pipeline"]
+
+  validate:
+    image: agentic-generator:latest
+    container_name: agentic-validate
+    depends_on:
+      generate-crewai:
+        condition: service_completed_successfully
+      generate-langgraph:
+        condition: service_completed_successfully
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./generated_kg:/app/generated_kg:ro
+      - ./output_files:/app/output_files:ro
+    command: ["validate"]
+    restart: "no"
+    profiles: ["pipeline"]
+
+  stats:
+    image: agentic-generator:latest
+    container_name: agentic-stats
+    depends_on:
+      generate-crewai:
+        condition: service_completed_successfully
+      generate-langgraph:
+        condition: service_completed_successfully
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./generated_kg:/app/generated_kg:ro
+      - ./output_files:/app/output_files:ro
+    command: ["stats"]
+    restart: "no"
+    profiles: ["pipeline"]
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: agentic-generator:latest
+    container_name: agentic-app
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./generated_kg:/app/generated_kg
+      - ./output_files:/app/output_files
+      - ./agentO.ttl:/app/agentO.ttl:ro
+    command: ["full"]
+    restart: "no"
+    stdin_open: true
+    tty: true
+
+  prompt:
+    image: agentic-generator:latest
+    container_name: agentic-prompt
+    env_file:
+      - path: .env
+        required: true
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+    volumes:
+      - ./Script:/app/Script
+      - ./agentO.ttl:/app/agentO.ttl:ro
+      - ./crews:/crews:ro
+    command: ["prompt"]
+    restart: "no"
+    profiles: ["llm"]
+
+  dev:
+    image: agentic-generator:latest
+    container_name: agentic-dev
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./:/app
+    command: ["bash"]
+    stdin_open: true
+    tty: true
+    restart: "no"
+    profiles: ["dev"]

@@ -1,0 +1,14 @@
+{
+  "framework": "crewai",
+  "pattern": "match_profile_to_positions",
+  "generated_files": [
+    ".env.example",
+    "config/agents.yaml",
+    "config/inputs.yaml",
+    "config/tasks.yaml",
+    "crew.py",
+    "main.py",
+    "pyproject.toml"
+  ],
+  "timestamp": "2026-06-02T08:45:12.141346+00:00"
+}

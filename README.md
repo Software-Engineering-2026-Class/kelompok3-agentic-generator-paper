@@ -72,6 +72,47 @@ The main starting points for the codebase are:
   pip install -r requirements.txt
   ```
 
+## Quick Start with Docker
+
+A complete containerized environment is provided. The whole pipeline (normalize → generate → validate → statistics) is runnable with a single command:
+
+```bash
+docker compose up
+```
+
+This builds the image on first run and executes the full pipeline. Output appears in `./output_files/`.
+
+### Common commands
+
+| Command | Purpose |
+|---|---|
+| `docker compose up` | Run the entire pipeline (normalize → generate → validate → stats) |
+| `docker compose run --rm app normalize` | Run only the KG-normalization stage |
+| `docker compose run --rm app crewai` | Generate only CrewAI projects |
+| `docker compose run --rm app langgraph` | Generate only LangGraph projects |
+| `docker compose run --rm app stats` | Generate only framework statistics |
+| `docker compose run --rm app bash` | Open an interactive shell inside the image |
+| `docker compose --profile pipeline up` | Run each stage as its own container (with `depends_on` ordering) |
+| `docker compose --profile llm up` | Also run the optional LLM ontology-population stage (requires `OPENAI_API_KEY`) |
+| `docker compose down --rmi local` | Stop and remove containers + the built image |
+
+### Environment variables
+
+Copy `.env.example` to `.env` and fill in your `OPENAI_API_KEY`. The default pipeline does **not** call the OpenAI API; only the `prompt` service (LLM ontology-population) does. A `.env` is therefore only required if you enable the `llm` profile.
+
+### Pipeline stages
+
+| Stage | Service (profile `pipeline`) | Container-only (`app`) |
+|---|---|---|
+| 1. Normalize KGs | `normalize` | `entrypoint.sh normalize` |
+| 2. Append kickoff inputs | `kickoff` | `entrypoint.sh kickoff` |
+| 3. Generate CrewAI | `generate-crewai` | `entrypoint.sh crewai` |
+| 4. Generate LangGraph | `generate-langgraph` | `entrypoint.sh langgraph` |
+| 5. Validate | `validate` | `entrypoint.sh validate` |
+| 6. Statistics | `stats` | `entrypoint.sh stats` |
+
+The multi-container `pipeline` profile runs each stage in a separate container with `depends_on: condition: service_completed_successfully` ordering, so stages run in sequence and the command exits only when the last one finishes.
+
 ## Usage
 
 ### Option 1: Generate Multi-Agent Code from Knowledge Graph

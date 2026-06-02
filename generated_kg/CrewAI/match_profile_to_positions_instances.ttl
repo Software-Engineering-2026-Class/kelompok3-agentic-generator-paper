@@ -14,6 +14,8 @@
 
 
 
+
+
 # Execution time: 58.64 seconds
 # Model used: gpt-5-mini
 
@@ -30,6 +32,7 @@
 #################################################################
 # Team / Crew
 #################################################################
+
 
 
 
@@ -279,6 +282,12 @@ CV file: {path_to_cv}""" ;
     agento-ext:inputKey "path_to_jobs_csv" ;
     agento-ext:inputValue "./src/match_to_proposal/data/jobs.csv" ;
     agento-ext:isDefaultValue true .
+
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
 
 #################################################################
 # Agents (Canonical Pattern)

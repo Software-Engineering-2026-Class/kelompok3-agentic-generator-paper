@@ -10,6 +10,8 @@
 
 
 
+
+
 # Execution time: 218.00 seconds
 # Model used: gpt-5-mini
 
@@ -25,6 +27,7 @@
 #################################################################
 # Agents (LLMAgent individuals)
 #################################################################
+
 
 
 
@@ -536,6 +539,12 @@ each with 1 paragraph description following the examples provided above.
     agento-ext:inputKey "product_details" ;
     agento-ext:inputValue "" ;
     agento-ext:isDefaultValue false .
+
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
 
 #################################################################
 # Agents (Canonical Pattern)

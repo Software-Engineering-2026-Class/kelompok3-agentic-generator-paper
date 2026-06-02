@@ -14,6 +14,8 @@
 
 
 
+
+
 # Execution time: 57.23 seconds
 # Model used: gpt-5-mini
 
@@ -31,6 +33,7 @@
 #################################################################
 
 ### Team / Crew
+
 
 
 :MetaQuestKnowledge_Crew rdf:type :Team ;
@@ -155,6 +158,12 @@ These runtime operations and parameters are preserved as documentation rather th
     agento-ext:inputKey "question" ;
     agento-ext:inputValue "How often should I take breaks?" ;
     agento-ext:isDefaultValue true .
+
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
 
 #################################################################
 # Agents (Canonical Pattern)

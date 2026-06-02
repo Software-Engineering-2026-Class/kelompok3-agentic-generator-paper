@@ -2,3 +2,9 @@ rdflib
 pandas
 crewai
 autogen
+pyyaml
+jinja2
+langchain-core
+langchain-openai
+langgraph
+openai

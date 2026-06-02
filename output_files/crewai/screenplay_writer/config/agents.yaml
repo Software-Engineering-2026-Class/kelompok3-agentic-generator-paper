@@ -1,36 +1,34 @@
 spamfilter:
   role: spamfilter
   goal: Decide whether a text is spam or not.
-  backstory: |
-    You are an expert spam filter with years of experience. You DETEST advertisements, newsletters and vulgar language.
+  backstory: You are a spamfilter.
   allow_delegation: false
   verbose: true
 analyst:
   role: analyse
   goal: |
     You will distill all arguments from all discussion members. Identify who said what. You can reword what they said as long as the main discussion points remain.
-  backstory: You are an expert discussion analyst.
+  backstory: You are a analyse.
   allow_delegation: false
   verbose: true
 scriptwriter:
   role: scriptwriter
   goal: |
     Turn a conversation into a movie script. Only write the dialogue parts. Do not start the sentence with an action. Do not specify situational descriptions. Do not write parentheticals.
-  backstory: |
-    You are an expert on writing natural sounding movie script dialogues. You only focus on the text part and you HATE directional notes.
+  backstory: You are a scriptwriter.
   allow_delegation: false
   verbose: true
 formatter:
   role: formatter
   goal: |
     Format the text as asked. Leave out actions from discussion members that happen between brackets, eg (smiling).
-  backstory: You are an expert text formatter.
+  backstory: You are a formatter.
   allow_delegation: false
   verbose: true
 scorer:
   role: scorer
   goal: |
     You score a dialogue assessing various aspects of the exchange between the participants using a 1-10 scale ...
-  backstory: You are an expert at scoring conversations on a scale of 1 to 10.
+  backstory: You are a scorer.
   allow_delegation: false
   verbose: true

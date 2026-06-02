@@ -16,8 +16,7 @@ from langchain.llms import Ollama
 # ===========================================================
 # TODO: tool_calculator — unknown tool class "CalculatorTool"
 #   Description: Calculator tool (from src/stock_analysis/tools/calculator_tool.py).
-
-    Purpose
+    Purpose:
 #   Implement as a custom BaseTool or replace with a crewai_tools equivalent.
 # tool_calculator = SomeCustomTool()
 tool_scrape_website = ScrapeWebsiteTool()

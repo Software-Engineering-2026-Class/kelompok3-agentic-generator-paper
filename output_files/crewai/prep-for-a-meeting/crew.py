@@ -13,8 +13,8 @@ from crewai.project import CrewBase, agent, crew, task
 # Tool Instances
 # ===========================================================
 # TODO: exa_search_tool — unknown tool class "ExaSearchTool"
-#   Description: Tool wrapping Exa (exa_py) search capabilities used by agents.
-Provides three m
+#   Description: Tool wrapping Exa (exa_py) search capabilities used by agents.
+Provides three ma
 #   Implement as a custom BaseTool or replace with a crewai_tools equivalent.
 # exa_search_tool = SomeCustomTool(EXA_API_KEY="Your Key (from .env.example)")
 

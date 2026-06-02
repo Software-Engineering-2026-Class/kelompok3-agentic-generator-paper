@@ -1,0 +1,10 @@
+{
+  "framework": "langgraph",
+  "pattern": "open-code",
+  "generated_files": [
+    "__pycache__/main.cpython-312.pyc",
+    "main.py",
+    "requirements.txt"
+  ],
+  "timestamp": "2026-06-02T08:45:21.813230+00:00"
+}

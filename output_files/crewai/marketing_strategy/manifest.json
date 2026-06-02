@@ -1,0 +1,14 @@
+{
+  "framework": "crewai",
+  "pattern": "marketing_strategy",
+  "generated_files": [
+    ".env.example",
+    "config/agents.yaml",
+    "config/inputs.yaml",
+    "config/tasks.yaml",
+    "crew.py",
+    "main.py",
+    "pyproject.toml"
+  ],
+  "timestamp": "2026-06-02T08:45:11.963794+00:00"
+}

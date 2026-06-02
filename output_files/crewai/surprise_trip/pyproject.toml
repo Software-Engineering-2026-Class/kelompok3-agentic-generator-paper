@@ -1,8 +1,8 @@
 [project]
 name = "surprise_travel"
 version = "0.1.0"
-description = "SurpriseTravel crew coordinating agents to plan a surprise travel itinerary.
-  "
+description = "SurpriseTravel crew coordinating agents to plan a surprise travel itinerary.
+   "
 authors = [{name = "Your Name", email = "you@example.com"}]
 readme = "README.md"
 requires-python = ">=3.10,<=3.13"

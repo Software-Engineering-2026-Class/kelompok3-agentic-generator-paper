@@ -1,0 +1,9 @@
+{
+  "framework": "langgraph",
+  "pattern": "chat-agent",
+  "generated_files": [
+    "main.py",
+    "requirements.txt"
+  ],
+  "timestamp": "2026-06-02T08:45:14.292365+00:00"
+}

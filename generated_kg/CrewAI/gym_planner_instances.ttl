@@ -9,12 +9,15 @@
 @base <http://www.w3id.org/agentic-ai/onto#> .
 @prefix agento-ext: <http://www.w3id.org/agentic-ai/ext#> .
 
+
+
 # Execution time: 10.00 seconds
 # Model used: manual-generation-by-copilot
 
 ################################################################################
 # Team / System representing the crew
 ################################################################################
+
 
 :GymPlannerCrew a :Team ;
     <http://purl.org/dc/terms/title> "Gym Planner Crew" ;
@@ -25,32 +28,6 @@
 
 ################################################################################
 # Agents (LLM Agents)
-################################################################################
-
-:FitnessExpertAgent a :LLMAgent ;
-    :agentID "FitnessExpertAgent" ;
-    :agentRole "Senior Fitness Coach" ;
-    <http://purl.org/dc/terms/description> "An expert in personal training, biomechanics, and designing customized workout routines based on user goals (e.g., hypertrophy, weight loss, mobility) and current fitness levels." ;
-    :hasAgentGoal "Design highly effective, structured, and customized workout routines." ;
-    :hasAgentCapability :RoutineDesignCapability ;
-    :agentPrompt :FitnessExpertAgent_Backstory .
-
-:NutritionistAgent a :LLMAgent ;
-    :agentID "NutritionistAgent" ;
-    :agentRole "Certified Dietitian" ;
-    <http://purl.org/dc/terms/description> "An expert in sports nutrition who calculates macronutrients and creates practical, healthy daily meal plans tailored to specific caloric needs and fitness goals." ;
-    :hasAgentGoal "Create healthy, easy-to-follow daily meal plans that complement the workout routines." ;
-    :hasAgentCapability :MealPlanCapability ;
-    :agentPrompt :NutritionistAgent_Backstory .
-
-:FitnessExpertAgent_Backstory a :Prompt ;
-    :promptInstruction "You are a top-tier Senior Fitness Coach who has trained professional athletes and total beginners. You know how to balance intensity and recovery." .
-
-:NutritionistAgent_Backstory a :Prompt ;
-    :promptInstruction "You are a Certified Dietitian specializing in sports nutrition. You believe in sustainable, science-backed meal planning." .
-
-################################################################################
-# Capabilities
 ################################################################################
 
 :RoutineDesignCapability a :Capability ;
@@ -143,3 +120,35 @@
     :stepOrder 2 ;
     :hasAssociatedTask :CreateMealPlanTask ;
     :relatedStep :Step1_Workout .
+
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
+:Design highly effective, structured, and customized workout routines. a :Goal ;
+    <http://purl.org/dc/terms/description> "Senior Fitness Coach" .
+
+:Create healthy, easy-to-follow daily meal plans that complement the workout routines. a :Goal ;
+    <http://purl.org/dc/terms/description> "Certified Dietitian" .
+
+:FitnessExpertAgent a :LLMAgent ;
+    :agentID "FitnessExpertAgent" ;
+    :agentRole "Senior Fitness Coach" ;
+    :hasAgentGoal :Design highly effective, structured, and customized workout routines. ;
+    :hasAgentCapability :RoutineDesignCapability ;
+    :agentPrompt :prompt_FitnessExpertAgent .
+
+:prompt_FitnessExpertAgent a :Prompt ;
+    :promptContext "You are a top-tier Senior Fitness Coach who has trained professional athletes and total beginners. You know how to balance intensity and recovery." .
+
+:NutritionistAgent a :LLMAgent ;
+    :agentID "NutritionistAgent" ;
+    :agentRole "Certified Dietitian" ;
+    :hasAgentGoal :Create healthy, easy-to-follow daily meal plans that complement the workout routines. ;
+    :hasAgentCapability :MealPlanCapability ;
+    :agentPrompt :prompt_NutritionistAgent .
+
+:prompt_NutritionistAgent a :Prompt ;
+    :promptContext "You are a Certified Dietitian specializing in sports nutrition. You believe in sustainable, science-backed meal planning." .
