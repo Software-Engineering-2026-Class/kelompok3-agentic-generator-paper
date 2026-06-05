@@ -1,3 +1,15 @@
+@prefix : <http://www.w3id.org/agentic-ai/onto#> .
+@prefix pp: <http://purl.org/net/p-plan#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix beam: <http://w3id.org/beam/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://www.w3id.org/agentic-ai/onto#> .
+@prefix agento-ext: <http://www.w3id.org/agentic-ai/ext#> .
+
 # Execution time: 92.47 seconds
 # Model used: gpt-5-mini
 
@@ -12,17 +24,6 @@
 # - The ontology has no property specifically for "tool call arguments" or "tool call response structure." We modeled argument names and expected outputs in Prompt and Config descriptions and preserved schema text literals.
 # - The dynamic, conversational "messages" state (state.messages) was preserved semantically as an LLM message resource but not modeled as a mutable sequence. The ontology captures that the agent passes conversation messages to the LLM but not the exact runtime order.
 # - No new classes or properties were added. Some implementation details were necessarily condensed into description literals or Config entries to preserve fidelity.
-
-@prefix : <http://www.w3id.org/agentic-ai/onto#> .
-@prefix pp: <http://purl.org/net/p-plan#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix beam: <http://w3id.org/beam/core#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
-@base <http://www.w3id.org/agentic-ai/onto#> .
 
 #################################################################
 # Individuals for Stockbroker agent solution
@@ -310,3 +311,17 @@ These notes are preserved for semantic reconstruction; actual functions, SDK usa
 """ .
 
 # End of individuals.
+
+################################################################################
+# KickoffInputBundle (agento-ext) - Uniform runtime inputs for pipeline extraction
+################################################################################
+
+:KickoffInput_stock_ticker a agento-ext:KickoffInputBundle ;
+    agento-ext:inputKey "stock_ticker" ;
+    agento-ext:inputValue "AAPL" ;
+    agento-ext:isDefaultValue true .
+
+:KickoffInput_analysis_type a agento-ext:KickoffInputBundle ;
+    agento-ext:inputKey "analysis_type" ;
+    agento-ext:inputValue "short-term outlook" ;
+    agento-ext:isDefaultValue true .

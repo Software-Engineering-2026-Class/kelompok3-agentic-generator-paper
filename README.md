@@ -67,7 +67,7 @@ AgentO solves this by providing a **single source of truth** — a Knowledge Gra
 | **Ontology-Driven Generation** | Uses the standard [AgentO Ontology](https://w3id.org/agentic-ai/onto) as the formal specification layer |
 | **Multi-Framework Output** | Generates complete projects for **CrewAI** (YAML configs + Python) and **LangGraph** (stateful graphs) |
 | **3 LangGraph Patterns** | Supports **Linear**, **Tool-Calling**, and **Supervisor** orchestration patterns |
-| **CrewAI Best Practices** | Outputs `agents.yaml`, `tasks.yaml`, `crew.py`, `main.py`, `.env.example`, and `inputs.yaml` |
+| **Config-Driven Outputs** | CrewAI emits `agents.yaml`, `tasks.yaml`, `crew.py`, `main.py`, `.env.example`, and `config/inputs.yaml`. LangGraph emits `main.py`, `config/inputs.yaml`, `.env.example`, and `requirements.txt`. |
 | **Batch & Single Processing** | Process all KGs at once or target a single `.ttl` file |
 | **Offline Quality Evaluation** | 3-stage validation pipeline: syntax check → AST-vs-IR comparison → mock runtime execution |
 | **Reverse Engineering** | Extract agentic structures from existing codebases into Knowledge Graph instances via LLM |
@@ -257,6 +257,8 @@ Only required if you plan to use the **reverse engineering** module or run **gen
 echo "OPENAI_API_KEY=sk-your-key-here" > .env
 ```
 
+> **Per-project `.env`:** Each generated LangGraph project also ships with its own `.env.example` (containing `OPENAI_API_KEY`, `OPENAI_API_BASE`, and `LLM_MODEL`). Copy it to `.env` inside the generated project directory and fill in your real key before running `python main.py`. The `.env` is loaded with `override=True` so it wins over any global environment variables (e.g. `OPENAI_API_BASE` pointing to a different provider).
+
 ---
 
 ## Quick Start with Docker
@@ -291,6 +293,7 @@ Copy `.env.example` to `.env` and fill in your `OPENAI_API_KEY`. The default pip
 
 | Stage | Service (profile `pipeline`) | Container-only (`app`) |
 |---|---|---|
+| 0. Build image | `build` | `entrypoint.sh build` |
 | 1. Normalize KGs | `normalize` | `entrypoint.sh normalize` |
 | 2. Append kickoff inputs | `kickoff` | `entrypoint.sh kickoff` |
 | 3. Generate CrewAI | `generate-crewai` | `entrypoint.sh crewai` |
@@ -477,6 +480,9 @@ output_files/crewai/<scenario>/
 ```
 output_files/langgraph/<scenario>/
 ├── main.py                 
+├── config/
+│   └── inputs.yaml         
+├── .env.example            
 ├── requirements.txt        
 └── manifest.json           
 ```

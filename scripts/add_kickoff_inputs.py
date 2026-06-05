@@ -1,23 +1,11 @@
-"""
-One-time migration script: Add agento-ext:KickoffInputBundle triples to all CrewAI TTL files.
-
-This appends a uniform, SPARQL-friendly input representation to each KG file,
-replacing the 7+ ad-hoc patterns for encoding runtime inputs.
-
-Run once from project root:
-    python scripts/add_kickoff_inputs.py
-"""
-
 import os
 
-TTL_DIR = os.path.join(os.path.dirname(__file__), "..", "generated_kg", "CrewAI")
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CREAI_TTL_DIR = os.path.join(PROJECT_ROOT, "generated_kg", "CrewAI")
+LANGGRAPH_TTL_DIR = os.path.join(PROJECT_ROOT, "generated_kg", "LangGraph")
 
-# Namespace prefix block to inject (only if not already present)
 EXT_PREFIX = '@prefix agento-ext: <http://www.w3id.org/agentic-ai/ext#> .'
 
-# Per-crew KickoffInputBundle definitions
-# key = TTL filename stem, value = list of (inputKey, inputValue, isDefault)
-# isDefault=False means Pattern H: no concrete value available (runtime-only)
 CREW_INPUTS = {
     "game-builder-crew_instances": [
         ("game", "A Snake game where the player controls a snake that moves continuously, and the player can change its direction using input keys. The snake grows longer each time it eats food, which appears randomly on the screen. The game ends if the snake collides with itself or the walls. The player's score increases with each food item eaten. The game should include a simple scoring system, a start screen, and a game-over screen displaying the final score.", True),
@@ -60,9 +48,7 @@ CREW_INPUTS = {
     "recruitment_instances": [
         ("job_requirements", "Ruby on Rails and React Engineer - We are seeking a skilled Ruby on Rails and React engineer to join our team. The ideal candidate will have experience in both backend and frontend development, with a passion for building high-quality web applications.", True),
     ],
-    "screenplay_writer_instances": [
-        # No runtime input variables - discussion text is embedded in the KG
-    ],
+    "screenplay_writer_instances": [],
     "starter_template_instances": [
         ("var1", "", False),
         ("var2", "", False),
@@ -86,26 +72,62 @@ CREW_INPUTS = {
     ],
 }
 
+LANGGRAPH_INPUTS = {
+    "chat-agent_instances": [],
+    "email-agent_instances": [
+        ("recipient", "user@example.com", True),
+        ("subject", "Quick question about the project", True),
+        ("body", "Hi, I wanted to follow up on our last conversation about the project timeline. Can you send me an update when you have a moment? Thanks!", True),
+    ],
+    "open-code_instances": [
+        ("request", "Write a Python function that reads a CSV file and returns a list of dictionaries, one per row. Include error handling for missing files and malformed rows.", True),
+    ],
+    "pizza-orderer_instances": [
+        ("pizza_type", "Margherita", True),
+        ("size", "large", True),
+        ("toppings", "extra cheese, mushrooms", True),
+        ("delivery_address", "123 Main St, Springfield", True),
+    ],
+    "stockbroker_instances": [
+        ("stock_ticker", "AAPL", True),
+        ("analysis_type", "short-term outlook", True),
+    ],
+    "supervisor_instances": [
+        ("task_description", "Investigate the Q3 sales drop and produce a report with findings and recommendations.", True),
+    ],
+    "trip-planner_instances": [
+        ("location", "Bali, Indonesia", True),
+        ("startDate", "2026-08-15", True),
+        ("endDate", "2026-08-22", True),
+        ("numberOfGuests", "2", True),
+        ("interests", "beaches, temples, local food", True),
+    ],
+    "utils_instances": [],
+    "writer-agent_instances": [
+        ("topic", "The impact of remote work on team collaboration", True),
+        ("tone", "professional but conversational", True),
+        ("length", "500 words", True),
+    ],
+}
+
 
 def _escape_ttl(value: str) -> str:
-    """Escape a string for Turtle literal (double-quoted)."""
     return value.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n")
 
 
-def build_bundle_block(crew_stem: str, inputs: list) -> str:
-    """Build the TTL block for KickoffInputBundle triples."""
+def build_bundle_block(stem: str, inputs: list) -> str:
     if not inputs:
         return ""
 
     lines = [
         "",
         "################################################################################",
-        "# KickoffInputBundle (agento-ext) — Uniform runtime inputs for pipeline extraction",
+        "# KickoffInputBundle (agento-ext) - Uniform runtime inputs for pipeline extraction",
         "################################################################################",
         "",
     ]
 
-    for i, (key, value, is_default) in enumerate(inputs, 1):
+    for key, value, is_default in inputs:
         node_name = f":KickoffInput_{key}"
         escaped_val = _escape_ttl(value)
 
@@ -121,17 +143,14 @@ def build_bundle_block(crew_stem: str, inputs: list) -> str:
     return "\n".join(lines)
 
 
-def process_file(filepath: str, crew_stem: str, inputs: list) -> None:
-    """Add agento-ext prefix and KickoffInputBundle triples to a TTL file."""
+def process_file(filepath: str, stem: str, inputs: list) -> None:
     with open(filepath, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Skip if already modified
     if "agento-ext:" in content:
-        print(f"  [SKIP] {crew_stem} — already has agento-ext triples")
+        print(f"  [SKIP] {stem} - already has agento-ext triples")
         return
 
-    # 1. Inject prefix after other @prefix lines
     prefix_lines = []
     other_lines = []
     in_prefix_block = True
@@ -139,23 +158,16 @@ def process_file(filepath: str, crew_stem: str, inputs: list) -> None:
         if in_prefix_block and (line.startswith("@prefix") or line.startswith("@base")):
             prefix_lines.append(line)
         elif in_prefix_block and line.strip() == "" and prefix_lines:
-            # Could be a blank between prefix and content
             prefix_lines.append(line)
         else:
             if in_prefix_block and prefix_lines:
                 in_prefix_block = False
             other_lines.append(line)
 
-    # Add our prefix after existing ones
-    prefix_lines.insert(-1, EXT_PREFIX)  # Before the trailing blank line
+    prefix_lines.insert(-1, EXT_PREFIX)
 
-    # 2. Build the bundle block
-    bundle_block = build_bundle_block(crew_stem, inputs)
-
-    # 3. Reassemble: prefixes + original content + bundle at end
+    bundle_block = build_bundle_block(stem, inputs)
     new_content = "\n".join(prefix_lines) + "\n" + "\n".join(other_lines)
-
-    # Strip trailing whitespace and add bundle before final end
     new_content = new_content.rstrip() + "\n" + bundle_block
 
     with open(filepath, "w", encoding="utf-8") as f:
@@ -163,19 +175,26 @@ def process_file(filepath: str, crew_stem: str, inputs: list) -> None:
 
     n_inputs = len(inputs)
     has_defaults = sum(1 for _, v, d in inputs if d and v)
-    print(f"  [OK] {crew_stem} — {n_inputs} inputs ({has_defaults} with defaults)")
+    print(f"  [OK] {stem} - {n_inputs} inputs ({has_defaults} with defaults)")
+
+
+def process_directory(ttl_dir: str, inputs_dict: dict, label: str) -> None:
+    print(f"\n[{label}] processing {ttl_dir}")
+    if not os.path.isdir(ttl_dir):
+        print(f"  [WARN] directory not found, skipping")
+        return
+    for stem, inputs in inputs_dict.items():
+        filepath = os.path.join(ttl_dir, f"{stem}.ttl")
+        if not os.path.exists(filepath):
+            print(f"  [WARN] {stem}.ttl not found, skipping")
+            continue
+        process_file(filepath, stem, inputs)
 
 
 def main():
-    print("Adding agento-ext:KickoffInputBundle to CrewAI TTL files...\n")
-
-    for crew_stem, inputs in CREW_INPUTS.items():
-        filepath = os.path.join(TTL_DIR, f"{crew_stem}.ttl")
-        if not os.path.exists(filepath):
-            print(f"  [WARN] {crew_stem}.ttl not found, skipping")
-            continue
-        process_file(filepath, crew_stem, inputs)
-
+    print("Adding agento-ext:KickoffInputBundle to TTL files...")
+    process_directory(CREAI_TTL_DIR, CREW_INPUTS, "CrewAI")
+    process_directory(LANGGRAPH_TTL_DIR, LANGGRAPH_INPUTS, "LangGraph")
     print("\nDone! All TTL files updated.")
 
 

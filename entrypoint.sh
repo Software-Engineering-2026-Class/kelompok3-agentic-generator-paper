@@ -22,6 +22,13 @@ require_openai_key() {
   fi
 }
 
+stage_build() {
+  log "Stage 0 — Docker image verification"
+  log "Image build is performed by docker compose itself via the \`build\` service."
+  log "Image tag: agentic-generator:latest"
+  ok "Image is ready for pipeline use"
+}
+
 stage_normalize() {
   log "Stage 1/5 — Normalize Knowledge Graphs (generated_kg/CrewAI/*.ttl)"
   python scripts/normalize_kg.py
@@ -101,6 +108,7 @@ usage() {
 Usage: entrypoint.sh <stage> [args]
 
 Stages:
+  build      Verify/prepare Docker image (no-op; actual build is done by compose)
   full       Run the entire pipeline (normalize -> generate -> validate -> stats)
   normalize  Normalize generated_kg/CrewAI/*.ttl to canonical agent pattern
   kickoff    Append kickoff input bundles to CrewAI TTLs
@@ -114,7 +122,9 @@ Stages:
   help       Show this help
 
 Examples:
-  docker compose up app
+  docker compose --profile pipeline up build       build image only (pipeline profile)
+  docker compose --profile pipeline up             run full multi-stage pipeline
+  docker compose up app                            run monolithic \`full\` pipeline
   docker compose run --rm app normalize
   docker compose run --rm app prompt ./some_folder
 EOF
@@ -124,6 +134,7 @@ cmd="${1:-help}"
 shift || true
 
 case "$cmd" in
+  build)     stage_build ;;
   full)      stage_full ;;
   normalize) stage_normalize ;;
   kickoff)   stage_kickoff ;;

@@ -37,7 +37,7 @@ def main():
     # -------------------------------------------------------------
     lg_results = []
     lg_kg_dir = os.path.join("generated_kg", "LangGraph")
-    lg_out_dir = os.path.join("output_files", "output_langgraph")
+    lg_out_dir = os.path.join("output_files", "langgraph")
     
     lg_ttls = sorted([f for f in os.listdir(lg_kg_dir) if f.endswith(".ttl")])
     print(f"\nProcessing {len(lg_ttls)} LangGraph KGs...")
@@ -84,7 +84,7 @@ def main():
     # -------------------------------------------------------------
     crew_results = []
     crew_kg_dir = os.path.join("generated_kg", "CrewAI")
-    crew_out_dir = os.path.join("output_files", "output_crewai")
+    crew_out_dir = os.path.join("output_files", "crewai")
     
     crew_ttls = sorted([f for f in os.listdir(crew_kg_dir) if f.endswith(".ttl")])
     print(f"Processing {len(crew_ttls)} CrewAI KGs...")

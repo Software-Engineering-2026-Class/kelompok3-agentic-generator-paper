@@ -1,10 +1,48 @@
+import os
 from typing import Annotated, TypedDict
+from pathlib import Path
+from dotenv import load_dotenv
+import yaml
+
+_HERE = Path(__file__).parent
+load_dotenv(_HERE / ".env", override=True)
+
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage
 from langchain_core.tools import tool
+
+LLM_MODEL = os.environ.get("LLM_MODEL", "anthropic/claude-3-7-sonnet-latest")
+
+
+def _load_inputs() -> dict:
+    inputs_path = _HERE / "config" / "inputs.yaml"
+    if not inputs_path.exists():
+        return {}
+    with open(inputs_path, encoding="utf-8") as fh:
+        data = yaml.safe_load(fh)
+    if not data:
+        return {}
+    result = {}
+    for k, v in data.items():
+        if isinstance(v, list) and v:
+            result[k] = str(v[0])
+        else:
+            result[k] = str(v) if v is not None else ""
+    return result
+
+
+def _build_user_message(inputs: dict) -> str:
+    if not inputs:
+        return "Please use your tool to answer this."
+    filled = {k: v for k, v in inputs.items() if v}
+    if not filled:
+        return "Please use your tool to answer this."
+    parts = [f"{k}={v}" for k, v in filled.items()]
+    return "Process this request with the following parameters: " + ", ".join(parts)
+
 
 # 1. Define Tools
 
@@ -46,12 +84,10 @@ def unnamed__tool_6(query: str) -> str:
 
 tools_list = [unnamed__tool, unnamed__tool_1, unnamed__tool_2, unnamed__tool_3, unnamed__tool_4, unnamed__tool_5, unnamed__tool_6]
 
-# 2. Define State
 class AgentState(TypedDict):
     messages: Annotated[list, add_messages]
 
-# 3. Define the main Agent Node
-llm = ChatOpenAI(model="anthropic/claude-3-7-sonnet-latest")
+llm = ChatOpenAI(model=LLM_MODEL)
 llm_with_tools = llm.bind_tools(tools_list)
 
 def agent_node(state: AgentState):
@@ -60,7 +96,6 @@ def agent_node(state: AgentState):
     response = llm_with_tools.invoke(messages)
     return {"messages": [response]}
 
-# 4. Build Graph
 workflow = StateGraph(AgentState)
 workflow.add_node("agent", agent_node)
 workflow.add_node("tools", ToolNode(tools_list))
@@ -72,6 +107,8 @@ workflow.add_edge("tools", "agent")
 app = workflow.compile()
 
 if __name__ == "__main__":
-    msgs = app.invoke({"messages": [("user", "Please use your tool to answer this.")]})
+    inputs = _load_inputs()
+    user_msg = _build_user_message(inputs)
+    msgs = app.invoke({"messages": [("user", user_msg)]})
     for m in msgs['messages']:
         print(f"{m.type}: {m.content}")

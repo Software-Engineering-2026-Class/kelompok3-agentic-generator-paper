@@ -1,3 +1,10 @@
+@prefix : <http://www.w3id.org/agentic-ai/onto#> .
+@prefix beam: <http://w3id.org/beam/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix agento-ext: <http://www.w3id.org/agentic-ai/ext#> .
+
 # Execution time: 92.00 seconds
 # Model used: gpt-5-mini
 
@@ -9,12 +16,6 @@
 # - Missing a way to represent "compiled" or "executable" artifact of the graph; I recorded the agent as an LLMAgent with a title "Chat Agent" and captured the behavior and prompts, but cannot express compiled/SDK-specific implementation details (async, invoke call semantics).
 # - I did not include or represent framework / SDK classes (StateGraph, Annotation.Root, ChatOpenAI class, model.invoke method) as ontology classes or properties — those are treated as implementation details and recorded in descriptive literals where necessary.
 # - No issues detected with using existing ontology classes/properties otherwise.
-
-@prefix : <http://www.w3id.org/agentic-ai/onto#> .
-@prefix beam: <http://w3id.org/beam/core#> .
-@prefix dct: <http://purl.org/dc/terms/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ########################################################################
 # Individuals describing the agent-based solution (Chat Agent)

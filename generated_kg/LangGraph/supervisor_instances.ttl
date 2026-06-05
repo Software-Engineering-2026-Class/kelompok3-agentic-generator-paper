@@ -1,3 +1,12 @@
+@prefix : <http://www.w3id.org/agentic-ai/onto#> .
+@prefix pp: <http://purl.org/net/p-plan#> .
+@prefix beam: <http://w3id.org/beam/core#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix agento-ext: <http://www.w3id.org/agentic-ai/ext#> .
+
 # Execution time: 122.08 seconds
 # Model used: gpt-5-mini
 
@@ -8,14 +17,6 @@
 # - There is no property to model multi-key config objects with clear key→value grouping; configKey / configValue on Config individuals are used (one pair per Config individual) to preserve each configuration parameter without inventing new classes or properties.
 # - Runtime tool invocation details (e.g., tool_call object structure returned by an LLM, or use of response.tool_calls) are represented as expected task outputs in literal promptOutputIndicator fields.
 # - No UI-specific constructs (nodes as UI components) are represented — nodes are modeled as WorkflowSteps and Tasks to capture semantic behavior.
-
-@prefix : <http://www.w3id.org/agentic-ai/onto#> .
-@prefix pp: <http://purl.org/net/p-plan#> .
-@prefix beam: <http://w3id.org/beam/core#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 #################################################################
 # Instances describing the "Generative UI Agent" solution
@@ -444,3 +445,12 @@ Otherwise, just answer as normal.""" ;
 #################################################################
 # End of instances
 #################################################################
+
+################################################################################
+# KickoffInputBundle (agento-ext) - Uniform runtime inputs for pipeline extraction
+################################################################################
+
+:KickoffInput_task_description a agento-ext:KickoffInputBundle ;
+    agento-ext:inputKey "task_description" ;
+    agento-ext:inputValue "Investigate the Q3 sales drop and produce a report with findings and recommendations." ;
+    agento-ext:isDefaultValue true .

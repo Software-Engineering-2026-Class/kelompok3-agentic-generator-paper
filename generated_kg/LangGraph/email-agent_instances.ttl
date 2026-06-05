@@ -1,3 +1,12 @@
+@prefix : <http://www.w3id.org/agentic-ai/onto#> .
+@prefix beam: <http://w3id.org/beam/core#> .
+@prefix pp: <http://purl.org/net/p-plan#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix agento-ext: <http://www.w3id.org/agentic-ai/ext#> .
+
 # Execution time: 97.71 seconds
 # Model used: gpt-5-mini
 
@@ -10,14 +19,6 @@
 # - No code or framework-specific constructs (e.g., function names, SDK calls) are stored. Only semantic elements (prompts, schemas, capabilities, resources, workflow topology, configs) are included so the solution can be re-created semantically.
 # - Assumed the workflow pattern "Email Assistant" is a single-agent workflow (no Team used).
 # - No additional classes or properties were added; only existing ones from the provided ontology were used.
-
-@prefix : <http://www.w3id.org/agentic-ai/onto#> .
-@prefix beam: <http://w3id.org/beam/core#> .
-@prefix pp: <http://purl.org/net/p-plan#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
 
 #################################################################
 # Instances for Email Assistant Agent solution
@@ -313,3 +314,22 @@ Given that, please rewrite the email. Do NOT modify anything the user does not r
 :EmailAssistantAgent rdfs:comment "Compiled state graph agent named 'Email Assistant Agent' that orchestrates prompts, tool calls, human interrupts, and send actions." .
 
 # End of instance data.
+
+################################################################################
+# KickoffInputBundle (agento-ext) - Uniform runtime inputs for pipeline extraction
+################################################################################
+
+:KickoffInput_recipient a agento-ext:KickoffInputBundle ;
+    agento-ext:inputKey "recipient" ;
+    agento-ext:inputValue "user@example.com" ;
+    agento-ext:isDefaultValue true .
+
+:KickoffInput_subject a agento-ext:KickoffInputBundle ;
+    agento-ext:inputKey "subject" ;
+    agento-ext:inputValue "Quick question about the project" ;
+    agento-ext:isDefaultValue true .
+
+:KickoffInput_body a agento-ext:KickoffInputBundle ;
+    agento-ext:inputKey "body" ;
+    agento-ext:inputValue "Hi, I wanted to follow up on our last conversation about the project timeline. Can you send me an update when you have a moment? Thanks!" ;
+    agento-ext:isDefaultValue true .

@@ -1,3 +1,14 @@
+@prefix : <http://www.w3id.org/agentic-ai/onto#> .
+@prefix pp: <http://purl.org/net/p-plan#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix beam: <http://w3id.org/beam/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.w3id.org/agentic-ai/onto#> .
+@prefix agento-ext: <http://www.w3id.org/agentic-ai/ext#> .
+
 # Execution time: 68.54 seconds
 # Model used: gpt-5-mini
 
@@ -8,16 +19,6 @@
 # - The ontology cannot represent language-specific code structures or the code itself (per instructions). Implementation logic is preserved as textual descriptions in dcterms:description and Prompt properties, but not as source code.
 # - The ontology cannot represent arrays/complex structured values beyond beam:Resource and literals; message-array semantics are captured in resource descriptions.
 # - No LLMAgents were present in the code; therefore no agent individuals are created. If agents are required later, they can be linked to these tasks/tools via performedByAgent, hasAgentCapability, etc.
-
-@prefix : <http://www.w3id.org/agentic-ai/onto#> .
-@prefix pp: <http://purl.org/net/p-plan#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix beam: <http://w3id.org/beam/core#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://www.w3id.org/agentic-ai/onto#> .
 
 #################################################################
 # Instances for the "text utilities" solution (capitalize + message formatting)

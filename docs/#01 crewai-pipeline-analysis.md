@@ -24,7 +24,7 @@ This pipeline reads the generated `.ttl` files and reconstructs a fully runnable
 * **Expected Input**:
   A `.ttl` file containing instance data based on `agentO.ttl`.
 * **Expected Output**:
-  A ready-to-run Python project directory (usually placed in `output_files/output_crewai/<project_name>/`), which typically includes:
+  A ready-to-run Python project directory (usually placed in `output_files/crewai/<project_name>/`), which typically includes:
   * `crew.py`: Defines the Crew, Agents, and Tasks logic.
   * `main.py`: The execution entry point (`kickoff` script).
   * `.env`: Environment variables and API keys (if defined in the KG).
@@ -69,10 +69,10 @@ The following properties exist in the ontology but are either ignored by the gen
    # Ensure environment is active
    python src/crewai/run.py generated_kg/CrewAI/<your_instance>.ttl
    ```
-   *Result: A generated python project in `output_files/output_crewai/`.*
+   *Result: A generated python project in `output_files/crewai/`.*
 
 3. **Execution (Run the generated code):**
    ```bash
-   cd output_files/output_crewai/<generated_project_name>
+   cd output_files/crewai/<generated_project_name>
    python main.py
    ```

@@ -1,3 +1,14 @@
+@prefix : <http://www.w3id.org/agentic-ai/onto#> .
+@prefix pp: <http://purl.org/net/p-plan#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix beam: <http://w3id.org/beam/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.w3id.org/agentic-ai/onto#> .
+@prefix agento-ext: <http://www.w3id.org/agentic-ai/ext#> .
+
 # Execution time: 108.40 seconds
 # Model used: gpt-5-mini
 
@@ -8,16 +19,6 @@
 # - The ontology does not have a property to model "tool call outcome" (accepted/rejected) or per-iteration state. I store the semantics (executedPlans, rejectedPlans, remainingPlans) as literal JSON in Prompt.promptInputData so an LLM can reconstruct the iteration semantics.
 # - The ontology has limited support for representing code files as resources. I model files as beam:Instance resources with dc:title for path and dc:description for exact file content (preserving delimiters and code fences).
 # - No new classes or properties were added. Where framework-specific concepts exist (typed UI, component maps, SDK types), they are captured as descriptive literals and not modeled as new ontology classes.
-
-@prefix : <http://www.w3id.org/agentic-ai/onto#> .
-@prefix pp: <http://purl.org/net/p-plan#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix beam: <http://w3id.org/beam/core#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://www.w3id.org/agentic-ai/onto#> .
 
 #################################################################
 # Individuals for the "Open Code" agent solution
@@ -452,3 +453,12 @@ This artifact is updated each planner run; initial remainingPlans is the canonic
 # - Human_User participates by approving or rejecting the proposed change; rejections are detected by the planner by searching for the substring "rejected" in the tool response content (see Config_UpdateFileToolConfig).
 # - The agent config key permissions.full_write_access controls whether the executor loops back to the planner (full automation) or the workflow ends after success.
 # End of individuals.
+
+################################################################################
+# KickoffInputBundle (agento-ext) - Uniform runtime inputs for pipeline extraction
+################################################################################
+
+:KickoffInput_request a agento-ext:KickoffInputBundle ;
+    agento-ext:inputKey "request" ;
+    agento-ext:inputValue "Write a Python function that reads a CSV file and returns a list of dictionaries, one per row. Include error handling for missing files and malformed rows." ;
+    agento-ext:isDefaultValue true .

@@ -17,7 +17,7 @@ Responsible for taking the Python IR objects and rendering them into executable 
 Instead of hardcoding string concatenations, it uses pre-defined templates that enforce LangGraph best practices (e.g., proper `TypedDict` state definitions, `StateGraph` initializations, and `.compile()` mechanics).
 
 ### C. CLI Runner (`src/langgraph/run.py`)
-The command-line interface that glues the Extractor and Generator together. It handles file I/O operations, ensuring the generated Python scripts are saved correctly into `output_files/output_langgraph/<project_name>/`.
+  The command-line interface that glues the Extractor and Generator together. It handles file I/O operations, ensuring the generated Python scripts are saved correctly into `output_files/langgraph/<project_name>/`.
 
 ## 2. Supported Agent Pattern Types
 
@@ -50,13 +50,13 @@ python src/langgraph/run.py <path_to_ttl_file>
 python src/langgraph/run.py generated_kg/LangGraph/open-code_instances.ttl
 ```
 
-The system will output a ready-to-run project directory under `output_files/output_langgraph/<project_name>/` containing:
+The system will output a ready-to-run project directory under `output_files/langgraph/<project_name>/` containing:
 1. `main.py`: The executable LangGraph python script.
 2. `requirements.txt`: The required pip dependencies (e.g., `langgraph`, `langchain-openai`).
 
 To execute the final generated script:
 ```bash
-cd output_files/output_langgraph/<project_name>
+cd output_files/langgraph/<project_name>
 pip install -r requirements.txt
 python main.py
 ```

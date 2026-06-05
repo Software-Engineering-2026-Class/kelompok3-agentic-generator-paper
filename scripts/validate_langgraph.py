@@ -58,7 +58,7 @@ def main():
     for ttl in ttl_files:
         kg_path = os.path.join(kg_dir, ttl)
         raw_name = ttl.replace(".ttl", "").replace("_instances", "")
-        out_dir = os.path.join("output_files", "output_langgraph", raw_name)
+        out_dir = os.path.join("output_files", "langgraph", raw_name)
         
         print(f"\nProcessing {ttl}...")
         try:

@@ -9,13 +9,23 @@
 name: agentic-generator
 
 services:
-  # NOTE: `normalize` mutates generated_kg/CrewAI/*.ttl in place. Mounted writable.
-  normalize:
+  build:
     build:
       context: .
       dockerfile: Dockerfile
     image: agentic-generator:latest
+    container_name: agentic-build
+    command: ["build"]
+    restart: "no"
+    profiles: ["pipeline"]
+
+  # NOTE: `normalize` mutates generated_kg/CrewAI/*.ttl in place. Mounted writable.
+  normalize:
+    image: agentic-generator:latest
     container_name: agentic-normalize
+    depends_on:
+      build:
+        condition: service_completed_successfully
     env_file:
       - path: .env
         required: false

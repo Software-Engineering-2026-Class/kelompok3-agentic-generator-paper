@@ -25,10 +25,19 @@ class EdgeModel(BaseModel):
 
 class NodeModel(BaseModel):
     id: str
-    name: str # e.g., 'StartStep', 'WorkflowStep'
+    name: str
     agent_ref: Optional[str] = None
     is_start: bool = False
     is_end: bool = False
+
+class InputVariableModel(BaseModel):
+    name: str = Field(..., description="Variable name (e.g. 'origin')")
+    default_value: str = Field("", description="Default value if found in KG")
+    has_default: bool = Field(False, description="True if KG provides a concrete default value")
+    alternative_values: List[str] = Field(
+        default_factory=list,
+        description="Other example values from KG",
+    )
 
 class LangGraphProject(BaseModel):
     name: str = "LangGraph Project"
@@ -36,14 +45,17 @@ class LangGraphProject(BaseModel):
     agents: List[AgentModel] = Field(default_factory=list)
     nodes: List[NodeModel] = Field(default_factory=list)
     edges: List[EdgeModel] = Field(default_factory=list)
-    
+    input_variables: List[InputVariableModel] = Field(
+        default_factory=list,
+        description="Runtime input variables (from agento-ext:KickoffInputBundle)",
+    )
+
     @property
     def pattern_type(self) -> str:
-        """Heuristic to detect the LangGraph pattern."""
         has_tools = len(self.tools) > 0
         if len(self.agents) > 1:
-            return "supervisor" # Pattern 3: Multi-agent / Supervisor
+            return "supervisor"
         elif has_tools:
-            return "tool_calling" # Pattern 2: Single agent with tools
+            return "tool_calling"
         else:
-            return "linear" # Pattern 1: Simple linear / chat
+            return "linear"

@@ -2,3 +2,4 @@ langgraph>=0.0.26
 langchain-openai>=0.1.1
 langchain-core
 python-dotenv
+pyyaml>=6.0

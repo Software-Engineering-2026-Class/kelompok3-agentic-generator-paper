@@ -1,0 +1,14 @@
+# Runtime inputs for the LangGraph app.
+# Edit values below before running python main.py.
+#
+# When a key maps to a list, main.py uses the FIRST item as the
+# runtime value.  Reorder or edit the list to choose a different example.
+#
+# Variables with no concrete value (defaults to empty string) are
+# required - you must provide a value before running.
+
+location: "Bali, Indonesia"
+startDate: "2026-08-15"
+endDate: "2026-08-22"
+numberOfGuests: 2
+interests: "beaches, temples, local food"

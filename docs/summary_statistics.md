@@ -7,11 +7,11 @@ This report provides summary statistics for the generated code across two agenti
 | Metric | LangGraph | CrewAI | Total Aggregated |
 | --- | --- | --- | --- |
 | **KG Patterns / Scenarios Processed** | 9 | 17 | 26 |
-| **Generated Agents** | 8 | 52 | 60 |
-| **Generated Tasks** | 17 | 60 | 77 |
-| **Generated Tools** | 22 | 42 | 64 |
-| **Lines of Code (LOC) Generated** | 362 | 1967 | 2329 |
-| **Correctness (Compilation Rate)** | 9/9 (100.0%) | 13/17 (76.5%) | 22/26 (84.6%) |
+| **Generated Agents** | 8 | 50 | 58 |
+| **Generated Tasks** | 17 | 58 | 75 |
+| **Generated Tools** | 22 | 41 | 63 |
+| **Lines of Code (LOC) Generated** | 362 | 1873 | 2235 |
+| **Correctness (Compilation Rate)** | 9/9 (100.0%) | 12/17 (70.6%) | 21/26 (80.8%) |
 
 ## LangGraph Scenarios Detailed Statistics
 
@@ -32,7 +32,7 @@ This report provides summary statistics for the generated code across two agenti
 | Scenario Name | Process Pattern | Agents | Tasks | Tools | Generated LOC | Correctness (Syntax) |
 | --- | --- | --- | --- | --- | --- | --- |
 | `game-builder-crew` | `sequential` | 3 | 3 | 0 | 106 | ✅ Pass |
-| `gym_planner` | `sequential` | 2 | 2 | 1 | 94 | ✅ Pass |
+| `gym_planner` | `error` | 0 | 0 | 0 | 0 | ❌ Fail |
 | `industry-agents` | `sequential` | 3 | 3 | 2 | 107 | ✅ Pass |
 | `instagram_post` | `sequential` | 5 | 6 | 3 | 152 | ✅ Pass |
 | `job-posting` | `sequential` | 3 | 5 | 3 | 125 | ✅ Pass |
@@ -51,35 +51,42 @@ This report provides summary statistics for the generated code across two agenti
 
 ## Compilation Failure Logs
 
+### CrewAI Scenario `gym_planner` failure:
+```python
+at line 130 of <>:
+Bad syntax (expected '.' or '}' or ']' at end of statement) at ^ in:
+"...b'#####################################\r\n\r\n# Goals\r\n\r\n:Design '^b'highly effective, structured, and customized workout routine'..."
+```
+
 ### CrewAI Scenario `markdown_validator` failure:
 ```python
-  File "output_files/output_crewai/markdown_validator/crew.py", line 18
-    - Tool na
-           ^
+  File "output_files\crewai\markdown_validator\crew.py", line 17
+    - Tool nam
+           ^^^
 SyntaxError: invalid syntax
 
 ```
 
 ### CrewAI Scenario `prep-for-a-meeting` failure:
 ```python
-  File "output_files/output_crewai/prep-for-a-meeting/crew.py", line 18
-    Provides three m
-             ^
+  File "output_files\crewai\prep-for-a-meeting\crew.py", line 17
+    Provides three ma
+             ^^^^^
 SyntaxError: invalid syntax
 
 ```
 
 ### CrewAI Scenario `recruitment` failure:
 ```python
-  File "output_files/output_crewai/recruitment/crew.py", line 16
+  File "output_files\crewai\recruitment\crew.py", line 16
     tool_serperdev = SerperDevTool(name="SerperDevTool", name="Search API tool, configuration may include API key and search parameters (not included here).", note="SerperDevTool", note="Search API tool, configuration may include API key and search parameters (not included here).")
-                                                         ^
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 SyntaxError: keyword argument repeated: name
 
 ```
 
 ### CrewAI Scenario `stock_analysis` failure:
 ```python
-Sorry: IndentationError: unexpected indent (crew.py, line 20)
+Sorry: IndentationError: unexpected indent (crew.py, line 19)
 ```
 

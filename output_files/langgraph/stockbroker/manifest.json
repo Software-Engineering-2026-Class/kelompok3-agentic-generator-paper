@@ -2,8 +2,12 @@
   "framework": "langgraph",
   "pattern": "stockbroker",
   "generated_files": [
+    ".env.example",
+    "__pycache__/main.cpython-312.pyc",
+    "__pycache__/main.cpython-313.pyc",
+    "config/inputs.yaml",
     "main.py",
     "requirements.txt"
   ],
-  "timestamp": "2026-06-02T08:45:16.915132+00:00"
+  "timestamp": "2026-06-05T14:21:09.054996+00:00"
 }

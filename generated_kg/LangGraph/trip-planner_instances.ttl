@@ -1,3 +1,14 @@
+@prefix : <http://www.w3id.org/agentic-ai/onto#> .
+@prefix pp: <http://purl.org/net/p-plan#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix beam: <http://w3id.org/beam/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.w3id.org/agentic-ai/onto#> .
+@prefix agento-ext: <http://www.w3id.org/agentic-ai/ext#> .
+
 # Execution time: 119.78 seconds
 # Model used: gpt-5-mini
 
@@ -10,16 +21,6 @@
 # - Language model tuning / binding (e.g., model name, temperature, tool bindings, tool_choice) are represented as Config individuals with key/value pairs. The ontology supports Config but not structured nested config objects; keys/values are stored as strings.
 # - Dynamic runtime values (randomized accommodation IDs, faker-generated content, shuffled image URLs, and timestamps) are runtime artifacts and represented as descriptive templates or representative resource entries; lists (image URLs) are preserved as literal lists in descriptions where relevant.
 # - No new classes or properties have been added; only existing classes/properties are used.
-
-@prefix : <http://www.w3id.org/agentic-ai/onto#> .
-@prefix pp: <http://purl.org/net/p-plan#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix beam: <http://w3id.org/beam/core#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://www.w3id.org/agentic-ai/onto#> .
 
 #################################################################
 # Trip Planner Workflow Pattern and Steps
@@ -435,3 +436,32 @@ Implementation notes:
 #################################################################
 # End of triples
 #################################################################
+
+################################################################################
+# KickoffInputBundle (agento-ext) - Uniform runtime inputs for pipeline extraction
+################################################################################
+
+:KickoffInput_location a agento-ext:KickoffInputBundle ;
+    agento-ext:inputKey "location" ;
+    agento-ext:inputValue "Bali, Indonesia" ;
+    agento-ext:isDefaultValue true .
+
+:KickoffInput_startDate a agento-ext:KickoffInputBundle ;
+    agento-ext:inputKey "startDate" ;
+    agento-ext:inputValue "2026-08-15" ;
+    agento-ext:isDefaultValue true .
+
+:KickoffInput_endDate a agento-ext:KickoffInputBundle ;
+    agento-ext:inputKey "endDate" ;
+    agento-ext:inputValue "2026-08-22" ;
+    agento-ext:isDefaultValue true .
+
+:KickoffInput_numberOfGuests a agento-ext:KickoffInputBundle ;
+    agento-ext:inputKey "numberOfGuests" ;
+    agento-ext:inputValue "2" ;
+    agento-ext:isDefaultValue true .
+
+:KickoffInput_interests a agento-ext:KickoffInputBundle ;
+    agento-ext:inputKey "interests" ;
+    agento-ext:inputValue "beaches, temples, local food" ;
+    agento-ext:isDefaultValue true .

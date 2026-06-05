@@ -1,3 +1,14 @@
+@prefix : <http://www.w3id.org/agentic-ai/onto#> .
+@prefix pp: <http://purl.org/net/p-plan#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix beam: <http://w3id.org/beam/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix agento-ext: <http://www.w3id.org/agentic-ai/ext#> .
+
 # Execution time: 83.07 seconds
 # Model used: gpt-5-mini
 
@@ -9,16 +20,6 @@
 # - UI components, UUID generation, and SDK-specific binding semantics were intentionally omitted per instructions; references to UI behavior, pushes or component props are preserved as descriptive literals on Tasks or Resources.
 # - Streaming semantics (initStream/contentStream, tags like ["nostream"]) are represented as Capabilities and Config literals (Capability "streaming output", Agent config tag "tags":"[\"nostream\"]").
 # - Where necessary, behavioral/operational details from the source code are preserved as literal descriptions on Task, Prompt, Tool and Resource individuals.
-
-@prefix : <http://www.w3id.org/agentic-ai/onto#> .
-@prefix pp: <http://purl.org/net/p-plan#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix beam: <http://w3id.org/beam/core#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
 
 # Agent (LLM) instance
 :WriterAgent rdf:type :LLMAgent ;
@@ -213,3 +214,22 @@ Suggestions step behavior:
 """ .
 
 # End of Turtle instance population.
+
+################################################################################
+# KickoffInputBundle (agento-ext) - Uniform runtime inputs for pipeline extraction
+################################################################################
+
+:KickoffInput_topic a agento-ext:KickoffInputBundle ;
+    agento-ext:inputKey "topic" ;
+    agento-ext:inputValue "The impact of remote work on team collaboration" ;
+    agento-ext:isDefaultValue true .
+
+:KickoffInput_tone a agento-ext:KickoffInputBundle ;
+    agento-ext:inputKey "tone" ;
+    agento-ext:inputValue "professional but conversational" ;
+    agento-ext:isDefaultValue true .
+
+:KickoffInput_length a agento-ext:KickoffInputBundle ;
+    agento-ext:inputKey "length" ;
+    agento-ext:inputValue "500 words" ;
+    agento-ext:isDefaultValue true .
