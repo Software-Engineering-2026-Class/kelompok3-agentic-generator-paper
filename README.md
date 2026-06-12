@@ -504,6 +504,24 @@ output_files/langgraph/<scenario>/
 
 ---
 
+## Use Cases
+
+Three fully documented, reproducible end-to-end use cases live in the
+[`use-cases/`](use-cases/) folder. Each one specifies the **actor**, the exact
+**input** (command + source data), and the **output** (artifacts + a representative
+result).
+
+| # | Use Case | Direction | Framework | Input | Output |
+|---|----------|-----------|-----------|-------|--------|
+| [UC-1](use-cases/use-case-1-crewai-generation.md) | Generate a runnable CrewAI project from a Knowledge Graph | Forward (KG → Code) | CrewAI | `trip_planner_instances.ttl` | `agents.yaml`, `tasks.yaml`, `crew.py`, `main.py` |
+| [UC-2](use-cases/use-case-2-langgraph-tool-calling.md) | Generate a Tool-Calling LangGraph agent from a Knowledge Graph | Forward (KG → Code) | LangGraph | `trip-planner_instances.ttl` | `main.py`, `requirements.txt`, `manifest.json` |
+| [UC-3](use-cases/use-case-3-quality-evaluation.md) | Evaluate generated code quality offline (no API key) | Quality Assurance | LangGraph | 9 generated projects | `quality_report.md` (avg score 93.3/100) |
+
+See [`use-cases/README.md`](use-cases/README.md) for the index and how each use case
+maps to the 3-layer pipeline.
+
+---
+
 ## Project Links
 
 | Resource | URL |
