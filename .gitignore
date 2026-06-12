@@ -12,6 +12,7 @@ output/*.py
 .vscode/
 .idea/
 
+task/
 help.md
 ARCHITECTURE_MAP.md
 REPOSITORY_GUIDE.md
