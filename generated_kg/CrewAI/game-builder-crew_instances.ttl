@@ -33,6 +33,10 @@
 
 
 
+
+
+
+
 # Execution time: 127.47 seconds
 # Model used: gpt-5-mini
 
@@ -52,6 +56,8 @@
 #################################################################
 
 ### Team / Crew
+
+
 
 
 
@@ -572,6 +578,18 @@ Mechanics Used in the Game:
     agento-ext:inputKey "game" ;
     agento-ext:inputValue "Build a Pacman game, where the pacman moves up, down, left, right with the use of keyboard arrows. each food dot he eats, he gets a point. ghosts appear at random times and move randomly and if they hit pacman, it loses a life, he has three lives, then game over. if he finishes all food points in one level, he moves on to the next level, in which pacman moves faster, and more ghosts appear." ;
     agento-ext:isDefaultValue false .
+
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
 
 #################################################################
 # Agents (Canonical Pattern)

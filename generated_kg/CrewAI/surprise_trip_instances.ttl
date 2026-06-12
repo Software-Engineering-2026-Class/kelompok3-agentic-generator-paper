@@ -33,6 +33,10 @@
 
 
 
+
+
+
+
 # Execution time: 130.60 seconds
 # Model used: gpt-5-mini
 
@@ -48,6 +52,8 @@
 ################################################################################
 # Team (Crew)
 ################################################################################
+
+
 
 
 
@@ -345,6 +351,18 @@ This resource is the output_json schema referenced by itinerary_compilation_task
     agento-ext:inputKey "trip_duration" ;
     agento-ext:inputValue "14 days" ;
     agento-ext:isDefaultValue true .
+
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
 
 #################################################################
 # Agents (Canonical Pattern)

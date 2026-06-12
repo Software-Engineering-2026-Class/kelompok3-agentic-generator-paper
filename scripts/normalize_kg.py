@@ -22,19 +22,12 @@ What this script does:
 """
 
 import re
-import sys
 from pathlib import Path
-from collections import OrderedDict
-from typing import Optional
 
-from rdflib import Graph, Namespace, Literal, URIRef, RDF, RDFS, XSD
+from rdflib import Graph, Namespace, URIRef, RDF, RDFS
 from rdflib.namespace import DCTERMS
 
 ONTO = Namespace("http://www.w3id.org/agentic-ai/onto#")
-BEAM = Namespace("http://w3id.org/beam/core#")
-PROV = Namespace("http://www.w3.org/ns/prov#")
-PP = Namespace("http://purl.org/net/p-plan#")
-AGENTO_EXT = Namespace("http://www.w3id.org/agentic-ai/ext#")
 
 KG_DIR = Path(__file__).resolve().parent.parent / "generated_kg" / "CrewAI"
 
@@ -88,60 +81,6 @@ def _parse_semicolon_block(text: str) -> dict:
         if m:
             result[m.group(1).lower()] = m.group(2).strip()
     return result
-
-
-def _ordered_config_kv_from_ttl(raw_ttl: str, config_local_name: str) -> list:
-    """
-    Parse raw TTL text to extract ordered (key, value) pairs for a specific
-    Config node, handling both comma-separated and semicolon patterns.
-    Returns [(key, value), ...].
-    """
-    results = []
-    # Find the config block in raw text
-    # Pattern: :config_name a :Config ; ... .
-    # We need to find the block and extract configKey/configValue pairs
-    escaped = re.escape(config_local_name)
-    # Match the entire config block from declaration to final .
-    block_pattern = re.compile(
-        rf":{escaped}\s+(?:a|rdf:type)\s+:Config\s*;(.*?)\.\s*$",
-        re.DOTALL | re.MULTILINE,
-    )
-    m = block_pattern.search(raw_ttl)
-    if not m:
-        return results
-
-    block = m.group(1)
-
-    # Strategy 1: paired configKey/configValue on same line or adjacent
-    # :configKey "role" ; :configValue "spamfilter" ;
-    pair_pattern = re.compile(
-        r':configKey\s+"([^"]*?)"\s*;\s*:configValue\s+"((?:[^"\\]|\\"|\\.)*)"\s*',
-    )
-    pairs = pair_pattern.findall(block)
-    if pairs:
-        return [(k, v) for k, v in pairs]
-
-    # Strategy 2: comma-separated lists
-    # :configKey "role" , "goal" , "backstory" ;
-    # :configValue "val1" , "val2" , "val3" .
-    key_pattern = re.compile(r':configKey\s+((?:"[^"]*?"(?:\s*,\s*)?)+)')
-    val_pattern = re.compile(r':configValue\s+((?:"(?:[^"\\]|\\"|\\.)]*?"(?:\s*,\s*)?)+)', re.DOTALL)
-
-    key_match = key_pattern.search(block)
-    val_match = val_pattern.search(block)
-
-    if key_match and val_match:
-        keys = re.findall(r'"([^"]*?)"', key_match.group(1))
-        # For values, need to handle multi-line and escaped quotes
-        val_text = val_match.group(1)
-        values = re.findall(r'"((?:[^"\\]|\\"|\\.)*)"\s*', val_text)
-
-        if len(keys) == len(values):
-            return list(zip(keys, values))
-        # If counts don't match, try to extract the long string values
-        # that may contain commas inside
-
-    return results
 
 
 def _extract_config_kv_via_rdflib(g: Graph, cfg_iri_str: str) -> list:
@@ -395,11 +334,6 @@ def detect_prefix_style(raw_ttl: str) -> dict:
     return style
 
 
-def get_all_triples_for_subject(g: Graph, subj: URIRef) -> list:
-    """Get all (predicate, object) for a subject."""
-    return list(g.predicate_objects(subj))
-
-
 def is_agent_related(g: Graph, subj_uri: URIRef, agent_iris: set, agent_config_iris: set,
                      agent_prompt_iris: set, agent_goal_iris: set) -> bool:
     """Check if a subject URI is an agent, agent's config, prompt, or goal that we'll rewrite."""
@@ -461,57 +395,20 @@ def rebuild_ttl(file_path: Path) -> str:
 
     # === Build the new file content ===
 
-    # Step 1: Extract prefix block and comment header from raw text
     lines = raw.split("\n")
-    prefix_end = 0
-    for i, line in enumerate(lines):
-        stripped = line.strip()
-        if stripped.startswith("@prefix") or stripped.startswith("@base") or stripped == "":
-            prefix_end = i + 1
-        elif stripped.startswith("#"):
-            prefix_end = i + 1
-        else:
-            break
 
-    # Actually, let's find where the first real triple starts
-    # Keep everything before the first triple that's agent-related
-    # Better approach: parse the file in sections and rewrite agent sections
-
-    # Step 2: Identify line ranges of agent-related blocks in raw text
-    # We'll use a different approach: collect all non-agent content
-    # and rebuild the file with preserved non-agent content + new agent content
-
-    # Approach: use rdflib to identify all subjects and which are agent-related.
-    # Then parse raw text to find and remove agent-related blocks, replacing
-    # with canonical versions.
-
-    # Simpler reliable approach: rebuild entire file from graph + new agent data
-
-    # Collect all prefixes from raw
+    # Collect leading @prefix / @base lines; the first comment line ends the block.
     prefix_lines = []
-    comment_lines = []
     in_prefix = True
     for line in lines:
         stripped = line.strip()
         if in_prefix and (stripped.startswith("@prefix") or stripped.startswith("@base")):
             prefix_lines.append(line)
         elif stripped.startswith("#") or stripped == "":
-            comment_lines.append(line)
             if stripped.startswith("#"):
                 in_prefix = False
         else:
             break
-
-    # Find all subject URIs in the graph
-    all_subjects = set(g.subjects())
-
-    # Separate agent-related and non-agent subjects
-    non_agent_subjects = []
-    for s in all_subjects:
-        s_str = str(s)
-        if not is_agent_related(g, s, agent_iris, agent_config_iris,
-                                agent_prompt_iris, agent_goal_iris):
-            non_agent_subjects.append(s)
 
     # === Build output ===
     output_parts = []

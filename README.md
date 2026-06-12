@@ -312,6 +312,29 @@ Copy `.env.example` to `.env` and fill in your `OPENAI_API_KEY`. The default pip
 
 The multi-container `pipeline` profile runs each stage in a separate container with `depends_on: condition: service_completed_successfully` ordering, so stages run in sequence and the command exits only when the last one finishes.
 
+### Services & Container Names
+
+Every Compose service maps to an explicitly named container (all prefixed `agentic-`) and belongs to a profile. Services without a profile run by default; profiled services run only when their profile is activated.
+
+| Service | Container Name | Profile | Purpose |
+|---|---|---|---|
+| `app` | `agentic-app` | *(default)* | Monolithic full pipeline (`normalize → … → stats`) |
+| `build` | `agentic-build` | `pipeline` | Build/verify the image, then exit |
+| `normalize` | `agentic-normalize` | `pipeline` | Normalize `generated_kg/CrewAI/*.ttl` |
+| `kickoff` | `agentic-kickoff` | `pipeline` | Append kickoff input bundles to TTLs |
+| `generate-crewai` | `agentic-generate-crewai` | `pipeline` | Generate CrewAI projects |
+| `generate-langgraph` | `agentic-generate-langgraph` | `pipeline` | Generate LangGraph projects |
+| `validate` | `agentic-validate` | `pipeline` | Validate generated code |
+| `stats` | `agentic-stats` | `pipeline` | Generate framework statistics |
+| `prompt` | `agentic-prompt` | `llm` | LLM ontology-population (requires `OPENAI_API_KEY`) |
+| `dev` | `agentic-dev` | `dev` | Interactive shell inside the image |
+
+### Port Mapping
+
+This stack is a **batch / CLI pipeline, not a long-running network service** — it reads Knowledge Graphs, writes generated code to `./output_files/`, and exits. Consequently **no service publishes or exposes any port** (there are no `ports:` or `expose:` entries in `docker-compose.yml`), and no host ports are occupied. The container `HEALTHCHECK` is an in-process Python import check (`import src.crewai, src.langgraph`), not a TCP/HTTP probe, so it needs no port either.
+
+> If a future stage adds a network server (e.g. an API or dashboard), document its mapping here as `HOST:CONTAINER` (for example `8080:8080`).
+
 ---
 
 ## Usage Documentation
