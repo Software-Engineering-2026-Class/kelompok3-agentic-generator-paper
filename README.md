@@ -11,12 +11,21 @@ A semantic-web-driven code generator that bridges the gap between formal ontolog
 
 ## Members (Kelompok 3 - Metode Rekayasa Perangkat Lunak 2026)
 
-| Name | Student ID | GitHub |
-|---|---|---|
-| Kenji Ratanaputra | 24/534421/PA/22664 | [@Kenzi-GIT](https://github.com/Kenzi-GIT) |
-| Ayasha Rahmadinni | 24/545462/PA/23178 | [@ayashar](https://github.com/ayashar) |
-| Kevin Antonio Wiyono Lauw | 24/535917/PA/22736 | [@KevinAntonioWiyonoLauw](https://github.com/KevinAntonioWiyonoLauw) |
-| Melinda Annastasia Budijono | 24/542840/PA/23052 | [@melinda-ab](https://github.com/melinda-ab) |
+| Name | Student ID | GitHub | Role |
+|---|---|---|---|
+| Kevin Antonio Wiyono Lauw | 24/535917/PA/22736 | [@KevinAntonioWiyonoLauw](https://github.com/KevinAntonioWiyonoLauw) | Architecture & Second-Framework Lead |
+| Ayasha Rahmadinni | 24/545462/PA/23178 | [@ayashar](https://github.com/ayashar) | Validation & Quality Assurance |
+| Kenji Ratanaputra | 24/534421/PA/22664 | [@Kenzi-GIT](https://github.com/Kenzi-GIT) | Evaluation & Documentation |
+| Melinda Annastasia Budijono | 24/542840/PA/23052 | [@melinda-ab](https://github.com/melinda-ab) | Output Organization & Documentation |
+
+### Task Breakdown
+
+| Member | Responsibilities |
+|---|---|
+| **Kevin Antonio Wiyono Lauw** | #01 Fork `raviearjun/agentic-generator-paper` and audit codebase · #02 Map Agentic AI KG patterns to a second framework schema · #03 Implement code generator for the chosen second framework · Set up the Docker environment for the project |
+| **Ayasha Rahmadinni** | #04 Validate that generated framework code is executable · #05 Generate summary statistics of generated frameworks · #08 Extend the KG with patterns from the second framework · Test code quality and functionality |
+| **Kenji Ratanaputra** | #06 Organize generated framework outputs into folders · #07 Evaluate quality of generated code (errors, missing parts) · #09 Write README and usage documentation |
+| **Melinda Annastasia Budijono** | #06 Organize generated framework outputs into folders · #09 Write README and usage documentation |
 
 ---
 
@@ -527,6 +536,7 @@ maps to the 3-layer pipeline.
 | Resource | URL |
 |---|---|
 | **Repository** | [kelompok3-agentic-generator-paper](https://github.com/Software-Engineering-2026-Class/kelompok3-agentic-generator-paper) |
+| **Changelog** | See [`CHANGELOG.md`](CHANGELOG.md) |
 | **AgentO Ontology** | [https://w3id.org/agentic-ai/onto](https://w3id.org/agentic-ai/onto) |
 | **Research Paper** | See `paper/K-CAP_2025_paper_25.pdf` |
 
