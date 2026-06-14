@@ -80,7 +80,7 @@ Berdasarkan latar belakang yang telah diuraikan, proyek ini berupaya menjawab em
 | Generation Layer | `src/crewai/generator.py`, `src/langgraph/generator.py` | Rendering template Jinja2 menjadi kode Python dan YAML. |
 | CLI Runner | `src/crewai/run.py`, `src/langgraph/run.py` | Antarmuka command-line untuk generasi batch maupun tunggal. |
 | QA Pipeline | `scripts/evaluate_quality.py` | Evaluasi 3 tahap (sintaksis → AST → mock runtime). |
-| Reverse Engineering | `Script/run_prompt.py` | Ekstraksi kode menjadi Turtle melalui LLM OpenAI. |
+| Reverse Engineering | `scripts/run_prompt.py` | Ekstraksi kode menjadi Turtle melalui LLM OpenAI. |
 
 ### 1.4.4 Lingkup Evaluasi dan Validasi
 - Analisis statis menggunakan modul `ast` bawaan Python.
@@ -324,7 +324,7 @@ Kelas `_MockLLM` mengimplementasikan perilaku cerdas: mendeteksi kata kunci `"su
 
 ## 3.5 Modul Reverse Engineering
 
-Modul reverse engineering terletak di `Script/run_prompt.py` dan menggunakan API OpenAI untuk menganalisis kode sumber proyek agen. Alur kerjanya:
+Modul reverse engineering terletak di `scripts/run_prompt.py` dan menggunakan API OpenAI untuk menganalisis kode sumber proyek agen. Alur kerjanya:
 
 1. **Pengumpulan Artefak**: Sistem membaca seluruh file Python, YAML, TOML, dan Markdown dari direktori target yang diberikan melalui argumen CLI.
 2. **Konstruksi Prompt**: Konten file digabungkan dengan template instruksi (`analysis.prompt.md`) yang berisi penjelasan ontologi AgentO, contoh output Turtle, dan aturan format.
