@@ -71,26 +71,26 @@ AgentO solves this by providing a **single source of truth** — a Knowledge Gra
 
 ## Key Features
 
-| Feature | Description |
-|---|---|
-| **Ontology-Driven Generation** | Uses the standard [AgentO Ontology](https://w3id.org/agentic-ai/onto) as the formal specification layer |
-| **Multi-Framework Output** | Generates complete projects for **CrewAI** (YAML configs + Python) and **LangGraph** (stateful graphs) |
-| **3 LangGraph Patterns** | Supports **Linear**, **Tool-Calling**, and **Supervisor** orchestration patterns |
-| **Config-Driven Outputs** | CrewAI emits `agents.yaml`, `tasks.yaml`, `crew.py`, `main.py`, `.env.example`, and `config/inputs.yaml`. LangGraph emits `main.py`, `config/inputs.yaml`, `.env.example`, and `requirements.txt`. |
-| **Batch & Single Processing** | Process all KGs at once or target a single `.ttl` file |
-| **Offline Quality Evaluation** | 3-stage validation pipeline: syntax check → AST-vs-IR comparison → mock runtime execution |
-| **Reverse Engineering** | Extract agentic structures from existing codebases into Knowledge Graph instances via LLM |
-| **Manifest Generation** | Each output project includes a `manifest.json` with metadata and file listings |
+| Feature                        | Description                                                                                                                                                                                        |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Ontology-Driven Generation** | Uses the standard [AgentO Ontology](https://w3id.org/agentic-ai/onto) as the formal specification layer                                                                                            |
+| **Multi-Framework Output**     | Generates complete projects for **CrewAI** (YAML configs + Python) and **LangGraph** (stateful graphs)                                                                                             |
+| **3 LangGraph Patterns**       | Supports **Linear**, **Tool-Calling**, and **Supervisor** orchestration patterns                                                                                                                   |
+| **Config-Driven Outputs**      | CrewAI emits `agents.yaml`, `tasks.yaml`, `crew.py`, `main.py`, `.env.example`, and `config/inputs.yaml`. LangGraph emits `main.py`, `config/inputs.yaml`, `.env.example`, and `requirements.txt`. |
+| **Batch & Single Processing**  | Process all KGs at once or target a single `.ttl` file                                                                                                                                             |
+| **Offline Quality Evaluation** | 3-stage validation pipeline: syntax check → AST-vs-IR comparison → mock runtime execution                                                                                                          |
+| **Reverse Engineering**        | Extract agentic structures from existing codebases into Knowledge Graph instances via LLM                                                                                                          |
+| **Manifest Generation**        | Each output project includes a `manifest.json` with metadata and file listings                                                                                                                     |
 
 ### Dataset Coverage
 
-| Framework | KG Scenarios | Generated Agents | Generated Tasks | Generated Tools |
-|---|:---:|:---:|:---:|:---:|
-| **CrewAI** | 17 | 52 | 60 | 42 |
-| **LangGraph** | 9 | 8 | 17 | 22 |
-| **AutoGen** | 6 | — | — | — |
-| **Mastra AI** | 35 | — | — | — |
-| **Total** | **67** | **60+** | **77+** | **64+** |
+| Framework     | KG Scenarios | Generated Agents | Generated Tasks | Generated Tools |
+| ------------- | :----------: | :--------------: | :-------------: | :-------------: |
+| **CrewAI**    |      17      |        52        |       60        |       42        |
+| **LangGraph** |      9       |        8         |       17        |       22        |
+| **AutoGen**   |      6       |        —         |        —        |        —        |
+| **Mastra AI** |      35      |        —         |        —        |        —        |
+| **Total**     |    **67**    |     **60+**      |     **77+**     |     **64+**     |
 
 ---
 
@@ -112,12 +112,12 @@ graph LR
 
 **Pipeline per module:**
 
-| Layer | CrewAI | LangGraph |
-|---|---|---|
-| **Layer 1** — Extraction | `src/crewai/extractor.py` (SPARQL queries) | `src/langgraph/extractor.py` (SPARQL queries) |
-| **Layer 2** — IR Models | `src/crewai/models.py` (Pydantic schemas) | `src/langgraph/models.py` (Pydantic schemas) |
-| **Layer 3** — Generation | `src/crewai/generator.py` (YAML + Jinja2) | `src/langgraph/generator.py` (Jinja2 templates) |
-| **Runner** — CLI | `src/crewai/run.py` | `src/langgraph/run.py` |
+| Layer                    | CrewAI                                     | LangGraph                                       |
+| ------------------------ | ------------------------------------------ | ----------------------------------------------- |
+| **Layer 1** — Extraction | `src/crewai/extractor.py` (SPARQL queries) | `src/langgraph/extractor.py` (SPARQL queries)   |
+| **Layer 2** — IR Models  | `src/crewai/models.py` (Pydantic schemas)  | `src/langgraph/models.py` (Pydantic schemas)    |
+| **Layer 3** — Generation | `src/crewai/generator.py` (YAML + Jinja2)  | `src/langgraph/generator.py` (Jinja2 templates) |
+| **Runner** — CLI         | `src/crewai/run.py`                        | `src/langgraph/run.py`                          |
 
 ---
 
@@ -126,77 +126,78 @@ graph LR
 ```
 kelompok3-agentic-generator-paper/
 │
-├── src/                            
+├── src/
 │   ├── crewai/                     #   CrewAI code generation module
-│   │   ├── extractor.py            
-│   │   ├── models.py               
-│   │   ├── generator.py            
-│   │   ├── run.py                  
-│   │   └── templates/              
-│   │       ├── crew.py.j2          
-│   │       └── main.py.j2          
+│   │   ├── extractor.py
+│   │   ├── models.py
+│   │   ├── generator.py
+│   │   ├── run.py
+│   │   └── templates/
+│   │       ├── crew.py.j2
+│   │       └── main.py.j2
 │   └── langgraph/                  #   LangGraph code generation module
-│       ├── extractor.py            
-│       ├── models.py               
-│       ├── generator.py            
-│       └── run.py                  
+│       ├── extractor.py
+│       ├── models.py
+│       ├── generator.py
+│       └── run.py
 │
-├── scripts/                        
-│   ├── evaluate_quality.py         
-│   ├── generate_statistics.py      
-│   ├── validate_langgraph.py       
-│   ├── normalize_kg.py             
-│   └── add_kickoff_inputs.py       
+├── scripts/
+│   ├── evaluate_quality.py
+│   ├── generate_statistics.py
+│   ├── validate_langgraph.py
+│   ├── runtime_test_outputs.py
+│   ├── normalize_kg.py
+│   └── add_kickoff_inputs.py
 │
-├── Script/                         
-│   ├── run_prompt.py               
-│   ├── analysis.prompt.md          
-│   └── run_all.sh                  
+├── Script/
+│   ├── run_prompt.py
+│   ├── analysis.prompt.md
+│   └── run_all.sh
 │
-├── generated_kg/                   
-│   ├── CrewAI/                     
-│   ├── LangGraph/                  
-│   ├── AutoGen/                    
-│   └── Mastra AI/                  
+├── generated_kg/
+│   ├── CrewAI/
+│   ├── LangGraph/
+│   ├── AutoGen/
+│   └── Mastra AI/
 │
-├── output_files/                   
-│   ├── crewai/                     
-│   └── langgraph/                  
+├── output_files/
+│   ├── crewai/
+│   └── langgraph/
 │
-├── docs/                           
-│   ├── quality_report.md           
-│   ├── quality_findings.md         
-│   ├── summary_statistics.md       
-│   └── validation_results.md       
+├── docs/
+│   ├── quality_report.md
+│   ├── quality_findings.md
+│   ├── summary_statistics.md
+│   └── validation_results.md
 │
-├── paper/                          
-│   ├── K-CAP_2025_paper_25.pdf     
-│   └── paper-latest.pdf            
+├── paper/
+│   ├── K-CAP_2025_paper_25.pdf
+│   └── paper-latest.pdf
 │
-├── agentO.ttl                      
-├── pyproject.toml                  
-├── requirements.txt                
-├── LICENSE                         
-└── README.md                       
+├── agentO.ttl
+├── pyproject.toml
+├── requirements.txt
+├── LICENSE
+└── README.md
 ```
 
 ---
 
 ## Tech Stack
 
-| Category | Technology | Purpose |
-|---|---|---|
-| **Language** | Python 3.10 – 3.13 | Core implementation language |
-| **Knowledge Graph** | `rdflib` ≥ 7.0.0 | RDF/Turtle parsing & SPARQL query execution |
-| **Data Modeling** | `pydantic` ≥ 2.0.0 | Typed intermediate representation (IR) schemas |
-| **Template Engine** | `jinja2` | Code & YAML file generation from templates |
-| **YAML Processing** | `pyyaml` | CrewAI configuration file generation |
-| **Target Framework** | `crewai` ≥ 0.152.0 | Multi-agent orchestration framework |
-| **Target Framework** | `langgraph`, `langchain-core` | Stateful graph-based agent workflows |
-| **Target Framework** | `autogen-agentchat` ≥ 0.4.0 | Microsoft AutoGen multi-agent framework |
-| **LLM Integration** | `openai` | Reverse engineering (code-to-KG extraction) |
-| **Build System** | `hatchling` / `uv` | Modern Python packaging & dependency management |
-| **Containerization** | Docker + Docker Compose | Reproducible pipeline execution |
+| Category             | Technology                    | Purpose                                         |
+| -------------------- | ----------------------------- | ----------------------------------------------- |
+| **Language**         | Python 3.10 – 3.13            | Core implementation language                    |
+| **Knowledge Graph**  | `rdflib` ≥ 7.0.0              | RDF/Turtle parsing & SPARQL query execution     |
+| **Data Modeling**    | `pydantic` ≥ 2.0.0            | Typed intermediate representation (IR) schemas  |
+| **Template Engine**  | `jinja2`                      | Code & YAML file generation from templates      |
+| **YAML Processing**  | `pyyaml`                      | CrewAI configuration file generation            |
+| **Target Framework** | `crewai` ≥ 0.152.0            | Multi-agent orchestration framework             |
+| **Target Framework** | `langgraph`, `langchain-core` | Stateful graph-based agent workflows            |
+| **Target Framework** | `autogen-agentchat` ≥ 0.4.0   | Microsoft AutoGen multi-agent framework         |
+| **LLM Integration**  | `openai`                      | Reverse engineering (code-to-KG extraction)     |
+| **Build System**     | `hatchling` / `uv`            | Modern Python packaging & dependency management |
+| **Containerization** | Docker + Docker Compose       | Reproducible pipeline execution                 |
 
 ---
 
@@ -210,8 +211,8 @@ Before you begin, ensure you have the following installed:
   ```
 - **pip** (comes with Python) or **uv** (modern alternative)
 - **Git** for cloning the repository
-- **Docker & Docker Compose** *(optional — for containerized execution)*
-- **OpenAI API Key** *(optional — only needed for reverse engineering)*
+- **Docker & Docker Compose** _(optional — for containerized execution)_
+- **OpenAI API Key** _(optional — only needed for reverse engineering)_
 
 ---
 
@@ -227,12 +228,14 @@ cd kelompok3-agentic-generator-paper
 ### Step 2 — Create a Virtual Environment
 
 **Windows (PowerShell):**
+
 ```powershell
 python -m venv .venv
 .venv\Scripts\activate
 ```
 
 **macOS / Linux:**
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
@@ -241,23 +244,26 @@ source .venv/bin/activate
 ### Step 3 — Install Dependencies
 
 **Option A — Using pip (standard):**
+
 ```bash
 pip install -r requirements.txt
 ```
 
 **Option B — Using uv (recommended, faster):**
+
 ```bash
 pip install uv
 uv sync
 ```
 
 **Option C — Full install with LangGraph evaluation support:**
+
 ```bash
 pip install rdflib pandas crewai autogen
 pip install langchain-openai langgraph langchain-core pydantic jinja2 pyyaml
 ```
 
-### Step 4 — Configure Environment Variables *(optional)*
+### Step 4 — Configure Environment Variables _(optional)_
 
 Only required if you plan to use the **reverse engineering** module or run **generated CrewAI/LangGraph projects** that call OpenAI:
 
@@ -282,17 +288,17 @@ This builds the image on first run and executes the full pipeline. Output appear
 
 ### Common Commands
 
-| Command | Purpose |
-|---|---|
-| `docker compose up` | Run the entire pipeline (normalize → generate → validate → stats) |
-| `docker compose run --rm app normalize` | Run only the KG-normalization stage |
-| `docker compose run --rm app crewai` | Generate only CrewAI projects |
-| `docker compose run --rm app langgraph` | Generate only LangGraph projects |
-| `docker compose run --rm app stats` | Generate only framework statistics |
-| `docker compose run --rm app bash` | Open an interactive shell inside the image |
-| `docker compose --profile pipeline up` | Run each stage as its own container (with `depends_on` ordering) |
-| `docker compose --profile llm up` | Also run the optional LLM ontology-population stage (requires `OPENAI_API_KEY`) |
-| `docker compose down --rmi local` | Stop and remove containers + the built image |
+| Command                                 | Purpose                                                                         |
+| --------------------------------------- | ------------------------------------------------------------------------------- |
+| `docker compose up`                     | Run the entire pipeline (normalize → generate → validate → stats)               |
+| `docker compose run --rm app normalize` | Run only the KG-normalization stage                                             |
+| `docker compose run --rm app crewai`    | Generate only CrewAI projects                                                   |
+| `docker compose run --rm app langgraph` | Generate only LangGraph projects                                                |
+| `docker compose run --rm app stats`     | Generate only framework statistics                                              |
+| `docker compose run --rm app bash`      | Open an interactive shell inside the image                                      |
+| `docker compose --profile pipeline up`  | Run each stage as its own container (with `depends_on` ordering)                |
+| `docker compose --profile llm up`       | Also run the optional LLM ontology-population stage (requires `OPENAI_API_KEY`) |
+| `docker compose down --rmi local`       | Stop and remove containers + the built image                                    |
 
 ### Environment Variables
 
@@ -300,15 +306,15 @@ Copy `.env.example` to `.env` and fill in your `OPENAI_API_KEY`. The default pip
 
 ### Pipeline Stages
 
-| Stage | Service (profile `pipeline`) | Container-only (`app`) |
-|---|---|---|
-| 0. Build image | `build` | `entrypoint.sh build` |
-| 1. Normalize KGs | `normalize` | `entrypoint.sh normalize` |
-| 2. Append kickoff inputs | `kickoff` | `entrypoint.sh kickoff` |
-| 3. Generate CrewAI | `generate-crewai` | `entrypoint.sh crewai` |
-| 4. Generate LangGraph | `generate-langgraph` | `entrypoint.sh langgraph` |
-| 5. Validate | `validate` | `entrypoint.sh validate` |
-| 6. Statistics | `stats` | `entrypoint.sh stats` |
+| Stage                    | Service (profile `pipeline`) | Container-only (`app`)    |
+| ------------------------ | ---------------------------- | ------------------------- |
+| 0. Build image           | `build`                      | `entrypoint.sh build`     |
+| 1. Normalize KGs         | `normalize`                  | `entrypoint.sh normalize` |
+| 2. Append kickoff inputs | `kickoff`                    | `entrypoint.sh kickoff`   |
+| 3. Generate CrewAI       | `generate-crewai`            | `entrypoint.sh crewai`    |
+| 4. Generate LangGraph    | `generate-langgraph`         | `entrypoint.sh langgraph` |
+| 5. Validate              | `validate`                   | `entrypoint.sh validate`  |
+| 6. Statistics            | `stats`                      | `entrypoint.sh stats`     |
 
 The multi-container `pipeline` profile runs each stage in a separate container with `depends_on: condition: service_completed_successfully` ordering, so stages run in sequence and the command exits only when the last one finishes.
 
@@ -350,6 +356,7 @@ python -m src.crewai.run
 ```
 
 **Expected output:**
+
 ```
 =================================================================
   KG → SPARQL → Pydantic → CrewAI Project Generator
@@ -381,6 +388,7 @@ python src/langgraph/run.py generated_kg/LangGraph/trip-planner_instances.ttl
 ```
 
 **Expected output:**
+
 ```
 Reading KG from generated_kg/LangGraph/trip-planner_instances.ttl...
 Detected LangGraph Pattern: tool_calling
@@ -394,11 +402,13 @@ Done!
 #### D. Generate All LangGraph Projects
 
 **Linux/macOS:**
+
 ```bash
 for f in generated_kg/LangGraph/*.ttl; do python src/langgraph/run.py "$f"; done
 ```
 
 **Windows (PowerShell):**
+
 ```powershell
 Get-ChildItem generated_kg\LangGraph\*.ttl | ForEach-Object {
     python src/langgraph/run.py $_.FullName
@@ -418,6 +428,7 @@ python scripts/evaluate_quality.py
 ```
 
 **Expected output:**
+
 ```
 =======================================================
   Issue #07 - LangGraph Quality Evaluation
@@ -443,6 +454,7 @@ python scripts/evaluate_quality.py
 ```
 
 **Generated reports:**
+
 - `docs/quality_report.md` — Per-scenario quality scores and comparison table
 - `docs/quality_findings.md` — Root cause analysis (IRI leaks, unnamed tools, pattern misdetection)
 
@@ -454,13 +466,40 @@ python scripts/generate_statistics.py
 
 Outputs `docs/summary_statistics.md` with LOC counts, agent/task/tool tallies, and syntax validation results.
 
-#### C. Validate LangGraph Execution (Mock Runtime)
+#### C. Runtime Execution Test for Generated Outputs
+
+Run real execution smoke-tests on generated projects in `output_files`.
+This checks whether generated code can be imported and executed (not only syntax).
+
+**LangGraph only (default):**
+
+```bash
+python scripts/runtime_test_outputs.py
+```
+
+**Both frameworks:**
+
+```bash
+python scripts/runtime_test_outputs.py --framework all
+```
+
+**Single project:**
+
+```bash
+python scripts/runtime_test_outputs.py --framework langgraph --project chat-agent
+```
+
+Generated runtime report:
+
+- `docs/runtime_execution_report.md`
+
+#### D. Validate LangGraph Execution (Legacy Mock Runtime)
 
 ```bash
 python scripts/validate_langgraph.py
 ```
 
-#### D. Normalize Knowledge Graph Files
+#### E. Normalize Knowledge Graph Files
 
 ```bash
 python scripts/normalize_kg.py
@@ -497,26 +536,26 @@ Each generated CrewAI project follows the official project structure:
 ```
 output_files/crewai/<scenario>/
 ├── config/
-│   ├── agents.yaml         
-│   ├── tasks.yaml          
-│   └── inputs.yaml         
-├── crew.py                 
-├── main.py                 
-├── .env.example            
-├── pyproject.toml          
-└── manifest.json           
+│   ├── agents.yaml
+│   ├── tasks.yaml
+│   └── inputs.yaml
+├── crew.py
+├── main.py
+├── .env.example
+├── pyproject.toml
+└── manifest.json
 ```
 
 ### LangGraph Project
 
 ```
 output_files/langgraph/<scenario>/
-├── main.py                 
+├── main.py
 ├── config/
-│   └── inputs.yaml         
-├── .env.example            
-├── requirements.txt        
-└── manifest.json           
+│   └── inputs.yaml
+├── .env.example
+├── requirements.txt
+└── manifest.json
 ```
 
 ---
