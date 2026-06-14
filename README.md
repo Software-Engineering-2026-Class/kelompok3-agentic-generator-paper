@@ -532,7 +532,7 @@ output_files/langgraph/<scenario>/
 | **LangGraph Validation** | `python scripts/validate_langgraph.py` | Mock runtime execution testing |
 | **KG Normalization** | `python scripts/normalize_kg.py` | Clean & standardize TTL files |
 | **Add Kickoff Inputs** | `python scripts/add_kickoff_inputs.py` | Inject input bundles into TTL |
-| **Reverse Engineering** | `python Script/run_prompt.py <folder>` | LLM-based code-to-KG extraction |
+| **Reverse Engineering** | `python scripts/run_prompt.py <folder>` | LLM-based code-to-KG extraction |
 
 ---
 

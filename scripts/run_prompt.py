@@ -3,12 +3,8 @@ import sys
 import time
 from openai import OpenAI
 
-# Require OPENAI_API_KEY from the environment; never hard-code secrets.
-if not os.environ.get("OPENAI_API_KEY"):
-    print("Error: OPENAI_API_KEY environment variable is not set.")
-    sys.exit(1)
-
 client = OpenAI()
+os.environ["OPENAI_API_KEY"] = "your_api_key_here"  # set your API key here or ensure it's set in the environment
 prompt_file = "analysis.prompt.md"
 ontology_file = "agentic-o.ttl"
 model_name = "gpt-5-mini"   # change as needed

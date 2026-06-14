@@ -7,7 +7,7 @@ This document provides an end-to-end analysis of the CrewAI generation pipeline.
 The project features a **two-way (reverse and forward) engineering pipeline** that bridges CrewAI Python code and an Ontology-based Knowledge Graph (`agentO.ttl`).
 
 ### Part A: Reverse Engineering (Extraction Pipeline)
-**Script**: `Script/run_prompt.py`
+**Script**: `scripts/run_prompt.py`
 
 This script parses existing CrewAI source code and pushes it to an LLM (OpenAI) to extract its semantic structure.
 
@@ -60,7 +60,7 @@ The following properties exist in the ontology but are either ignored by the gen
 1. **Extraction (Code to KG):**
    ```bash
    # From root directory
-   python Script/run_prompt.py <path_to_existing_crewai_project>
+   python scripts/run_prompt.py <path_to_existing_crewai_project>
    ```
    *Result: A new `.ttl` file in `agent-o/` directory.*
 

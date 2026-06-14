@@ -79,9 +79,9 @@ stage_prompt() {
   require_openai_key
   log "LLM ontology-population (uses OPENAI_API_KEY, processes ../crews/* by default)"
   if [[ $# -ge 2 ]]; then
-    python Script/run_prompt.py "$2"
+    python scripts/run_prompt.py "$2"
   else
-    bash Script/run_all.sh
+    bash scripts/run_all.sh
   fi
   ok "Prompt run complete"
 }
