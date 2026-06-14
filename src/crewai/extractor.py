@@ -379,11 +379,6 @@ def _infer_process_from_text(text: str) -> Optional[ProcessType]:
     return None
 
 
-
-
-# ── Strategy 1.5 helpers removed: canonical KG uses separate Config per key ──
-
-
 def _extract_team(g: Graph) -> Tuple[str, str, ProcessType]:
     """Extract team name, description, and process type."""
     crew_name = "MyCrew"

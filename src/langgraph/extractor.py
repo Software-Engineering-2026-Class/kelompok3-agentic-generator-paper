@@ -1,12 +1,12 @@
 import rdflib
 import re
-from rdflib import Graph, URIRef
+from rdflib import Graph
 from .models import LangGraphProject, AgentModel, ToolModel, NodeModel, EdgeModel, InputVariableModel
 
 def to_snake_case(name: str) -> str:
-    sStyle = re.sub(r'(?<!^)(?=[A-Z])', '_', name).lower()
-    sStyle = re.sub(r'[\W]+', '_', sStyle).strip('_')
-    return sStyle if sStyle else "node"
+    snake = re.sub(r'(?<!^)(?=[A-Z])', '_', name).lower()
+    snake = re.sub(r'[\W]+', '_', snake).strip('_')
+    return snake if snake else "node"
 
 def extract_langgraph_project(kg_path: str) -> LangGraphProject:
     g = Graph()

@@ -33,6 +33,10 @@
 
 
 
+
+
+
+
 # Execution time: 85.09 seconds
 # Model used: gpt-5-mini
 
@@ -51,6 +55,8 @@
 #################################################################
 
 ### Team (Crew)
+
+
 
 
 
@@ -285,6 +291,18 @@ Note: The exact procedural behavior (kickoff, train) belongs to the framework (c
     agento-ext:inputKey "filename" ;
     agento-ext:inputValue "" ;
     agento-ext:isDefaultValue false .
+
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
+
+#################################################################
+# Agents (Canonical Pattern)
+#################################################################
+
+# Goals
 
 #################################################################
 # Agents (Canonical Pattern)
