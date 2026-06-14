@@ -79,6 +79,7 @@ AgentO solves this by providing a **single source of truth** — a Knowledge Gra
 | **Config-Driven Outputs**      | CrewAI emits `agents.yaml`, `tasks.yaml`, `crew.py`, `main.py`, `.env.example`, and `config/inputs.yaml`. LangGraph emits `main.py`, `config/inputs.yaml`, `.env.example`, and `requirements.txt`. |
 | **Batch & Single Processing**  | Process all KGs at once or target a single `.ttl` file                                                                                                                                             |
 | **Offline Quality Evaluation** | 3-stage validation pipeline: syntax check → AST-vs-IR comparison → mock runtime execution                                                                                                          |
+| **Runtime Smoke-Test**         | Real subprocess execution of every generated `output_files/*/main.py` with per-project timeout, Mock LLM (LangGraph) and Mock `Crew.kickoff` (CrewAI) — no API key required; reports `docs/runtime_execution_report.md` |
 | **Reverse Engineering**        | Extract agentic structures from existing codebases into Knowledge Graph instances via LLM                                                                                                          |
 | **Manifest Generation**        | Each output project includes a `manifest.json` with metadata and file listings                                                                                                                     |
 
@@ -147,9 +148,7 @@ kelompok3-agentic-generator-paper/
 │   ├── validate_langgraph.py
 │   ├── runtime_test_outputs.py
 │   ├── normalize_kg.py
-│   └── add_kickoff_inputs.py
-│
-├── Script/
+│   ├── add_kickoff_inputs.py
 │   ├── run_prompt.py
 │   ├── analysis.prompt.md
 │   └── run_all.sh
@@ -168,7 +167,8 @@ kelompok3-agentic-generator-paper/
 │   ├── quality_report.md
 │   ├── quality_findings.md
 │   ├── summary_statistics.md
-│   └── validation_results.md
+│   ├── validation_results.md
+│   └── runtime_execution_report.md
 │
 ├── paper/
 │   ├── K-CAP_2025_paper_25.pdf
@@ -518,10 +518,11 @@ Extracts the agentic structure of an existing codebase and generates a Turtle in
 export OPENAI_API_KEY="sk-your-key-here"   # Linux/macOS
 # $env:OPENAI_API_KEY="sk-your-key-here"   # Windows PowerShell
 
-# Run extraction on a project folder
-cd Script
-python run_prompt.py /path/to/agent-project-folder
+# Run extraction on a project folder (from the repo root)
+python scripts/run_prompt.py /path/to/agent-project-folder
 ```
+
+> The script will **exit immediately with a clear error** if `OPENAI_API_KEY` is not set in the environment — this is intentional and prevents the script from continuing with a missing key.
 
 The output `.ttl` file will be written to `agent-o/<folder-name>_instances.ttl`.
 
@@ -568,10 +569,11 @@ output_files/langgraph/<scenario>/
 | **LangGraph Generator** | `python src/langgraph/run.py <file.ttl>` | Generate a LangGraph project |
 | **Quality Evaluation** | `python scripts/evaluate_quality.py` | 3-stage offline code quality assessment |
 | **Statistics Report** | `python scripts/generate_statistics.py` | Generate LOC/agent/task statistics |
-| **LangGraph Validation** | `python scripts/validate_langgraph.py` | Mock runtime execution testing |
+| **Runtime Execution Test** | `python scripts/runtime_test_outputs.py [--framework all] [--project <name>] [--timeout <sec>]` | Real subprocess smoke-test of generated projects (CrewAI + LangGraph) |
+| **LangGraph Validation** | `python scripts/validate_langgraph.py` | Mock runtime execution testing (legacy) |
 | **KG Normalization** | `python scripts/normalize_kg.py` | Clean & standardize TTL files |
 | **Add Kickoff Inputs** | `python scripts/add_kickoff_inputs.py` | Inject input bundles into TTL |
-| **Reverse Engineering** | `python scripts/run_prompt.py <folder>` | LLM-based code-to-KG extraction |
+| **Reverse Engineering** | `python scripts/run_prompt.py <folder>` | LLM-based code-to-KG extraction (requires `OPENAI_API_KEY`) |
 
 ---
 
